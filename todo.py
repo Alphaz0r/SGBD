@@ -1,11 +1,11 @@
 #############################################################################################################################################################
-#   todo : to prevent SQL Injection we use %s as a placeholder for queries => placer la query de base dans une variable et venir y ajouter                  #
+#TODO : to prevent SQL Injection we use %s as a placeholder for queries => placer la query de base dans une variable et venir y ajouter                  #
 #                                                                                                                les paramètres de la query                 #
-#   todo : spécialiser chaque fonction en ne laissant pas l'utilisateur modifier la query entière mais plutôt des morceaux                                  #
+#TODO : spécialiser chaque fonction en ne laissant pas l'utilisateur modifier la query entière mais plutôt des morceaux                                  #
 #                                                                                                       (/SELECT/ x /FROM/ y /WHERE/ z /ORDER BY/ a)                     #
-#   todo : Implémenter les jointures, héritage de la classe table ?
+#TODO : Implémenter les jointures, héritage de la classe table ?
 #
-#   todo : greffer le GUI                                                                                                                                   #
+#TODO : greffer le GUI                                                                                                                                   #
 #       => écran de connexion : good, voir fenetre_connexion.py, apprendre tkinter                                                                                                                        #
 #       => affichage des tables                                                                                                                             #
 #       => query custom (pouvoir modifier le code sql directement dans le gui)                                                                              #

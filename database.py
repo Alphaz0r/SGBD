@@ -1,4 +1,6 @@
 import mysql.connector
+import dicoType
+
 
 class Database:
     def __init__(self, user="root", passw="", host="127.0.0.1", db="ecole"):
@@ -26,31 +28,47 @@ class Database:
     
     def Show_Tables(self):
         try:
+            sql="SHOW TABLES"
             cursor=self.cnx.cursor()
-            cursor.execute("SHOW TABLES")
+            cursor.execute(sql)
             for i in cursor:
                 print(i)
         except:
             print("Une erreur est survenue lors de l'affichage des tables")
 
-    def Create_Table(self, query):
+    def Create_Table(self, name, pk, col):
         try:
+            sql="CREATE TABLE "
             cursor=self.cnx.cursor()
-            cursor.execute(query)
+            sql+=name + " (" + pk + " INT" + " AUTO_INCREMENT " + "PRIMARY KEY"
+            for i in range(col):
+                try:
+                    sql+=", "
+                    colname = input("Nom de la colonne " + str(i) + " : ")     #TODO Vérifier exceptions ici
+                    coltype = input("Type de la colonne " + str(i) +  " ,veuillez choisir parmis les options suivantes\n\n" + "dico" + "\n\n" + "Votre choix : ")
+                    sql+= " " + colname + " " + coltype
+                except:
+                    print("Erreur dans l'entrée du type ou du nom de la colonne")
+                    return "Veuillez recommencer"
+            sql+=")"
+            cursor.execute(sql)
         except:
             print("Une erreur est survenue lors de la création de la table")
         finally:
-            print("Table dans la database : " + self.db)
+            print("Table dans la database : " + self.db + " :")
             self.Show_Tables()
 
-    def Drop_Table(self, table, query):
+    def Drop_Table(self, nomTable):
         try:
+            sql="DROP TABLE "
+            sql+=nomTable
             cursor=self.cnx.cursor()
-            cursor.execute(query)
+            cursor.execute(sql)
+            print("Suppression de la table " + nomTable + " réussie")
         except:
             print("Une erreur est survenue lors de la suppression de la table")
         finally:
-            print("Table dans la database : " + self.db)
+            print("Table dans la database : " + self.db + ": \n")
             self.Show_Tables()
 
     def Alter_Table(self, table, query):
