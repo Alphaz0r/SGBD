@@ -22,28 +22,18 @@ class Database:
 
     def QueFaire(self):
         try:
-            print("\n**********************************   Que souhaitez-vous faire dans la base de données " + self.db + "?   **********************************")
-            print("**********************************   Choix 1 : Montrer toutes les tables de la base de données   **********************************")
-            print("**********************************   Choix 2 : Créer une table dans la base de données           **********************************")
-            print("**********************************   Choix 3 : Modifier une table dans la base de données        **********************************")
-            print("**********************************   Choix 4 : Supprimer une table dans la base de données       **********************************")
-            print("**********************************   Choix 5 : Se déconnecter                                    **********************************")
+            print("\n**********************************   Que souhaitez-vous faire dans la base de données " + self.db + "?     **********************************")
+            print("**********************************   Choix 1 : Lister toutes les tables de la base de données        **********************************")
+            print("********************************** Choix 2 : Accéder à l'une des tables de la base de données        **********************************")
+            print("**********************************   Choix 3 : Se déconnecter                                        **********************************")
             choix=input("\nVotre choix : ")
 
             if choix=="1" or choix == "2" or choix=="3" or choix=="4" or choix=="5":
                 if choix=="1":
                     self.Show_Tables()
                 elif choix=="2":
-                    nomTableCrea=input("ETAPE 1 Veuillez choisir un nom pour la table.\nNom de la table :")
-                    nomPk=input("ETAPE 2 Veuillez choisir le nom de la colonne qui servira d'identifiant.\nNom de la colonne :")
-                    nombreCol=input("ETAPE 3 Veuillez choisir le nombres de colonnes que comportera la table " + nomTableCrea +"\n Nombre de colonnes :")
-                    self.Create_Table(nomTableCrea, nomPk, nombreCol)
+                    print("Faut coder le choix numero 2 gaillard")
                 elif choix=="3":
-                    self.Alter_Table()
-                elif choix=="4":
-                    nomTable=input("Quelle table souhaitez-vous supprimer ?\n Nom de la table :")
-                    self.Drop_Table(nomTable)
-                elif choix=="5":
                     self.dc = True
                     self.Se_Deconnecter()
             else:
@@ -52,9 +42,8 @@ class Database:
             print("Erreur rencontrée")
 
 
-    def getInstance(self):
-        return self.__instance
 
+    #Méthode pour se connecter à la base de données
     def Se_Connecter(self):
         try:
             username=input("Nom d'utilisateur : ")
@@ -67,7 +56,7 @@ class Database:
         except:
             print("Une erreur est survenue lors de la connexion")
         
-
+    #Méthode pour se déconnecter de la base de données avec vérification
     def Se_Deconnecter(self):
         try:
             reponse=input("Êtes vous sûr de vouloir vous déconnecter ? Y/N\n")
@@ -87,6 +76,7 @@ class Database:
             print("Erreur dans la déconnexion")
 
     
+    #Méthode qui va afficher toutes les tables présentes dans la base de données
     def Show_Tables(self):
         sql="SHOW TABLES"
         print("\n***Tables présentes dans la base de données " + self.db + " ***")
@@ -99,6 +89,8 @@ class Database:
         except:
             print("Une erreur est survenue lors de l'affichage des tables")
 
+    
+    """
     def Create_Table(self, name, pk, col):
         try:
             sql="CREATE TABLE "
@@ -119,7 +111,9 @@ class Database:
         finally:
             print("Table dans la database " + self.db + " :")
             self.Show_Tables()
+        """
 
+        """
     def Drop_Table(self, nomTable):
         try:
             sql="DROP TABLE "
@@ -139,7 +133,7 @@ class Database:
             cursor.execute(query)
         except:
             print("Une erreur est survenue lors de la modification de la table")
-
+        """
 
    
         
