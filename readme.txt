@@ -10,8 +10,15 @@ fenetre_connexion.py :
 table.py :
       Concerne tout ce qui est en rapport avec une table en particuliers
       
-test & test2.py :
+test.py :
       Fichiers de tests 
       
 todo.py :
       Liste choses à faire
+
+
+
+interface_console :
+      # indique une question posée à l'utilisateur, il doit réagir pour continuer
+      +++ indique une erreur que le programme a rencontré
+      

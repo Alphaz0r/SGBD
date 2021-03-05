@@ -1,12 +1,13 @@
-import mysql.connector
-import dicoType
+import mysql.connector, interface_console, dicoType 
+import client, concentration, drugs, facture # DAO
+
 
 
 class Database:
     __instance=None
     def __init__(self, user="root", passw="", host="127.0.0.1", db="pharmacie"):
         if Database.__instance != None:
-            raise Exception("Cette classe est un singleton!")
+            raise Exception("+++Cette classe est un singleton!+++")
         else:
             self.__instance = self
             print(self.__instance)
@@ -14,68 +15,39 @@ class Database:
             self.passw=passw
             self.host=host
             self.db=db
-            self.dc=False
             self.Se_Connecter()
-            while self.dc==False:
-                self.QueFaire()
+            self.Show_Tables()
+            self.QueFaire()
 
-
+    #Fonction  menu principal
     def QueFaire(self):
-        try:
-            print("\n**********************************   Que souhaitez-vous faire dans la base de données " + self.db + "?     **********************************")
-            print("**********************************   Choix 1 : Lister toutes les tables de la base de données        **********************************")
-            print("********************************** Choix 2 : Accéder à l'une des tables de la base de données        **********************************")
-            print("**********************************   Choix 3 : Se déconnecter                                        **********************************")
-            choix=input("\nVotre choix : ")
+        dc=False
+        while(dc==False):
+            try:
+                interface_console.aff_menu_principal(self.db)   #Affichage menu principal
+                choix=input("\nVotre choix : ") 
 
-            if choix=="1" or choix == "2" or choix=="3" or choix=="4" or choix=="5":
-                if choix=="1":
-                    self.Show_Tables()
-                elif choix=="2":
-                    print("Faut coder le choix numero 2 gaillard")
-                elif choix=="3":
-                    self.dc = True
-                    self.Se_Deconnecter()
-            else:
-                print("Veuillez choisir l'un des choix proposés")
-        except:
-            print("Erreur rencontrée")
-
-
-
-    #Méthode pour se connecter à la base de données
-    def Se_Connecter(self):
-        try:
-            username=input("Nom d'utilisateur : ")
-            password=input("Mot de passe : ")
-        except:
-            print("Identifiants incorrects")
-        try:
-            self.cnx = mysql.connector.connect(username=username, password=password, host=self.host, database=self.db)
-            print("Connexion avec la base de données réalisée avec succès")
-        except:
-            print("Une erreur est survenue lors de la connexion")
-        
-    #Méthode pour se déconnecter de la base de données avec vérification
-    def Se_Deconnecter(self):
-        try:
-            reponse=input("Êtes vous sûr de vouloir vous déconnecter ? Y/N\n")
-            if reponse=="Y" or reponse == "N":
-                if reponse == "Y":
-                    try:
-                        self.cnx.close()
-                        print("Connexion fermée avec succès")
-                    except:
-                        print("Erreur survenue lors de la déconnexion")
+                if choix=="1" or choix == "2" or choix=="3" or choix=="4" or choix=="5":
+                    if choix!="5":
+                        interface_console.aff_acces_table() #Affichage menu accès aux tables
+                        if choix=="1":
+                            clientDAO=client.Client()
+                        elif choix=="2":
+                            factureDAO=facture.Facture()
+                        elif choix=="3":
+                            drugDAO=drugs.Drugs()
+                        elif choix=="4":
+                            concentrationDAO=concentration.Concentration()
+                    else:
+                        dc = True  #Sortie de la boucle
+                        self.Se_Deconnecter()
                 else:
-                    return "Aucune action n'a été entreprise"
-            else:
-                print("Erreur dans le choix de reponse")
-                self.Se_Deconnecter()
-        except:
-            print("Erreur dans la déconnexion")
+                    print("### Veuillez choisir l'un des choix proposés")
+            except:
+                print("+++Erreur rencontrée+++")
+                raise
 
-    
+
     #Méthode qui va afficher toutes les tables présentes dans la base de données
     def Show_Tables(self):
         sql="SHOW TABLES"
@@ -87,54 +59,49 @@ class Database:
                 print(i)
             print("*******************************************************")
         except:
-            print("Une erreur est survenue lors de l'affichage des tables")
+            print("+++Une erreur est survenue lors de l'affichage des tables+++")
 
-    
-    """
-    def Create_Table(self, name, pk, col):
+    #Méthode pour se connecter à la base de données ( 3 essais permis )
+    def Se_Connecter(self):
+        attempt=4
+        while(attempt>=0):
+            try:
+                username=input("~Nom d'utilisateur : ")
+                password=input("~Mot de passe : ")
+                self.cnx = mysql.connector.connect(username=username, password=password, host=self.host, database=self.db)
+                print("Connexion avec la base de données réalisée avec succès")
+                attempt=4
+                break   #Sortie de la boucle
+            except:
+                print("+++Une erreur est survenue lors de la connexion+++\n+++Identifiants incorrects+++")
+                attempt-=1
+                print("\nNombre d'essais restants : " + str(attempt) + "\n")
+        if attempt==0:
+            print("+++Nombre d'essais dépassés, au revoir+++")
+            exit()
+        
+
+
+
+
+        
+    #Méthode pour se déconnecter de la base de données avec vérification
+    def Se_Deconnecter(self):
         try:
-            sql="CREATE TABLE "
-            cursor=self.cnx.cursor()
-            sql+=name + " (" + pk + " INT" + " AUTO_INCREMENT " + "PRIMARY KEY"
-            for i in range(col):
-                try:
-                    sql+=", "
-                    colname = input("Nom de la colonne " + str(i) + " : ")     #TODO Vérifier exceptions ici
-                    coltype = input("Type de la colonne " + str(i) +  " ,veuillez choisir parmis les options suivantes\n\n" + "dico" + "\n\n" + "Votre choix : ")
-                    sql+= " " + colname + " " + coltype
-                except:
-                    print("Erreur dans l'entrée du type ou du nom de la colonne")
-            sql+=")"
-            cursor.execute(sql)
+            reponse=input("~ Êtes vous sûr de vouloir vous déconnecter ? Y/N reponse : ")
+            if reponse=="Y" or reponse == "N":
+                if reponse == "Y":
+                    try:
+                        self.cnx.close()
+                        print("Connexion fermée avec succès !")
+                    except:
+                        print("+++Erreur survenue lors de la déconnexion+++")
+                else:
+                    print ("### Aucune action n'a été entreprise")
+            else:
+                print("+++Erreur dans le choix de reponse+++")
         except:
-            print("Une erreur est survenue lors de la création de la table")
-        finally:
-            print("Table dans la database " + self.db + " :")
-            self.Show_Tables()
-        """
-
-        """
-    def Drop_Table(self, nomTable):
-        try:
-            sql="DROP TABLE "
-            sql+=nomTable
-            cursor=self.cnx.cursor()
-            cursor.execute(sql)
-            print("Suppression de la table " + nomTable + " réussie")
-        except:
-            print("Une erreur est survenue lors de la suppression de la table")
-        finally:
-            print("Table dans la database : " + self.db + ": \n")
-            self.Show_Tables()
-
-    def Alter_Table(self, table, query):
-        try:
-            cursor=self.cnx.cursor()
-            cursor.execute(query)
-        except:
-            print("Une erreur est survenue lors de la modification de la table")
-        """
-
+            print("+++Erreur dans la déconnexion+++")
    
         
 
