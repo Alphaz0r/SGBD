@@ -9,9 +9,9 @@ if __name__=="__main__":
         if choix=="1":
             clientDAO=client.Client(letsgo.cnx)
         elif choix=="2":
-            factureDAO=facture.Facture()
+            factureDAO=facture.Facture(letsgo.cnx)
         elif choix=="3":
-            drugDAO=drugs.Drugs()
+            drugDAO=drugs.Drugs(letsgo.cnx)
         elif choix=="4":
-            concentrationDAO=concentration.Concentration()
+            concentrationDAO=concentration.Concentration(letsgo.cnx)
     

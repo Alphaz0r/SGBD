@@ -1,6 +1,9 @@
 import mysql.connector
 import interface_console
 import database
+from beautifultable import BeautifulTable
+from datetime import datetime
+
 
 class Client():
     def __init__(self, cnx): #Il faut récupérer la connexion à la base de données pour l'utiliser avec les pointeurs
@@ -8,8 +11,6 @@ class Client():
         self.cnx = cnx
         self.QueFaire()
         
-
-    
     def QueFaire(self):
         quit=False
         while(quit==False):
@@ -23,39 +24,44 @@ class Client():
                     elif choix=="2":
                         self.Modifier_Client()
                     elif choix=="3":
-                        drugDAO=drugs.Drugs()
+                        pass
                     elif choix=="4":
                         quit=True
 
     
-
-    
     def Afficher_Client(self):
-        sql="SELECT * FROM " + self.name        # SELECT * FROM clients
+        sql="SELECT PK_client_id, name, first_name, CAST(birth_date AS CHAR), age, rue, house_number, postcode, email, phone_number FROM " + self.name        # SELECT * FROM clients
+        cursor=self.cnx.cursor(dictionary=True) #Initialisation du curseur mysql, celui-ci retourne chaque ligne sous la forme clef:valeur 
+        table=BeautifulTable(maxwidth=300)      #Préparation de l'affichage des lignes
         try: 
-            choix=input("~Souhaitez-vous afficher \n 1) Tous les clients \n 2) 1 ou plusieurs clients\n~Votre choix : ")
+            choix=input("~Souhaitez-vous afficher \n 1) Tous les clients \n 2) Je choisis quel(s) client(s) afficher\n~Votre choix : ")
             if choix=="1" or choix=="2":
                 if choix=="1":
-                    pass
+                    pass    #TODO : Delete ce truc
                 elif choix=="2":
-                    sql+="WHERE clients.name= " # SELECT * FROM clients WHERE clients.name=
+                    sql+=" WHERE clients.PK_client_id= " # SELECT * FROM clients WHERE clients.PK_client_id=
                     try:
                         nbrClient=input("~Veuillez indiquer le nombre exact de clients que vous souhaitez afficher : ")
                         for i in nbrClient:
-                            nomClient=input("~~Veuillez indiquer le nom du client n°" + i + " : ")
-                            sql+=nomClient + ", "   #SELECT * FROM clients WHERE clients.name=roger,alain,jean-pierre, <<< On note bien la virgule+espace à la fin qu'on doit enlever
-                            sql=sql[:-2]            #SELECT * FROM clients WHERE clients.name=roger,alain,jean-pierre
+                            idClient=input("~~Veuillez indiquer l'ID' du client n°" + i + " : ")
+                            sql+=idClient + ", "   #SELECT * FROM clients WHERE clients.PK_client_id=2,4,8, <<< On note bien la virgule+espace à la fin qu'on doit enlever
+                            sql=sql[:-2]            #SELECT * FROM clients WHERE clients.PK_client_id=2,4,8
                     except:
                         print("\n+++Une erreur est survenue, un nombre est attendu+++")
             else:
-                print("Veuillez choisir parmis les choix proposés")
+                return "Veuillez choisir parmis les choix proposés"
             cursor=self.cnx.cursor()
             cursor.execute(sql)
-            result = cursor.fetchall()
-            for i in result:
-                print(i)
+            print("Affichage de votre requête : ")
+            table.columns.header=["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"]
+            
+            for row in cursor:
+                table.rows.append(row)
+            print(table)
         except:
             print("\n+++Une erreur est survenue lors de l'affichage de valeurs dans la table+++")
+        finally:
+            cursor.close()
 
     def Delete(self, query):
         try:
