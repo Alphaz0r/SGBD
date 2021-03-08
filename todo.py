@@ -9,5 +9,9 @@
 #       => écran de connexion : good, voir fenetre_connexion.py, apprendre kivy                                                                                                                       
 #       => affichage des tables                                                                                                                             
 #       => query custom (pouvoir modifier le code sql directement dans le gui)                                                                              
-#       => speed query (= utiliser les fonctions que j'ai créées = l'utilisateur laisse l'application traduire en sql)                                                                                                                    
+#       => speed query (= utiliser les fonctions que j'ai créées = l'utilisateur laisse l'application traduire en sql)   
+# 
+# TODO : Implémenter un ping vers le serveur mysql pour tester la connexion     
+# 
+# TODO : Implémenter un moyen de cacher et hasher le mdp                                                                                                            
 ###########################################################################################################################################################
