@@ -1,5 +1,5 @@
 import mysql.connector, interface_console, dicoType 
-import client, concentration, drugs, facture # DAO
+import table
 import connexion
 
 

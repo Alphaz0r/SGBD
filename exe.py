@@ -1,17 +1,17 @@
 import mysql.connector
 import interface_console
-import database, client, table
+import database, table
 
 if __name__=="__main__":
+    launcher=database.Database()
     while(True):
-        letsgo=database.Database()
-        choix=letsgo.QueFaire()
+        choix=launcher.QueFaire()
         if choix=="1":
-            clientDAO=table.Table(letsgo.cnx, "clients", ["PK_client_id", "name", "first_name", "birth_date", "age", "rue", "house_number", "postcode", "email", "phone_number"])
+            client=table.Table(launcher.cnx, ["clients"], ["PK_client_id", "name", "first_name", "birth_date", "age", "rue", "house_number", "postcode", "email", "phone_number"])
         elif choix=="2":
-            factureDAO=facture.Facture(letsgo.cnx)
+            facture=table.Table(launcher.cnx, ["facture"], ["PK_facture_id", "total_price"])
         elif choix=="3":
-            drugDAO=drugs.Drugs(letsgo.cnx)
+            drug=table.Table(launcher.cnx, ["drugs"], ["PK_drug,id","name","description","peremption_date","price"])
         elif choix=="4":
-            concentrationDAO=concentration.Concentration(letsgo.cnx)
+            concentration=table.Table(launcher.cnx, ["concentration"], ["PK_concentration_id", "concentration_mg"])
     
