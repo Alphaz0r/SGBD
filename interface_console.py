@@ -28,8 +28,8 @@ def aff_acces_table():
 def aff_menu_table(nomTable):
     print("\n################ Bienvenue dans la gestion des "+nomTable+" ! ##########################")
     print("########################################################################################")
-    print("# Choix 1 : Afficher les "+ nomTable" et leurs infos                                        #")
-    print("# Choix 2 : Modifier les informations d'un ou plusieurs " +nomTable"                                      #")
-    print("# Choix 3 : Supprimer un ou plusieurs "+nomTable" ainsi que ses informations /!\ action irréversible /!\ #")
+    print("# Choix 1 : Afficher les "+ nomTable+" et leurs infos                                        #")
+    print("# Choix 2 : Modifier les informations d'un ou plusieurs " +nomTable+"                                      #")
+    print("# Choix 3 : Supprimer un ou plusieurs "+nomTable+" ainsi que ses informations /!\ action irréversible /!\ #")
     print("# Choix 4 : Sortir de la gestion des " + nomTable + "                                           #")
     print("########################################################################################")
