@@ -22,7 +22,7 @@ def aff_acces_table():
 
 
 #
-#                  Client, concentration, facture, drugs
+#                  Table
 #
 
 def aff_menu_table(nomTable):
