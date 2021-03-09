@@ -6,11 +6,11 @@ from datetime import datetime
 
 
 class Drugs():
-    def __init__(self, cnx, table_name, col, aff_col): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
-        self.table_name=table_name  # [0] = ce qu'on veut gérer 
+    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
+        self.table_name=["drugs", "concentration"]  # [0] = ce qu'on veut gérer 
         self.cnx=cnx
-        self.col=col
-        self.aff_col=aff_col
+        self.col=["PK_drug_id","name","description","peremption_date","price", "stock", "concentration_mg", "PK_concentration_id"]
+        self.aff_col=["ID Médicaments", "Nom", "Description", "Date de péremption", "Prix en €€€", "Stock", "Concentration en mg"]      #Pour affichage
         self.QueFaire()
         
     def QueFaire(self):

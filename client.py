@@ -6,11 +6,11 @@ from datetime import datetime
 
 
 class Client():
-    def __init__(self, cnx, table_name, col, aff_col): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
-        self.table_name=table_name  # [0] = ce qu'on veut gérer 
+    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
+        self.table_name=["clients"]  # [0] = ce qu'on veut gérer 
         self.cnx=cnx
-        self.col=col
-        self.aff_col=aff_col
+        self.col=["PK_client_id", "name", "first_name", "birth_date", "age", "rue", "house_number", "postcode", "email", "phone_number"]
+        self.aff_col= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"]
         self.QueFaire()
         
     def QueFaire(self):
