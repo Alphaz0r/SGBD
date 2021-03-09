@@ -33,6 +33,7 @@ class Drugs():
 
     def Afficher_Table(self):   #Exemple QUERY : SELECT drugs.PK_drug_id, drugs.name, drugs.description, drugs.peremption_date, drugs.price, concentration.concentration_mg FROM drugs JOIN concentration ON drugs.FK_concentration_id = concentration.PK_concentration_id
         #Construction de la query de base NB: Impossible de sélectionner autre chose que TOUTES les colonnes de la table...
+         cursor=self.cnx.cursor()
         sql="SELECT "  
         for col in self.col:
             if col!="concentration_mg" and col!="PK_concentration_id":
@@ -66,7 +67,6 @@ class Drugs():
                         print("\n+++Une erreur est survenue, un nombre est attendu+++")
             else:
                 return "Veuillez choisir parmis les choix proposés"
-            cursor=self.cnx.cursor()
             cursor.execute(sql)
             print("\nAffichage de votre requête : ")
             table.columns.header=self.aff_col

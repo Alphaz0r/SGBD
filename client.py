@@ -32,6 +32,7 @@ class Client():
 
     
     def Afficher_Table(self):   #TODO : Gérer affichage multi-table jointure, envisager un héritage ?
+         cursor=self.cnx.cursor()
         sql="SELECT "  
         for col in self.col:
             if col=="birth_date":
@@ -63,7 +64,6 @@ class Client():
                         print("\n+++Une erreur est survenue, un nombre est attendu+++")
             else:
                 return "Veuillez choisir parmis les choix proposés"
-            cursor=self.cnx.cursor()
             cursor.execute(sql)
             print("\nAffichage de votre requête : ")
             table.columns.header=self.aff_col
