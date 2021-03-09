@@ -1,4 +1,5 @@
 import mysql.connector
+import sys
 
 class Connexion:
     def __init__(self, user="root", passw="", host="127.0.0.1", port="3306", db="pharmacie"):

@@ -1,11 +1,10 @@
 import mysql.connector, interface_console, dicoType 
-import table
 import connexion
 
 
 
 class Database(connexion.Connexion):
-    def __init__(self):
+    def __init__(self, ):
             super().__init__()
 
     #Fonction  menu principal
