@@ -1,11 +1,11 @@
 import mysql.connector
 import interface_console
-import database, drugs, facture, client
+import database, drugs, facture, client, users, concentration
 
 if __name__=="__main__":
     launcher=database.Database()
     while(True):
-        choix=launcher.QueFaire()
+        choix=launcher.Menu()
         if choix=="1":
             client=client.Client(launcher.cnx)
         elif choix=="2":
@@ -13,5 +13,7 @@ if __name__=="__main__":
         elif choix=="3":
             drug=drugs.Drugs(launcher.cnx)
         elif choix=="4":
-            concentration=table.Table(launcher.cnx, ["concentration"], ["PK_concentration_id", "concentration_mg"], ["CHANGEZ dans exe.py"])
+            concentration=concentration.Concentration(launcher.cnx)
+        elif choix=="5":
+            users=users.Users(launcher.cnx)
     
