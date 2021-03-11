@@ -58,3 +58,7 @@ def aff_menu_users():
     print("# Choix 5 : Insérer un nouvel utilisateur                                                                   #")
     print("# Choix 6 : Sortir de la gestion des utilisateurs                                                           #")
     print("##############################################################################################################")
+
+
+def creation_row_client():
+    print("")
