@@ -14,8 +14,10 @@ class Connexion:
         attempt=4
         while(attempt>=0):
             try:
-                username=input("~ Nom d'utilisateur : ")
-                password=input("~~~~~~ Mot de passe : ")
+                #username=input("~ Nom d'utilisateur : ")
+                #password=input("~~~~~~ Mot de passe : ")
+                username="root"
+                password=""
                 self.cnx = mysql.connector.connect(username=username, password=password, host=self.host, database=self.db) #TODO : Implémenter un ping test vers la base de données pour raise des erreurs plus claires
                 print("\n       ### Test de connexion avec la base de données réalisée avec succès")
                 attempt=4

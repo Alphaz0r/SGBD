@@ -76,7 +76,7 @@ class Client():
             reponse=input("\nÊtes vous sûr de vouloir insérer les valeurs entrées précédemment dans la base de données ? Y/N\nVotre réponse : ")
             if reponse=="Y":
                 sql="INSERT INTO pharmacie.clients (PK_client_id, name, first_name, birth_date, age, rue, house_number, postcode, email, phone_number) VALUES "
-                sql+="(NULL, '"+query_list[0]+"','"+query_list[1]+"','"+query_list[2]+"',"+query_list[3]+","+query_list[4]+",'"+query_list[5]+"','"+query_list[6]+"','"+query_list[7]+"','"+query_list[8]+"');"
+                sql+="("+query_list[0]+", '"+query_list[1]+"','"+query_list[2]+"','"+query_list[3]+"',"+query_list[4]+",'"+query_list[5]+"','"+query_list[6]+"','"+query_list[7]+"','"+query_list[8]+"','"+query_list[9]+"');"
                 print(sql)
                 cursor.execute(sql)
                 self.cnx.commit()
@@ -93,7 +93,7 @@ class Client():
 
     def Build_Row(self):
         #Initialisation de la liste qui va récupérer les variables pour la query
-        query_list=[]
+        query_list=["NULL"]
         #Préparation de la table magique
         table_vide=BeautifulTable(maxwidth=300)
         result_table=BeautifulTable(maxwidth=300)
@@ -105,9 +105,18 @@ class Client():
             for value in self.aff_col:
                 if value!="ID":
                     print("Indiquez une valeur pour \""+value+"\"")     #TODO: Gérer erreur ici insertion
-                    rep=input("Valeur : ")
-                    if rep=="":
-                      rep=input("\n\nIndiquez une valeur pour \""+value+"\"\nRien n'est pas une valeur\nValeur : ")
+                    rep=input("Valeur : ")      #TODO : Gérer la date et l'âge et rien
+                    if rep=="":    
+                        while rep=="":
+                            rep=input("### Veuillez entrer une valeur ###")
+                    elif value=="Age":
+                        while(self.Intable(rep)==False):
+                            rep=input("### Veuillez entrer un NOMBRE  ###")
+                    elif value=="Date de naissance":
+                        while(self.Dateable(rep)==False):
+                            rep=input("### Veuillez entrer une date selon ce format : DD-MM-YYYY  ###")
+                        rep=rep[::-1]
+                    
                     query_list.append(rep)
         except:
             print("+++ Erreur dans l'insertion de données, veuillez recommencer +++")
@@ -125,9 +134,24 @@ class Client():
                     self.Build_Row()
                 elif reponse=="Q":
                     print("### Retour au menu... ###")
-                    return("stop")
+                    return("")
             except:
                 print("")
+
+    def Intable(self, nombre):
+        try:
+            int_nombre=int(nombre)
+            return True
+        except:
+            return False
+
+    def Dateable(self, date):
+        try:
+            date=datetime.strptime(date, %d-%m-%Y)
+            return True
+        except:
+            return False
+
        
 
 

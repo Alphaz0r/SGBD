@@ -23,7 +23,7 @@ class Database(connexion.Connexion):
                         dc = True  #Sortie de la boucle
                         self.Se_Deconnecter()
                 else:
-                    print("### Veuillez choisir l'un des choix proposés")
+                    print("### Veuillez choisir l'un des choix proposés ###")
             except:
                 print("+++Erreur rencontrée+++")
 
