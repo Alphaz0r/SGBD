@@ -31,10 +31,12 @@ Package requis :
                     Concentration
                     Utilisateurs
 
-      -Ajouter row Clients
+      -Ajouter row 
                     factures
                     Drugs
-                    Concentration
+                    
                     Utilisateurs
 
       -Déconnexion et fermeture du programme
+
+      -QoL

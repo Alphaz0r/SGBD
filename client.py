@@ -11,7 +11,6 @@ class Client():
         self.cnx=cnx
         self.col=["PK_client_id", "name", "first_name", "birth_date", "age", "rue", "house_number", "postcode", "email", "phone_number"]
         self.aff_col= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"]
-        self.Menu()
         
     def Menu(self):
         quit=False
@@ -39,15 +38,15 @@ class Client():
         try: 
             choix=input("~Souhaitez-vous afficher \n 1) Tous les clients \n 2) Je choisis quel(s) client(s) afficher\n~Votre choix : ")
             if choix=="2":
-                sql+=" WHERE clients.PK_client_id in (" # SELECT * FROM clients WHERE clients.PK_client_id=
+                sql+=" WHERE clients.PK_client_id in (" # SELECT * FROM clients WHERE clients.PK_client_id in (
                 try:
                     nbrClient=input("~Veuillez indiquer le nombre exact de clients que vous souhaitez afficher : ")
                     for i in range(int(nbrClient)):
                         idClient=input("~~Veuillez indiquer l'ID du client recherché : ")
-                        sql+=idClient + ","                                                                        #Query intermédiaire : SELECT * FROM clients WHERE clients.PK_client_id=2,4,8, <<< On note bien la virgule+espace à la fin qu'on doit enlever
+                        sql+=idClient + ","                                                                        #Query intermédiaire : SELECT * FROM clients WHERE clients.PK_client_id in (2,4,8, <<< On note bien la virgule+espace à la fin qu'on doit enlever
                     sql=sql[:-1]  
-                    sql+=")"    
-                    print(sql)                                                                                   #Exemple query finale : SELECT * FROM clients WHERE clients.PK_client_id=2,4,8
+                    sql+=")"            
+                    print(sql)                                                                                   #Exemple query finale : SELECT ... FROM clients WHERE clients.PK_client_id in (2,4,8)
                 except:
                     print("\n+++Une erreur est survenue, un nombre est attendu+++")
             else:
@@ -61,6 +60,8 @@ class Client():
             for row in cursor:
                 table.rows.append(row)  
             print(table)
+
+            input("\nPressez n'importe quelle touche pour continuer...")
 
         except:
             print("\n+++Une erreur est survenue lors de l'affichage de valeurs dans la table+++")
@@ -110,12 +111,17 @@ class Client():
                         while rep=="":
                             rep=input("### Veuillez entrer une valeur ###")
                     elif value=="Age":
-                        while(self.Intable(rep)==False):
+                        test_int=self.Intable(rep)
+                        while(test_int==False):
                             rep=input("### Veuillez entrer un NOMBRE  ###")
+                            test_int=self.Intable(rep)
                     elif value=="Date de naissance":
-                        while(self.Dateable(rep)==False):
-                            rep=input("### Veuillez entrer une date selon ce format : DD-MM-YYYY  ###")
-                        rep=rep[::-1]
+                        test_date=self.Dateable(rep)
+                        while(test_date==False):
+                            rep=input("### Veuillez entrer une date selon ce format : YYYY-MM-DD  ###")
+                            test_date=self.Dateable(rep)
+                        rep+=' 00:00:00'
+                        print(rep)
                     
                     query_list.append(rep)
         except:
@@ -136,7 +142,7 @@ class Client():
                     print("### Retour au menu... ###")
                     return("")
             except:
-                print("")
+                print("+++ Erreur dans la validation des données +++")
 
     def Intable(self, nombre):
         try:
@@ -147,7 +153,7 @@ class Client():
 
     def Dateable(self, date):
         try:
-            date=datetime.strptime(date, %d-%m-%Y)
+            date=datetime.strptime(date, '%Y-%m-%d')
             return True
         except:
             return False

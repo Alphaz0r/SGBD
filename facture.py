@@ -22,7 +22,6 @@ class Facture():
         self.total_price=""
         self.date_creation=""
         self.PK_client_id=""
-        self.Menu()
         
     def Menu(self):
         quit=False

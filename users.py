@@ -34,6 +34,8 @@ class Users():
                 table.rows.append(row)  
             print(table)
 
+            input("\nPressez n'importe quelle touche pour continuer...")
+
         except:
             print("\n+++Une erreur est survenue lors de l'affichage de valeurs dans la table+++")
         finally:
