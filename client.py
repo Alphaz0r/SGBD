@@ -20,11 +20,11 @@ class Client():
             if choix=="1":
                 self.Display_Rows()
             elif choix=="2":
-                pass
+                self.Alter_Row()
             elif choix=="3":
                 self.Delete_Row()
             elif choix=="4":
-                self.Insert_Rows()
+                self.Insert_Row()
             elif choix=="5":
                 quit=True
     
@@ -69,7 +69,7 @@ class Client():
             cursor.close()  #Dans tous les cas on ferme le curseur
 
 
-    def Insert_Rows(self):      #INSERT INTO `clients` (`PK_client_id`, `name`, `first_name`, `birth_date`, `age`, `rue`, `house_number`, `postcode`, `email`, `phone_number`) 
+    def Insert_Row(self):      #INSERT INTO `clients` (`PK_client_id`, `name`, `first_name`, `birth_date`, `age`, `rue`, `house_number`, `postcode`, `email`, `phone_number`) 
                                 #VALUES (NULL, 'Odenthal', 'Laetitia', '2017-06-13', '20', 'Rue de la Vallée', '82', '7852', 'unemail@email.email.emailemail', '045896525');
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
@@ -171,6 +171,9 @@ class Client():
             print("+++ Erreur dans la suppression de données +++")
         finally:
             cursor.close()
+
+    def Alter_Row(self):
+        
 
 
 

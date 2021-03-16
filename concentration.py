@@ -88,6 +88,7 @@ class Concentration():
                 print("La réponse doit être Y, N ou Q")
         except:
             print("+++ Erreur dans l'insertion des données +++")
+            self.cnx.rollback()
         finally:
             cursor.close()
 
@@ -162,6 +163,7 @@ class Concentration():
                     print("### Veuillez choisir une des réponses proposées. ###")
         except:
             print("+++ Erreur dans la suppression de données +++")
+            self.cnx.rollback()
         finally:
             cursor.close()
 
