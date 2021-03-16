@@ -25,16 +25,10 @@ Package requis :
                     Concentration
                     Utilisateurs
 
-      -Suppression Clients
-                    factures
-                    Drugs
-                    Concentration
+      -Suppression  factures
                     Utilisateurs
 
-      -Ajouter row 
-                    factures
-                    Drugs
-                    
+      -Ajouter row  factures
                     Utilisateurs
 
       -Déconnexion et fermeture du programme
