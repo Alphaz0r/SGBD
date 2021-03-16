@@ -11,17 +11,6 @@ class Facture():
         self.cnx=cnx
         self.col=["PK_facture_id","FK_client_id","name","first_name","email","rue","house_number","postcode","total_price","date_creation","PK_client_id"]
         self.aff_col=["ID Facture","ID Client", "Nom","Prénom","email","Rue","Numéro de maison","Code postal","Prix Total Facture €€€","Date de facturation"]
-        self.PK_facture_id=""
-        self.FK_client_id=""
-        self.name=""
-        self.first_name=""
-        self.email=""
-        self.rue=""
-        self.house_number=""    #Initialisation des attributs qui accueilleront les infos de la bdd pour modification
-        self.postcode=""
-        self.total_price=""
-        self.date_creation=""
-        self.PK_client_id=""
         
     def Menu(self):
         quit=False

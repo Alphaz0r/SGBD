@@ -153,6 +153,33 @@ class Drugs():
             except:
                 print("+++ Erreur dans la validation des données +++")
 
+
+     def Delete_Row(self):
+        try:
+            chiffre=False
+            cursor=self.cnx.cursor()
+            sql="DELETE FROM drugs"
+            while(chiffre==False):
+                id=input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ")
+                chiffre=self.Intable(id)
+            
+            while(True):
+                reponse=input("La ligne avec l'ID "+id+" va être supprimée. Confirmer ? Y/N\nVotre réponse : ")
+                if reponse=="Y":
+                    sql+=" WHERE drugs.PK_drug_id="+id
+                    print(sql)
+                    cursor.execute(sql)
+                    self.cnx.commit()
+                    return ("")
+                elif reponse=="N":
+                    input("### Aucune action n'a été entreprise, retour au menu.\nAppuyer sur n'importe quelle touche pour continuer... ###")
+                    return ("")
+                else:
+                    print("### Veuillez choisir une des réponses proposées. ###")
+        except:
+            print("+++ Erreur dans la suppression de données +++")
+        finally:
+            cursor.close()
     #
     # Méthodes de tests & validation des input spécifiques
     #
