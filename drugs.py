@@ -161,7 +161,7 @@ class Drugs():
             cursor=self.cnx.cursor()
             sql="DELETE FROM drugs"
             while(chiffre==False):
-                id=input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ")
+                id=input("Veuillez choisir l'ID de la ligne à modifier\nVotre choix : ")
                 chiffre=self.Intable(id)
             
             while(True):

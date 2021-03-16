@@ -10,7 +10,7 @@ class Concentration():
         self.aff_col=["ID Concentration","Concentration en mg"]
         self.cnx=cnx
 
-
+    #Menu principal
     def Menu(self):
         quit=False
         while(quit==False):
@@ -19,14 +19,17 @@ class Concentration():
             if choix=="1":
                 self.Display_Rows()
             elif choix=="2":
-                pass
+                self.Alter_Row()
             elif choix=="3":
-                pass
+                self.Delete_Row()
             elif choix=="4":
                 self.Insert_Rows()
             elif choix=="5":
                 quit=True
 
+    #
+    # Méthode d'affichage
+    #
     def Display_Rows(self):   
         try:    
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
@@ -166,6 +169,51 @@ class Concentration():
             self.cnx.rollback()
         finally:
             cursor.close()
+
+    def Alter_Row(self):
+        try:
+            #Initialisation des variables... 
+            table_before=BeautifulTable(maxwidth=300)                   
+            table_before.columns.header=self.aff_col
+            cursor=self.cnx.cursor()
+            sql_update="UPDATE concentration SET "
+
+            #On demande l'ID nécessaire pour la modification de la ligne
+            chiffre=False
+            while(chiffre==False):
+                id=input("Veuillez choisir l'ID de la ligne à modifier\nVotre choix : ") #TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur de son existence ou pas
+                chiffre=self.Intable(id)    
+
+            #Affichage pour l'utilisateur de la ligne AVANT modification
+            sql_select="SELECT PK_concentration_id, concentration_mg FROM concentration WHERE PK_concentration_id="
+            sql_select+=id
+            cursor.execute(sql_select)
+            for row in cursor:
+                table_before.rows.append(row)  
+            print(table_before)
+
+            #Préparation de la modification de la ligne
+            while(True):
+                reponse=input("Préparation de la modification de la ligne ci-dessus. Confirmer ? Y/N\nVotre choix :")
+                if reponse=="Y":
+                    new_info=self.Build_Row()
+                    print(new_info)
+                    if new_info==None:
+                        return None
+                    else:           #["PK_client_id", "name", "first_name", "birth_date", "age", "rue", "house_number", "postcode", "email", "phone_number"]
+                        sql_update+="concentration_mg='"+new_info[1]+"'"
+                        sql_update+=" WHERE PK_concentration_id="+id
+                        print(sql_update)
+                        cursor.execute(sql_update)
+                        self.cnx.commit()
+                        return None
+
+                elif reponse=="N":
+                    print("Retour au menu...")
+                    return None
+        except:
+            print("+++ Erreur dans la modification des données +++")
+            self.cnx.rollback()
 
 
 

@@ -7,19 +7,25 @@ interface_console :
 
 ---VERSION PYTHON : 3.9.2---
 
-Package requis : 
+Packages requis : 
       - BeautifulTables
       - mysql-python-connector
       -
 
       Remarque : Tout s'installe via pip 
+      ( 
+        pip install --PackageName--
+        pip3 install --PackageName--
+        python -m pip install --PackageName--
+        /path/to/python -m install --PackageName--
+      )
       
 
 
 
 
 #TODO:
-      -Modification Clients
+      -Modification 
                     factures
                     Drugs
                     Concentration

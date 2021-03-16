@@ -183,7 +183,7 @@ class Client():
             #On demande l'ID nécessaire pour la modification de la ligne
             chiffre=False
             while(chiffre==False):
-                id=input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ") #TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur
+                id=input("Veuillez choisir l'ID de la ligne à modifier\nVotre choix : ") #TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur de son existence ou pas
                 chiffre=self.Intable(id)    
 
             #Affichage pour l'utilisateur de la ligne AVANT modification
