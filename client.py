@@ -140,7 +140,7 @@ class Client():
                     self.Build_Row()
                 elif reponse=="Q":
                     print("### Retour au menu... ###")
-                    return("")
+                    return None
             except:
                 print("+++ Erreur dans la validation des données +++")
 
@@ -151,7 +151,7 @@ class Client():
             cursor=self.cnx.cursor()
             sql="DELETE FROM clients"
             while(chiffre==False):
-                id=input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ")
+                id=input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ") #TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur
                 chiffre=self.Intable(id)
             
             while(True):
@@ -173,8 +173,49 @@ class Client():
             cursor.close()
 
     def Alter_Row(self):
-        
+        try:
+            #Initialisation des variables... 
+            table_before=BeautifulTable(maxwidth=300)                   
+            table_before.columns.header=self.aff_col
+            cursor=self.cnx.cursor()
+            sql_update="UPDATE clients SET "
 
+            #On demande l'ID nécessaire pour la modification de la ligne
+            chiffre=False
+            while(chiffre==False):
+                id=input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ") #TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur
+                chiffre=self.Intable(id)    
+
+            #Affichage pour l'utilisateur de la ligne AVANT modification
+            sql_select="SELECT PK_client_id, name, first_name, CAST(birth_date AS CHAR),age, rue, house_number, postcode, email, phone_number FROM clients WHERE clients.PK_client_id="
+            sql_select+=id
+            cursor.execute(sql_select)
+            for row in cursor:
+                table_before.rows.append(row)  
+            print(table_before)
+
+            #Préparation de la modification de la ligne
+            while(True):
+                reponse=input("Préparation de la modification de la ligne ci-dessus. Confirmer ? Y/N\nVotre choix :")
+                if reponse=="Y":
+                    new_info=self.Build_Row()
+                    print(new_info)
+                    if new_info==None:
+                        return None
+                    else:           #["PK_client_id", "name", "first_name", "birth_date", "age", "rue", "house_number", "postcode", "email", "phone_number"]
+                        sql_update+="name='"+new_info[1]+"', first_name='"+new_info[2]+"', birth_date='"+new_info[3]+"', age='"+new_info[4]+"', rue='"+new_info[5]+"', house_number='"+new_info[6]+"', postcode='"+new_info[7]+"', email='"+new_info[8]+"', phone_number='"+new_info[9]+"'"
+                        sql_update+=" WHERE PK_client_id="+id
+                        print(sql_update)
+                        cursor.execute(sql_update)
+                        self.cnx.commit()
+                        return None
+
+                elif reponse=="N":
+                    print("Retour au menu...")
+                    return None
+        except:
+            print("+++ Erreur dans la modification des données +++")
+            self.cnx.rollback()
 
 
 

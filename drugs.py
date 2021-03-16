@@ -155,7 +155,7 @@ class Drugs():
                 print("+++ Erreur dans la validation des données +++")
 
 
-     def Delete_Row(self):
+    def Delete_Row(self):
         try:
             chiffre=False
             cursor=self.cnx.cursor()
