@@ -216,6 +216,8 @@ class Client():
         except:
             print("+++ Erreur dans la modification des données +++")
             self.cnx.rollback()
+        finally:
+            cursor.close()
 
 
 

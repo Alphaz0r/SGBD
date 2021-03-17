@@ -28,7 +28,6 @@ Packages requis :
       -Modification 
                     factures
                     Drugs
-                    Concentration
                     Utilisateurs
 
       -Suppression  factures
@@ -39,4 +38,34 @@ Packages requis :
 
       -Déconnexion et fermeture du programme
 
-      -QoL
+      -QoL, interface, docu, opti et rapport
+
+      -Gérer la date dans clients
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Modification des lignes "médicaments"
+      -Demander ID de la ligne à modifier
+      -Afficher la ligne
+      -Formulaire de Modification
+            Si il y a plusieurs tables :
+                  - ??
