@@ -28,5 +28,9 @@ class Database(connexion.Connexion):
                 print("+++Erreur rencontrée+++")
 
 
+
+                #TODO: Afficher dans exe
+
+
         
 

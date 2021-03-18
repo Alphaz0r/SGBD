@@ -1,5 +1,7 @@
 import mysql.connector
 import interface_console
+import sys
+sys.path.append("./controller/")
 from client_controller import *
 
 if __name__=="__main__":
