@@ -3,6 +3,7 @@ import interface_console
 import sys
 sys.path.append("./controller/")
 from client_controller import *
+from concentration_controller import *
 
 if __name__=="__main__":
     launcher=database.Database()
@@ -15,7 +16,7 @@ if __name__=="__main__":
         elif choix=="3":
             pass
         elif choix=="4":
-            pass
+            controller_concentration=Concentration_controller(launcher.cnx)
         elif choix=="5":
             pass
     

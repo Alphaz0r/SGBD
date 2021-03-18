@@ -26,14 +26,25 @@ def aff_acces_table():
 #                  Tables
 #
 
-def aff_menu_table(nomTable):
-    print("\n################ Bienvenue dans la gestion des "+nomTable+" ! ##########################")
+def aff_menu_clients():
+    print("\n################ Bienvenue dans la gestion des clients ! ##########################")
     print("##############################################################################################################")
-    print("# Choix 1 : Afficher les "+ nomTable+" et leurs infos                                                              #")
-    print("# Choix 2 : Modifier les informations des " +nomTable+"                                                            #")
-    print("# Choix 3 : Supprimer un(e) ou plusieurs "+nomTable+" ainsi que ses informations /!\ action irréversible /!\      #")
-    print("# Choix 4 : Ajouter un nouveau/une nouvelle "+nomTable+"                                                          #")
-    print("# Choix 5 : Sortir de la gestion des " + nomTable + "                                                                 #")
+    print("# Choix 1 : Afficher les clients et leurs infos                                                              #")
+    print("# Choix 2 : Modifier les informations d'un client                                                         #")
+    print("# Choix 3 : Supprimer un client ainsi que ses informations /!\ action irréversible /!\                    #")
+    print("# Choix 4 : Ajouter un nouveau client                                                                        #")
+    print("# Choix 5 : Sortir de la gestion des clients                                                                 #")
+    print("##############################################################################################################")
+
+
+def aff_menu_concentration():
+    print("\n################ Bienvenue dans la gestion des concentrations ! ##########################")
+    print("##############################################################################################################")
+    print("# Choix 1 : Afficher les concentrations et leurs infos                                                              #")
+    print("# Choix 2 : Modifier les informations d'une concentration                                                         #")
+    print("# Choix 3 : Supprimer une concentration ainsi que ses informations /!\ action irréversible /!\                    #")
+    print("# Choix 4 : Ajouter une nouveau concentration                                                                        #")
+    print("# Choix 5 : Sortir de la gestion des concentrations                                                                 #")
     print("##############################################################################################################")
 
 
@@ -60,5 +71,3 @@ def aff_menu_users():
     print("##############################################################################################################")
 
 
-def creation_row_client():
-    print("")

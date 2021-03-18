@@ -9,15 +9,15 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 from view.vue_mere import *
 
-class Client_vue(Vue_mere):
+class Concentration_vue(Vue_mere):
     def __init__(self):  # Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
-        self.nomTable="clients"
+        self.nomTable="concentration"
 
     def Menu(self):
         try:    
             quit = False
             while(quit == False):
-                interface_console.aff_menu_table(self.nomTable)  # Affichage menu table
+                interface_console.aff_menu_concentration()  # Affichage menu table
                 choix = input("\nVotre choix : ")
                 if choix == "1" or choix == "2" or choix == "3" or choix == "4":
                     return choix
@@ -34,50 +34,23 @@ class Client_vue(Vue_mere):
         result_table=BeautifulTable(maxwidth=300)
         result_table.columns.header=header
         table_vide.columns.header=header
-        table_vide.rows.append(["","","","","","","","","",""])  #Ajout de valeur "invisible" dans la table magique pour pouvoir afficher à l'utilisateur la row qu'il souhaite remplir de valeurs
+        table_vide.rows.append(["",""])  #TODO: MODIFIE CA
         print(table_vide)
         try:
             for value in header:
-                if value!="ID":
-                    rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")     #Gestion des erreurs et mauvais input
-                    rep=input("Valeur : ")      
+                if value!="ID Concentration": #TODO: MODIFIE CA
+                    rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")     #Gestion des erreurs et mauvais input      
                     if rep=="":    
                         while rep=="":
                             rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Age" or value=="Code postal":
+                    elif value=="Concentration en mg": #TODO: MODIFIE CA
                         test_int=self.Intable(rep)
                         while(test_int==False):
                             rep=input("### Veuillez entrer un NOMBRE  ###\n Nombre : ")
                             test_int=self.Intable(rep)
-                    elif value=="Date de naissance":
-                        test_date=self.Dateable(rep)
-                        while(test_date==False):
-                            rep=input("### Veuillez entrer une date selon ce format : YYYY-MM-DD  ###\n Date sous bon format : ")
-                            test_date=self.Dateable(rep)
-                        rep+=' 00:00:00'
-                    elif value=="Rue" or value=="Email":
-                        if len(rep)>30:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Nom" or value=="Prenom" or value=="Numéro de téléphone":
-                        if len(rep)>20:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Numéro de maison":
-                        if len(rep)>5:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Code postal":
-                        if len(rep)>6:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
                     query_list.append(rep)
         except:
-            print("+++ Erreur dans l'insertion de données, veuillez recommencer +++")
+            return None
 
         result_table.rows.append(query_list)
         print(result_table)
@@ -106,9 +79,9 @@ class Client_vue(Vue_mere):
                     print("### Retour au menu... ###")
                     return None
             except:
-                print("+++ Erreur dans la validation des données +++")
-            finally:
-                cursor.close()
+                return None
+                
+
 
 
     
