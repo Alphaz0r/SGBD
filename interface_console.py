@@ -36,6 +36,16 @@ def aff_menu_clients():
     print("# Choix 5 : Sortir de la gestion des clients                                                                 #")
     print("##############################################################################################################")
 
+def aff_menu_drugs():
+    print("\n################ Bienvenue dans la gestion des médicaments ! ##########################")
+    print("##############################################################################################################")
+    print("# Choix 1 : Afficher les médicaments et leurs infos                                                              #")
+    print("# Choix 2 : Modifier les informations d'un médicament                                                         #")
+    print("# Choix 3 : Supprimer un médicament ainsi que ses informations /!\ action irréversible /!\                    #")
+    print("# Choix 4 : Ajouter un nouveau médicament                                                                        #")
+    print("# Choix 5 : Sortir de la gestion des médicaments                                                                 #")
+    print("##############################################################################################################")
+
 
 def aff_menu_concentration():
     print("\n################ Bienvenue dans la gestion des concentrations ! ##########################")
