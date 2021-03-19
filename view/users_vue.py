@@ -8,16 +8,17 @@ sys.path.append("..\\view\\")
 from beautifultable import BeautifulTable
 from datetime import datetime
 from view.vue_mere import *
+from getpass import getpass
 
-class Client_vue(Vue_mere):
+class Users_vue(Vue_mere):
     def __init__(self):  # Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
-        self.nomTable="clients"
+        self.nomTable="users"
 
     def Menu(self):
         try:    
             quit = False
             while(quit == False):
-                interface_console.aff_menu_table()  # Affichage menu table
+                interface_console.aff_menu_users()  # Affichage menu table
                 choix = input("\nVotre choix : ")
                 if choix == "1" or choix == "2" or choix == "3" or choix == "4":
                     return choix
@@ -31,49 +32,32 @@ class Client_vue(Vue_mere):
         query_list=["NULL"]
         #Préparation de la table magique
         table_vide=BeautifulTable(maxwidth=300)
-        result_table=BeautifulTable(maxwidth=300)
+        result_table=BeautifulTable(maxwidth=600)
         result_table.columns.header=header
         table_vide.columns.header=header
-        table_vide.rows.append(["","","","","","","","","",""])  #Ajout de valeur "invisible" dans la table magique pour pouvoir afficher à l'utilisateur la row qu'il souhaite remplir de valeurs
+        table_vide.rows.append(["","","",""])  #Ajout de valeur "invisible" dans la table magique pour pouvoir afficher à l'utilisateur la row qu'il souhaite remplir de valeurs
         print(table_vide)
         try:
             for value in header:
-                if value!="ID":
-                    rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")     #Gestion des erreurs et mauvais input      
+                if value!="ID Utilisateur":
+                    if value=="Password":
+                        rep=getpass("Password : ")
+                    else:
+                        rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")     #Gestion des erreurs et mauvais input      
                     if rep=="":    
                         while rep=="":
                             rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Age" or value=="Code postal":
-                        test_int=self.Intable(rep)
-                        while(test_int==False):
-                            rep=input("### Veuillez entrer un NOMBRE  ###\n Nombre : ")
-                            test_int=self.Intable(rep)
-                    elif value=="Date de naissance":
-                        test_date=self.Dateable(rep)
-                        while(test_date==False):
-                            rep=input("### Veuillez entrer une date selon ce format : YYYY-MM-DD  ###\n Date sous bon format : ")
-                            test_date=self.Dateable(rep)
-                        rep+=' 00:00:00'
-                    elif value=="Rue" or value=="Email":
-                        if len(rep)>30:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Nom" or value=="Prenom" or value=="Numéro de téléphone":
+                    elif value=="Nom" or value=="Prénom":
                         if len(rep)>20:
                             reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
                             if reponse=="Y":
                                 rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Numéro de maison":
-                        if len(rep)>5:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Code postal":
-                        if len(rep)>6:
-                            reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
-                            if reponse=="Y":
-                                rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
+                    elif value=="Password":
+                        check_password=self.strongPasswordChecker(rep)
+                        while(check_password>0):
+                            print("Veuillez indiquer un mot de passe contenant une majuscule, une minuscule et un chiffre. 3 même lettres à la suite sont interdites. min : 6 max : 20")
+                            rep=getpass("Password : ")
+                            check_password=self.strongPasswordChecker(rep)
                     query_list.append(rep)
         except:
             print("+++ Erreur dans l'insertion de données, veuillez recommencer +++")
@@ -95,7 +79,7 @@ class Client_vue(Vue_mere):
                         elif reponse=="V":
                             return query_list
                         elif reponse=="P":
-                            print(result_table)
+                            print(result_table)         #TODO: Implémenter une méthode de récupération de mot de passe similaire à celle du dessus || découper ce bloc en plusieurs fonctions
                         elif reponse in header:
                             new_value=input("Entrez la valeur pour "+reponse+": ")
                             header[header.index(reponse)]=new_value
@@ -106,6 +90,37 @@ class Client_vue(Vue_mere):
                     return None
             except:
                 print("+++ Erreur dans la validation des données +++")
+
+
+    def strongPasswordChecker(self, s): #Trouvée sur internet
+        missing_type = 3
+        if any('a' <= c <= 'z' for c in s): missing_type -= 1
+        if any('A' <= c <= 'Z' for c in s): missing_type -= 1
+        if any(c.isdigit() for c in s): missing_type -= 1
+        change = 0
+        one = two = 0
+        p = 2
+        while p < len(s):
+            if s[p] == s[p-1] == s[p-2]:
+                length = 2
+                while p < len(s) and s[p] == s[p-1]:
+                    length += 1
+                    p += 1
+                change += length / 3
+                if length % 3 == 0: one += 1
+                elif length % 3 == 1: two += 1
+                else:
+                    p += 1
+            if len(s) < 6:
+                return max(missing_type, 6 - len(s))
+            elif len(s) <= 20:
+                return max(missing_type, change)
+            else:
+                delete = len(s) - 20
+                change -= min(delete, one)
+                change -= min(max(delete - one, 0), two * 2) / 2
+                change -= max(delete - one - 2 * two, 0) / 3
+                return delete + max(missing_type, change)
 
 
     

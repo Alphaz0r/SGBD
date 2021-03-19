@@ -5,6 +5,7 @@ sys.path.append("./controller/")
 from client_controller import *
 from concentration_controller import *
 from drugs_controller import *
+from users_controller import *
 
 if __name__=="__main__":
     launcher=database.Database()
@@ -19,5 +20,5 @@ if __name__=="__main__":
         elif choix=="4":
             controller_concentration=Concentration_controller(launcher.cnx)
         elif choix=="5":
-            pass
+            controller_users=Users_controller(launcher.cnx)
     

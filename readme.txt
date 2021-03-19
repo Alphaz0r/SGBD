@@ -27,7 +27,6 @@ Packages requis :
 #TODO:
       -Modification 
                     factures
-                    Drugs
                     Utilisateurs
 
       -Suppression  factures
@@ -39,8 +38,6 @@ Packages requis :
       -Déconnexion et fermeture du programme
 
       -QoL, interface, docu, opti et rapport
-
-      -Gérer la date dans clients
 
 
 

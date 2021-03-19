@@ -36,6 +36,16 @@ def aff_menu_clients():
     print("# Choix 5 : Sortir de la gestion des clients                                                                 #")
     print("##############################################################################################################")
 
+def aff_menu_users():
+    print("\n################ Bienvenue dans la gestion des utilisateurs ! ##########################")
+    print("##############################################################################################################")
+    print("# Choix 1 : Afficher les utilisateurs et leurs infos                                                              #")
+    print("# Choix 2 : Modifier les informations d'un utilisateur                                                         #")
+    print("# Choix 3 : Supprimer un utilisateur ainsi que ses informations /!\ action irréversible /!\                    #")
+    print("# Choix 4 : Ajouter un nouveau utilisateur                                                                        #")
+    print("# Choix 5 : Sortir de la gestion des utilisateurs                                                                 #")
+    print("##############################################################################################################")
+
 def aff_menu_drugs():
     print("\n################ Bienvenue dans la gestion des médicaments ! ##########################")
     print("##############################################################################################################")
@@ -68,16 +78,3 @@ def aff_menu_facture():
     print("# Choix 5 : Insérer une nouvelle facture                                                                    #")
     print("# Choix 6 : Sortir de la gestion des factures                                                               #")
     print("##############################################################################################################")
-
-
-def aff_menu_users():
-    print("\n################ Bienvenue dans la gestion des utilisateurs ! ##########################")
-    print("##############################################################################################################")
-    print("# Choix 1 : Afficher les utilisateurs                                                                       #")
-    print("# Choix 3 : Modifier les informations d'un utilisateur                                                      #")
-    print("# Choix 4 : Supprimer un utilisateur ainsi que ses informations /!\ action irréversible /!\                 #")
-    print("# Choix 5 : Insérer un nouvel utilisateur                                                                   #")
-    print("# Choix 6 : Sortir de la gestion des utilisateurs                                                           #")
-    print("##############################################################################################################")
-
-

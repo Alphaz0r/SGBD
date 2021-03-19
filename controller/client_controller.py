@@ -38,7 +38,7 @@ class Client_controller():
                 row=self.vue_client.getRow(self.aff_col)
                 if row!=None:
                     creation_reussie=self.modele_client.Insert_Row(row)
-                    if modification_reussie==True:
+                    if creation_reussie==True:
                         self.vue_client.Display_BackToMenu()
                         return None
             self.vue_client.Display_Alter_Error()
