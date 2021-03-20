@@ -1,6 +1,4 @@
 import mysql.connector
-import interface_console
-import database
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
@@ -11,12 +9,16 @@ from datetime import datetime
 import hashlib, binascii, os
 
 
-class Users_controller():
+class Users_controller(Singleton):
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col= ["ID Utilisateur","Nom","Pseudonyme","Password"]
         self.vue_users=Users_vue() #Création de la vue
         self.modele_users=Users_modele(self.cnx) #Création du modèle
+        
+
+
+    def Menu(self):
         while(True):
             choix_utilisateur=self.vue_users.Menu()
             if choix_utilisateur=="1":
@@ -118,10 +120,42 @@ class Users_controller():
         salt = stored_password[:64]
         stored_password = stored_password[64:]
         pwdhash = hashlib.pbkdf2_hmac('sha512', 
-                                    provided_password.encode('utf-8'), 
-                                    salt.encode('ascii'), 
-                                    100000)
+                                        provided_password.encode('utf-8'), 
+                                        salt.encode('ascii'), 
+                                        100000)
         pwdhash = binascii.hexlify(pwdhash).decode('ascii')
         return pwdhash == stored_password
+
+
+    def Get_and_Check_Creds(self):
+        try:
+            liste=self.vue_users.getUser_Pass()
+            liste[3]=self.hash_password(liste[3])       #Hashage du mdp
+            confirmation=self.vue_users.getConfirmation(id,2)  
+            if confirmation==True:
+                creation_reussie=self.modele_users.Insert_Row(liste)
+                if creation_reussie==True:
+                    self.vue_users.Display_BackToMenu()
+                    return None
+            self.vue_users.Display_Create_Error()
+        except:
+            self.vue_users.Display_Create_Error()
+
+    def Check_User_Passw(self, user, passw):
+        try:
+            cursor=self.modele_users.Select_Rows()
+            liste=[]
+            for row in cursor:
+                for element in row:
+                    liste.append(element)
+                check_pass=self.verify_password(liste[3], passw)
+                if liste[2]==user and check_pass==True :
+                    return True
+                liste=[]
+            return False
+        except:
+            print("ERROR")
+            if cursor!=None:cursor.close()
+
 
        

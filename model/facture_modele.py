@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import facture_controller
 from beautifultable import BeautifulTable
 from datetime import datetime

@@ -25,43 +25,8 @@ Packages requis :
 
 
 #TODO:
-      -Modification 
-                    factures
-                   
-
-      -Suppression  factures
-                    
-
-      -Ajouter row  factures
-
       -QoL, interface, docu, opti et rapport
 
       -Trigger bdd
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Modification des lignes "médicaments"
-      -Demander ID de la ligne à modifier
-      -Afficher la ligne
-      -Formulaire de Modification
-            Si il y a plusieurs tables :
-                  - ??
+      -Connexion

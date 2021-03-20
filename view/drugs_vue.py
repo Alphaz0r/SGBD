@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import client_controller
 import sys
 sys.path.append("..\\model\\")

@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import client_controller
 from beautifultable import BeautifulTable
 from datetime import datetime

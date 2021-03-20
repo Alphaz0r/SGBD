@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import client_controller
 import sys
 sys.path.append("..\\model\\")
@@ -121,6 +120,25 @@ class Users_vue(Vue_mere):
                 change -= min(max(delete - one, 0), two * 2) / 2
                 change -= max(delete - one - 2 * two, 0) / 3
                 return delete + max(missing_type, change)
+
+        
+    def getUser_Pass(self):
+        try:
+            liste=["NULL"]
+            nom=input("nom de famille : ")
+            user=input("username : ")
+            passw=getpass("password : ")
+            check_password=self.strongPasswordChecker(passw)
+            while(check_password>0):
+                input("Veuillez indiquer un mot de passe contenant une majuscule, une minuscule et un chiffre. 3 même lettres à la suite sont interdites. min : 6 max : 20")
+                check_password=self.strongPasswordChecker(passw)
+            liste.append(nom)
+            liste.append(user)
+            liste.append(passw)
+            return liste
+        except:
+            print("+++ Erreur dans la création d'utilisateur, veuillez recommencer +++")
+        
 
 
     

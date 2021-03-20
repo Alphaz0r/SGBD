@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import client_controller
 from beautifultable import BeautifulTable
 from datetime import datetime
@@ -14,14 +13,13 @@ class Users_modele():
     def Select_Rows(self, condition=False):   
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
-            sql="SELECT PK_user_id, name, first_name, password"
+            sql="SELECT PK_user_id, name, pseudonyme, password"
             sql+=" FROM users"
             if condition!=False:
                 sql+=" WHERE PK_user_id in("+condition+")"
             #On exécute la query
             cursor.execute(sql)               
             #On retourne le curseur pour le controller
-            print(cursor)
             return cursor
         except:
             return None
@@ -42,7 +40,7 @@ class Users_modele():
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE users SET "    
-            sql_update+="name='"+row[1]+"', first_name='"+row[2]+"', password='"+row[3]+"'"
+            sql_update+="name='"+row[1]+"', pseudonyme='"+row[2]+"', password='"+row[3]+"'"
             sql_update+=" WHERE PK_user_id="+id
             cursor.execute(sql_update)
             self.cnx.commit()
@@ -55,7 +53,7 @@ class Users_modele():
     def Insert_Row(self, row):                           
         try:
             cursor=self.cnx.cursor()    
-            sql="INSERT INTO pharmacie.users (PK_user_id, name, first_name, password) VALUES "
+            sql="INSERT INTO pharmacie.users (PK_user_id, name, pseudonyme, password) VALUES "
             sql+="("+row[0]+", '"+row[1]+"','"+row[2]+"','"+row[3]+"')"
             cursor.execute(sql)
             self.cnx.commit()
