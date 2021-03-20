@@ -9,7 +9,7 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class FactureRow_controller():
+class FactureRow_controller(Singleton):
     def __init__(self, cnx, id_facture): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.id_facture=id_facture

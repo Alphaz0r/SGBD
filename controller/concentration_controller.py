@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
@@ -11,7 +10,7 @@ from datetime import datetime
 
 
 
-class Concentration_controller():
+class Concentration_controller(Singleton):
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Concentration","Concentration en mg"] #TODO: MODIFIE CA

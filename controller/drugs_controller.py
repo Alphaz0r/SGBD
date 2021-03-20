@@ -1,6 +1,5 @@
 import mysql.connector
 import interface_console
-import database
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
@@ -12,7 +11,7 @@ from datetime import datetime
 
 
 
-class Drugs_controller():
+class Drugs_controller(Singleton):
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "ID Concentration en mg", "Stock"]      #Pour affichage

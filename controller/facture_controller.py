@@ -11,7 +11,7 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class Facture_controller():
+class Facture_controller(Singleton):
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Facture","ID Client", "Nom","Prénom","email","Rue","Numéro de maison","Code postal","Prix Total Facture €€€","Date de facturation"]
