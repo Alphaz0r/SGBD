@@ -15,6 +15,8 @@ class Facture_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Facture","ID Client", "Nom","Prénom","email","Rue","Numéro de maison","Code postal","Prix Total Facture €€€","Date de facturation"]
+        self.aff_col_client= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"]
+        self.table_client=self.Get_Row_Client()
         self.vue_facture=Facture_vue() #Création de la vue
         
 
@@ -68,18 +70,26 @@ class Facture_controller():
         except:
             vue_facture.Display_Delete_Error()
 
-    def Create_Row(self):       #Faire la création d'une facture
+    def Create_Row(self):
         try:
-            
-            client.Display_Rows()
-            id_client=False
-            client_ids=client.getClientId()
-            while id_client==False:
-                id_client=self.vue_facture.getClient()
-            client_ids=client.getClientId()
-            
+            modele_facture=Facture_modele(self.cnx)
+            table_before=BeautifulTable(maxwidth=300)                   
+            table_before.columns.header=self.aff_col
+            confirmation=self.vue_facture.getConfirmation(id,2)  
+            if confirmation==True:        
+                row=self.vue_facture.getRow(self.aff_col, self.table_client)
+                if row!=None:
+                    creation_reussie=modele_facture.Insert_Row(row)
+                    if creation_reussie==True:
+                        self.vue_facture.Display_BackToMenu()
+                        return None
+            self.vue_facture.Display_Alter_Error()
         except:
-            self.vue_facture.Display_Create_Error()
+            return None
+
+
+    def Update_Row(self):
+        pass
 
     def Display_FactureRow(self):
         try:    
@@ -90,6 +100,20 @@ class Facture_controller():
                 controller_factureRow.Display_Rows()
         except:
             self.vue_facture.Display_Select_Error()
+
+    def Get_Row_Client(self):
+        try:
+            modele_client=Client_modele(self.cnx)
+            client_list=modele_client.Select_Rows()
+            table_client=BeautifulTable(maxwidth=300)
+            table_client.columns.header=self.aff_col_client
+            for row in client_list:
+                table_client.rows.append(row)
+            return table_client
+        except:
+            return None
+        finally:
+            client_list.close()
 
    
 

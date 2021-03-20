@@ -76,6 +76,6 @@ class Client_modele():
             return cursor
         except:
             return None
-                
+            
 
     

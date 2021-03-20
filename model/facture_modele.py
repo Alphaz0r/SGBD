@@ -20,7 +20,6 @@ class Facture_modele():
             #On exécute la query
             cursor.execute(sql)               
             #On retourne le curseur pour le controller
-            print(cursor)
             return cursor
         except:
             return None
@@ -41,9 +40,8 @@ class Facture_modele():
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE facture SET "    
-            sql_update+="name='"+row[1]+"', first_name='"+row[2]+"', birth_date='"+row[3]+"', age='"+row[4]+"', rue='"+row[5]+"', house_number='"+row[6]+"', postcode='"+row[7]+"', email='"+row[8]+"', phone_number='"+row[9]+"'"
+            sql_update+="date_creation='"+row[1]+"'"
             sql_update+=" WHERE PK_facture_id="+id
-            print(sql_update)
             cursor.execute(sql_update)
             self.cnx.commit()
             return True
@@ -55,8 +53,8 @@ class Facture_modele():
     def Insert_Row(self, row):                           
         try:
             cursor=self.cnx.cursor()    
-            sql="INSERT INTO pharmacie.factures (PK_facture_id, name, first_name, birth_date, age, rue, house_number, postcode, email, phone_number) VALUES "
-            sql+="("+row[0]+", '"+row[1]+"','"+row[2]+"','"+row[3]+"',"+row[4]+",'"+row[5]+"','"+row[6]+"','"+row[7]+"','"+row[8]+"','"+row[9]+"');"
+            sql="INSERT INTO pharmacie.facture (PK_facture_id, total_price, FK_client_id, date_creation) VALUES "
+            sql+="("+row[0]+", "+row[3]+",'"+row[1]+"','"+row[2]+"')"
             cursor.execute(sql)
             self.cnx.commit()
             return True

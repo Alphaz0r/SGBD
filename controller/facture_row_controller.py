@@ -13,9 +13,9 @@ class FactureRow_controller():
     def __init__(self, cnx, id_facture): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.id_facture=id_facture
-        self.table_drugs=self.Get_Row_Drugs()
         self.aff_col= ["ID facture", "Ligne facture", "ID Médicament", "Nom médicament", "Nombre", "Concentration en mg", "Nom client", "Prénom client", "ID Client"] #Colonnes d'affichage pour BeautifulTables
         self.aff_col_drugs=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "Concentration en mg", "Stock"]
+        self.table_drugs=self.Get_Row_Drugs()
         self.vue_factureRow=FactureRow_vue(self.id_facture) #Création de la vue
 
         
@@ -38,9 +38,15 @@ class FactureRow_controller():
             modele_factureRow=FactureRow_modele(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
+        
+            cursor=modele_factureRow.Select_Rows(self.id_facture)
+            for row in cursor:
+                table_before.rows.append(row)  
+            self.vue_factureRow.Display_Rows(table_before)
             confirmation=self.vue_factureRow.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_factureRow.getRow(self.aff_col, self.table_drugs)
+                row.append(self.id_facture)
                 if row!=None:
                     creation_reussie=modele_factureRow.Insert_Row(row)
                     if creation_reussie==True:

@@ -36,6 +36,8 @@ Packages requis :
 
       -QoL, interface, docu, opti et rapport
 
+      -Trigger bdd
+
 
 
 
