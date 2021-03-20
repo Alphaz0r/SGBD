@@ -27,9 +27,9 @@ class Database():
                 print("+++Une erreur est survenue lors de la connexion+++\n+++Identifiants incorrects ou la base de données n'a pas été atteinte+++")
                 attempt-=1
                 print("\nNombre d'essais restants : " + str(attempt) + "\n")
-        if attempt==0:
-            print("+++Nombre d'essais dépassés, au revoir+++")
-            exit()
+                if attempt==0:
+                    print("+++Nombre d'essais dépassés, au revoir+++")
+                    exit()
         
         
     #Méthode pour se déconnecter de la base de données avec vérification
@@ -49,31 +49,6 @@ class Database():
                 print("+++Erreur dans le choix de reponse+++")
         except:
             print("+++Erreur dans la déconnexion+++")
-
-    #Fonction  menu principal
-    def Menu(self):
-        dc=False
-        while(dc==False):
-            try:
-                interface_console.aff_menu_principal(self.db)   #Affichage menu principal
-                choix=input("\nVotre choix : ")
-
-                if choix=="1" or choix == "2" or choix=="3" or choix=="4" or choix=="5" or choix=="6":
-                    if choix!="6":
-                        interface_console.aff_acces_table() #Affichage menu accès aux tables
-                        return choix
-                    else:
-                        dc = True  #Sortie de la boucle
-                        self.Se_Deconnecter()
-                else:
-                    print("### Veuillez choisir l'un des choix proposés ###")
-            except:
-                print("+++Erreur rencontrée+++")
-
-
-
-                #TODO: Afficher dans exe
-
 
         
 

@@ -14,7 +14,7 @@ import hashlib, binascii, os
 class Users_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
-        self.aff_col= ["ID Utilisateur","Nom","Prénom","Password"]
+        self.aff_col= ["ID Utilisateur","Nom","Pseudonyme","Password"]
         self.vue_users=Users_vue() #Création de la vue
         self.modele_users=Users_modele(self.cnx) #Création du modèle
         while(True):

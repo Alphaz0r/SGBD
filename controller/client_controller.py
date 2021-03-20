@@ -16,6 +16,8 @@ class Client_controller():
         self.aff_col= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"] #Colonnes d'affichage pour BeautifulTables
         self.vue_client=Client_vue() #Création de la vue
         self.modele_client=Client_modele(self.cnx) #Création du modèle
+        
+    def Menu(self):
         while(True):
             choix_utilisateur=self.vue_client.Menu()
             if choix_utilisateur=="1":
@@ -100,6 +102,19 @@ class Client_controller():
 
         except:
             return None
+
+
+    def getClientId(self, id):
+        try:
+            cursor=self.modele_client.Select_clientId(id)
+            if cursor==None:
+                print("Erreur")
+            else:
+                return cursor
+        except:
+            self.vue_client.Display_Select_Error()
+        finally:
+            cursor.close()
 
            
 

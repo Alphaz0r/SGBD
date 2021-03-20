@@ -66,6 +66,18 @@ class Drugs_modele():
             return False
         finally:
             cursor.close()
-                
 
     
+                
+
+    def Select_Rows_facture(self):   
+        try:
+            cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
+            sql="SELECT drugs.PK_drug_id, drugs.name, drugs.description, drugs.peremption_date, drugs.price, concentration.concentration_mg, drugs.stock FROM drugs JOIN concentration ON concentration.PK_concentration_id=drugs.FK_concentration_id" #TODO: MODIFIE CA
+            #On exécute la query
+            cursor.execute(sql)               
+            #On retourne le curseur pour le controller
+            print(cursor)
+            return cursor
+        except:
+            return None

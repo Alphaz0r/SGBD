@@ -47,7 +47,7 @@ class Users_vue(Vue_mere):
                     if rep=="":    
                         while rep=="":
                             rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")
-                    elif value=="Nom" or value=="Prénom":
+                    elif value=="Nom" or value=="Pseudonyme":
                         if len(rep)>20:
                             reponse=input("Attention, cette valeur est trop longue. Elle risque d'être tronquée dans la base de données.\nEntrer une nouvelle valeur ? Y/N : ")
                             if reponse=="Y":

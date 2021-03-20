@@ -29,7 +29,7 @@ class Vue_mere():
             chiffre=False
             while(chiffre == False):
                 # TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur
-                id = input("Veuillez choisir l'ID de la ligne à effacer\nVotre choix : ")
+                id = input("Veuillez choisir l'ID de la ligne \nVotre choix : ")
                 chiffre = self.Intable(id)
             return id
         except:

@@ -72,9 +72,20 @@ def aff_menu_facture():
     print("\n################ Bienvenue dans la gestion des factures ! ##########################")
     print("##############################################################################################################")
     print("# Choix 1 : Afficher les factures et leurs clients associés                                                 #")
-    print("# Choix 2 : Afficher les détails d'une facture                                                              #")
+    print("# Choix 2 : Afficher les détails d'une facture et interagir avec                                            #")
     print("# Choix 3 : Modifier les informations d'une facture                                                         #")
     print("# Choix 4 : Supprimer une ou plusieurs factures ainsi que ses informations /!\ action irréversible /!\      #")
     print("# Choix 5 : Insérer une nouvelle facture                                                                    #")
     print("# Choix 6 : Sortir de la gestion des factures                                                               #")
     print("##############################################################################################################")
+
+
+def aff_menu_facturerow(id):
+    print("\n------------------ Bienvenue dans la gestion de la facture n°"+id+" ! ---------------------------")
+    print("+------------------------------------------------------------------------------------------------------------+")
+    print("| Choix 1 : Afficher la facture n°"+id+"                                                                     |")
+    print("| Choix 2 : Modifier les informations d'une ligne                                                            |")
+    print("| Choix 3 : Supprimer une ligne ainsi que ses informations /!\ action irréversible /!\                       |")
+    print("| Choix 4 : Insérer une nouvelle ligne                                                                       |")
+    print("| Choix 5 : Sortir de la gestion de la facture                                                               |")
+    print("+------------------------------------------------------------------------------------------------------------+")

@@ -17,12 +17,9 @@ class Client_vue(Vue_mere):
         try:    
             quit = False
             while(quit == False):
-                interface_console.aff_menu_table()  # Affichage menu table
+                interface_console.aff_menu_clients()  # Affichage menu table
                 choix = input("\nVotre choix : ")
-                if choix == "1" or choix == "2" or choix == "3" or choix == "4":
-                    return choix
-                elif choix == "5":
-                    quit = True
+                if choix == "1" or choix == "2" or choix == "3" or choix == "4" or choix=="5":return choix  
         except:
             print("+++ Erreur dans le menu "+self.nomTable+" +++")
 

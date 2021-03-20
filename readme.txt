@@ -17,7 +17,7 @@ Packages requis :
         pip install --PackageName--
         pip3 install --PackageName--
         python -m pip install --PackageName--
-        /path/to/python -m install --PackageName--
+        /path/to/python -m pip install --PackageName--
       )
       
 
@@ -27,15 +27,12 @@ Packages requis :
 #TODO:
       -Modification 
                     factures
-                    Utilisateurs
+                   
 
       -Suppression  factures
-                    Utilisateurs
+                    
 
       -Ajouter row  factures
-                    Utilisateurs
-
-      -Déconnexion et fermeture du programme
 
       -QoL, interface, docu, opti et rapport
 

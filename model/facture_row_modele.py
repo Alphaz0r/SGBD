@@ -1,0 +1,77 @@
+import mysql.connector
+from beautifultable import BeautifulTable
+from datetime import datetime
+
+
+class FactureRow_modele():
+    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
+        self.cnx=cnx
+
+
+    def Select_Rows(self, id_facture="0", condition=False):   #OK
+        try:
+            cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
+            sql="SELECT facture.PK_facture_id, facture_row.PK_fd_id, facture_row.FK_drug_id, drugs.name, facture_row.item_count, concentration.concentration_mg, clients.name, clients.first_name, clients.PK_client_id "
+            sql+="FROM clients " 
+            sql+="JOIN facture " 
+            sql+="ON clients.PK_client_id=facture.FK_client_id " 
+            sql+="JOIN facture_row " 
+            sql+="ON facture.PK_facture_id=facture_row.FK_facture_id " 
+            sql+="JOIN drugs " 
+            sql+="ON facture_row.FK_drug_id=drugs.PK_drug_id " 
+            sql+="JOIN concentration " 
+            sql+="ON drugs.FK_concentration_id=concentration.PK_concentration_id WHERE "
+            sql+="PK_facture_id in ("+id_facture+")"
+            if condition!=False:
+                sql+=" and PK_fd_id in("+condition+")" #TODO: MODIFIE CA
+            print(sql)
+            #On exécute la query
+            cursor.execute(sql)               
+            #On retourne le curseur pour le controller
+            print(cursor)
+            return cursor
+        except:
+            return None
+
+    def Delete_Row(self, id_row, id_facture):
+        try:    
+            cursor=self.cnx.cursor()
+            sql="DELETE FROM facture_row"
+            sql+=" WHERE facture_row.PK_fd_id=("+id_row+") and FK_facture_id in ("+id_facture+")"
+            cursor.execute(sql)
+            self.cnx.commit()         
+        except:
+            return False
+        finally:
+            cursor.close()
+
+    def Update_Row(self, row, id_row, id_facture):
+        try:
+            cursor=self.cnx.cursor()
+            sql_update="UPDATE facture_row SET "    
+            sql_update+="item_count='"+row[2]+"', FK_drug_id='"+row[1]+"'"
+            sql_update+=" WHERE facture_row.PK_fd_id=("+id_row+") and FK_facture_id in ("+id_facture+")"
+            print(sql_update)
+            cursor.execute(sql_update)
+            self.cnx.commit()
+            return True
+        except:
+            return False
+        finally:
+            cursor.close()
+
+    def Insert_Row(self, row):                           
+        try:
+            cursor=self.cnx.cursor()    
+            sql="INSERT INTO pharmacie.factures (PK_fd_id, item_count, Fk_drug_id) VALUES "
+            sql+="("+row[0]+", "+row[1]+",'"+row[2]+"','"+row[3]+"')"
+            cursor.execute(sql)
+            self.cnx.commit()
+            return True
+        except:
+            return False
+        finally:
+            cursor.close()
+                
+
+    
