@@ -24,11 +24,9 @@ class FactureRow_modele():
             sql+="PK_facture_id in ("+id_facture+")"
             if condition!=False:
                 sql+=" and PK_fd_id in("+condition+")" #TODO: MODIFIE CA
-            print(sql)
             #On exécute la query
             cursor.execute(sql)               
             #On retourne le curseur pour le controller
-            print(cursor)
             return cursor
         except:
             return None
@@ -63,8 +61,9 @@ class FactureRow_modele():
     def Insert_Row(self, row):                           
         try:
             cursor=self.cnx.cursor()    
-            sql="INSERT INTO pharmacie.factures (PK_fd_id, item_count, Fk_drug_id) VALUES "
+            sql="INSERT INTO pharmacie.facture_row (PK_fd_id, item_count, FK_drug_id,  FK_facture_id) VALUES "
             sql+="("+row[0]+", "+row[1]+",'"+row[2]+"','"+row[3]+"')"
+            print(sql)
             cursor.execute(sql)
             self.cnx.commit()
             return True
