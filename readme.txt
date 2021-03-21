@@ -27,6 +27,4 @@ Packages requis :
 #TODO:
       -QoL, interface, docu, opti et rapport
 
-      -Trigger bdd
-
-      -Connexion
+      -Trigger bdd à vérifier
