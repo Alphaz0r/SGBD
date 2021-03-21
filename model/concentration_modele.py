@@ -19,7 +19,6 @@ class Concentration_modele():
             #On exécute la query
             cursor.execute(sql)               
             #On retourne le curseur pour le controller
-            print(cursor)
             return cursor
         except:
             return None
@@ -29,9 +28,13 @@ class Concentration_modele():
             cursor=self.cnx.cursor()
             sql="DELETE FROM concentration" #TODO: MODIFIE CA
             sql+=" WHERE concentration.PK_concentration_id="+id #TODO: MODIFIE CA
-            cursor.execute(sql)
-            self.cnx.commit()
-            return True         
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False         
         except:
             return False
         finally:
@@ -43,9 +46,12 @@ class Concentration_modele():
             sql_update="UPDATE concentration SET "  #TODO: MODIFIE CA   
             sql_update+="concentration_mg='"+row[1]+"'" #TODO: MODIFIE CA
             sql_update+=" WHERE PK_concentration_id="+id #TODO: MODIFIE CA
-            print(sql_update)
-            cursor.execute(sql_update)
-            self.cnx.commit()
+            try:
+                cursor.execute(sql_update)
+                self.cnx.commit()
+            except:
+                self.cnx.rollback()
+                return False
             return True
         except:
             return False
@@ -57,10 +63,12 @@ class Concentration_modele():
             cursor=self.cnx.cursor()   
             sql="INSERT INTO pharmacie.concentration (PK_concentration_id, concentration_mg) VALUES " #TODO: MODIFIE CA
             sql+="("+row[0]+", '"+row[1]+"');" #TODO: MODIFIE CA
-            print(sql)
-            cursor.execute(sql)
-            self.cnx.commit()
-            return True
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
         except:
             return False
         finally:

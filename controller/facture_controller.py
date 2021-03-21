@@ -11,7 +11,7 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class Facture_controller(Singleton):
+class Facture_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Facture","ID Client", "Nom","Prénom","email","Rue","Numéro de maison","Code postal","Prix Total Facture €€€","Date de facturation"]
@@ -83,12 +83,14 @@ class Facture_controller(Singleton):
                     if creation_reussie==True:
                         self.vue_facture.Display_BackToMenu()
                         return None
-            self.vue_facture.Display_Alter_Error()
+                self.vue_facture.Display_Create_Error()
+            else :
+                self.vue_facture.AucuneActionEntreprise()
         except:
             return None
 
 
-    def Update_Row(self):
+    def Update_Row(self):   #TODO: Ne pas oublier de pouvoir modifier la date de la facture
         pass
 
     def Display_FactureRow(self):

@@ -12,17 +12,17 @@ from singleton import *
  CLASSE Client_controller
           Nécessite la connexion à la base de données pour s'instancier
 """
-class Client_controller(Singleton):
+class Client_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"] #Colonnes d'affichage pour BeautifulTables
         self.vue_client=Client_vue()                                                                                                                #Création de la vue
         self.modele_client=Client_modele(self.cnx)                                                                                                  #Création du modèle
-                                                                                                                                                """ J'ai choisi d'instancier ces classes directement dans le constructeur
-                                                                                                                                                    Comme ca je peux les réutiliser partout directement où je veux.
-                                                                                                                                                    Cependant j'ai remarqué que l'inconvénient majeur de cnx est qu'il n'est utilisable
-                                                                                                                                                    qu'une seule fois pour plusieurs objets. Càd que si j'instancie un autre objet
-                                                                                                                                                    utilisant cnx, le programme retournera une erreur sql"""
+                                                                                                                                                    #J'ai choisi d'instancier ces classes directement dans le constructeur
+                                                                                                                                                    #Comme ca je peux les réutiliser partout directement où je veux.
+                                                                                                                                                    #Cependant j'ai remarqué que l'inconvénient majeur de cnx est qu'il n'est utilisable
+                                                                                                                                                    #qu'une seule fois pour plusieurs objets. Càd que si j'instancie un autre objet
+                                                                                                                                                    #utilisant cnx, le programme retournera une erreur sql
     """
     Menu principal
     """
@@ -48,7 +48,7 @@ class Client_controller(Singleton):
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
             #On demande une confirmation au user
-            confirmation=self.vue_client.getConfirmation(id,0)  
+            confirmation=self.vue_client.getConfirmation(id,2)  
             if confirmation==True:   
                 #On propose un formulaire au user     
                 row=self.vue_client.getRow(self.aff_col)
@@ -59,8 +59,10 @@ class Client_controller(Singleton):
                         #Si tout a bien fonctionné on notifie le user de la réussite
                         self.vue_client.Display_BackToMenu()
                         return None
-            #Si il y a eu une erreur quelque part... Appeler le service informatique
-            self.vue_client.Display_Alter_Error()
+                #Si il y a eu une erreur quelque part... Appeler le service informatique
+                self.vue_client.Display_Create_Error()
+            else :
+                print("\n### Aucune action n'a été entreprise, retour au menu ###")
         except:
             return None
     """
@@ -97,7 +99,7 @@ class Client_controller(Singleton):
                 #Information de la réussite
                 self.vue_client.Display_BackToMenu()
             else:
-                self.vue_client.Display_Delete_Error()
+                self.vue_client.AucuneActionEntreprise()
         except:
             self.vue_client.Display_Delete_Error()
     """

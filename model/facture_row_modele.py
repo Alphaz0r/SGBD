@@ -36,8 +36,13 @@ class FactureRow_modele():
             cursor=self.cnx.cursor()
             sql="DELETE FROM facture_row"
             sql+=" WHERE facture_row.PK_fd_id=("+id_row+") and FK_facture_id in ("+id_facture+")"
-            cursor.execute(sql)
-            self.cnx.commit()         
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()   
+                return True
+            except:
+                self.cnx.rollback()
+                return False      
         except:
             return False
         finally:
@@ -49,10 +54,13 @@ class FactureRow_modele():
             sql_update="UPDATE facture_row SET "    
             sql_update+="item_count='"+row[2]+"', FK_drug_id='"+row[1]+"'"
             sql_update+=" WHERE facture_row.PK_fd_id=("+id_row+") and FK_facture_id in ("+id_facture+")"
-            print(sql_update)
-            cursor.execute(sql_update)
-            self.cnx.commit()
-            return True
+            try:
+                cursor.execute(sql_update)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -63,10 +71,13 @@ class FactureRow_modele():
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.facture_row (PK_fd_id, item_count, FK_drug_id,  FK_facture_id) VALUES "
             sql+="("+row[0]+", "+row[1]+",'"+row[2]+"','"+row[3]+"')"
-            print(sql)
-            cursor.execute(sql)
-            self.cnx.commit()
-            return True
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:

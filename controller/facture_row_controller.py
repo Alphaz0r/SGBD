@@ -9,7 +9,7 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class FactureRow_controller(Singleton):
+class FactureRow_controller():
     def __init__(self, cnx, id_facture): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.id_facture=id_facture
@@ -52,7 +52,9 @@ class FactureRow_controller(Singleton):
                     if creation_reussie==True:
                         self.vue_factureRow.Display_BackToMenu()
                         return None
-            self.vue_factureRow.Display_Alter_Error()
+                self.vue_factureRow.Display_Create_Error()
+            else:
+                self.vue_factureRow.AucuneActionEntreprise()
         except:
             return None
 
@@ -85,7 +87,7 @@ class FactureRow_controller(Singleton):
                 modele_factureRow.Delete_Row(id, self.id_facture)
                 self.vue_factureRow.Display_BackToMenu()
             else:
-                self.vue_factureRow.Display_Delete_Error()
+                self.vue_factureRow.AucuneActionEntreprise()
         except:
             self.vue_factureRow.Display_Delete_Error()
 
@@ -109,10 +111,11 @@ class FactureRow_controller(Singleton):
                         if modification_reussie==True:
                             self.vue_factureRow.Display_BackToMenu()
                             return None
-                self.vue_factureRow.Display_Alter_Error()
-
+                    self.vue_factureRow.Display_Alter_Error()
+                else :
+                    self.vue_factureRow.AucuneActionEntreprise()
         except:
-            return None
+            self.vue_factureRow.Display_Alter_Error()
 
     def Get_Row_Drugs(self):
         try:

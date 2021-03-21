@@ -16,14 +16,11 @@ class Drugs_vue(Vue_mere):
 
     def Menu(self):
         try:    
-            quit = False
-            while(quit == False):
+            while(True):
                 interface_console.aff_menu_drugs()  # Affichage menu table
                 choix = input("\nVotre choix : ")
-                if choix == "1" or choix == "2" or choix == "3" or choix == "4":
+                if choix == "1" or choix == "2" or choix == "3" or choix == "4" or choix=="5":
                     return choix
-                elif choix == "5":
-                    quit = True
         except:
             print("+++ Erreur dans le menu "+self.nomTable+" +++")
 
@@ -40,8 +37,9 @@ class Drugs_vue(Vue_mere):
         try:
             for value in header:
                 if value!="ID Médicament": #TODO: MODIFIE CA OK
-                    if value=="ID Concentration en mg":
+                    if value=="Concentration en mg":
                         print(table_concentration)
+                        print("Veuillez entrez l'ID SVP")
                     rep=input("### Veuillez entrer une valeur ###\n"+value+" : ")     #Gestion des erreurs et mauvais input      
                     if rep=="":
                         while (rep==""):

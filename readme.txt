@@ -10,7 +10,7 @@ interface_console :
 Packages requis : 
       - BeautifulTables
       - mysql-python-connector
-      -
+      - 
 
       Remarque : Tout s'installe via pip 
       ( 

@@ -9,7 +9,7 @@ from datetime import datetime
 import hashlib, binascii, os
 
 
-class Users_controller(Singleton):
+class Users_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col= ["ID Utilisateur","Nom","Pseudonyme","Password"]
@@ -46,7 +46,9 @@ class Users_controller(Singleton):
                     if creation_reussie==True:
                         self.vue_users.Display_BackToMenu()
                         return None
-            self.vue_users.Display_Alter_Error()
+                self.vue_users.Display_Alter_Error()
+            else :
+                self.vue_users.AucuneActionEntreprise()
 
         except:
             self.vue_users.Display_Create_Error()
@@ -103,7 +105,9 @@ class Users_controller(Singleton):
                         if modification_reussie==True:
                             self.vue_users.Display_BackToMenu()
                             return None
-            self.vue_users.Display_Alter_Error()
+                    self.vue_users.Display_Alter_Error()
+                else:
+                    self.vue_users.AucuneActionEntreprise()
         except:
             self.vue_users.Display_Alter_Error()
 

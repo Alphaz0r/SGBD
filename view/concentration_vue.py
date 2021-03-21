@@ -18,10 +18,8 @@ class Concentration_vue(Vue_mere):
             while(quit == False):
                 interface_console.aff_menu_concentration()  # Affichage menu table
                 choix = input("\nVotre choix : ")
-                if choix == "1" or choix == "2" or choix == "3" or choix == "4":
+                if choix == "1" or choix == "2" or choix == "3" or choix == "4" or choix =="5":
                     return choix
-                elif choix == "5":
-                    quit = True
         except:
             print("+++ Erreur dans le menu "+self.nomTable+" +++")
 

@@ -10,12 +10,16 @@ from datetime import datetime
 
 
 
-class Concentration_controller(Singleton):
+class Concentration_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Concentration","Concentration en mg"] #TODO: MODIFIE CA
         self.vue_concentration=Concentration_vue() #TODO: MODIFIE CA
         self.modele_concentration=Concentration_modele(self.cnx) #TODO: MODIFIE CA
+        
+
+
+    def Menu(self):
         while(True):
             choix_utilisateur=self.vue_concentration.Menu()
             if choix_utilisateur=="1":
@@ -73,7 +77,9 @@ class Concentration_controller(Singleton):
                 if delete_confirmation==True:
                     self.vue_concentration.Display_BackToMenu()
                     return None
-            self.vue_concentration.Display_Delete_Error()
+                self.vue_concentration.Display_Delete_Error()
+            else :
+                print("\n### Aucune action n'a été entreprise, retour au menu ###")
         except:
             self.vue_concentration.Display_Delete_Error()
 
@@ -97,7 +103,9 @@ class Concentration_controller(Singleton):
                         if modification_reussie==True:
                             self.vue_concentration.Display_BackToMenu()
                             return None
-                self.vue_concentration.Display_Alter_Error()
+                    self.vue_concentration.Display_Alter_Error()
+                else :
+                    print("\n### Aucune action n'a été entreprise, retour au menu ###")
 
         except:
             self.vue_concentration.Display_Alter_Error()

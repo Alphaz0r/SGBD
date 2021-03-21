@@ -7,6 +7,7 @@ from users_controller import *
 from drugs_controller import *
 from concentration_controller import *
 from client_controller import *
+from singleton import *
 
 # Méthode pour se connecter à la base de données ( 3 essais permis )
 
@@ -34,6 +35,7 @@ def Test_Connection_DB():
                 print("+++ Nombre d'essais dépassés, au revoir +++")
                 exit()
 
+#Méthode pour l'enregistrement, la connexion
 
 def Connexion_utilisateur(cnx):
     while(True):
@@ -58,7 +60,7 @@ def Connexion_utilisateur(cnx):
             else:
                 print("+++ Erreur dans le menu de connexion +++")
 
-
+#Menu principal après connexion utilisateur
 def Menu(db):
     dc = False
     try:
@@ -98,8 +100,9 @@ def Se_Deconnecter(cnx):
         print("+++ Erreur dans la déconnexion +++")
         return False
 
-
+#Main
 if __name__ == "__main__":
+    singleton_test=Singleton()
     cnx = Test_Connection_DB()
     Connexion_utilisateur(cnx)
     dc = False
@@ -107,15 +110,23 @@ if __name__ == "__main__":
         choix = Menu("pharmacie")
         if choix == "1":
             controller_client = Client_controller(cnx)
+            controller_client.Display_Rows()
             controller_client.Menu()
         elif choix == "2":
             controller_facture = Facture_controller(cnx)
+            controller_facture.Display_Rows()
             controller_facture.WhereWeGoing()
         elif choix == "3":
             controller_drugs = Drugs_controller(cnx)
+            controller_drugs.Display_Rows()
+            controller_drugs.Menu()
         elif choix == "4":
             controller_concentration = Concentration_controller(cnx)
+            controller_concentration.Display_Rows()
+            controller_concentration.Menu()
         elif choix == "5":
             controller_users = Users_controller(cnx)
+            controller_users.Display_Rows()
+            controller_users.Menu()
         elif choix == "6":
             dc = Se_Deconnecter(cnx)

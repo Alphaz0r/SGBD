@@ -67,6 +67,9 @@ class Vue_mere():
 
     def Display_BackToMenu(self):
         input("~~~ Action réussie. Retour au menu. Appuyer sur une touche pour continuer... ~~~")
+
+    def AucuneActionEntreprise(self):
+        input("\n### Aucune action n'a été entreprise, retour au menu, appuyez sur une touche pour continuer... ###")
     #
     #
     #

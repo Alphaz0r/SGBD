@@ -11,19 +11,21 @@ from datetime import datetime
 
 
 
-class Drugs_controller(Singleton):
+class Drugs_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
-        self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "ID Concentration en mg", "Stock"]      #Pour affichage
+        self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "Concentration en mg", "Stock"]      #Pour affichage
         self.aff_col_concentration=["ID Concentration","Concentration en mg"]
         self.vue_drugs=Drugs_vue() #TODO: MODIFIE CA
         self.modele_drugs=Drugs_modele(self.cnx) #TODO: MODIFIE CA
         self.modele_concentration=Concentration_modele(self.cnx)
+        
+    def Menu(self):
         while(True):
             choix_utilisateur=self.vue_drugs.Menu()
             if choix_utilisateur=="1":
                 self.Display_Rows()
-            if choix_utilisateur=="2":
+            elif choix_utilisateur=="2":
                 self.Update_Row()
             elif choix_utilisateur=="3":
                 self.Delete_Row()
@@ -109,7 +111,8 @@ class Drugs_controller(Singleton):
                         if modification_reussie==True:
                             self.vue_drugs.Display_BackToMenu()
                             return None
-                self.vue_drugs.Display_Alter_Error()
-
+                    self.vue_drugs.Display_Alter_Error()
+                else:
+                    self.vue_drugs.AucuneActionEntreprise()
         except:
             self.vue_drugs.Display_Alter_Error()

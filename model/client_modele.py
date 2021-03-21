@@ -18,7 +18,6 @@ class Client_modele():
             #On exécute la query
             cursor.execute(sql)               
             #On retourne le curseur pour le controller
-            print(cursor)
             return cursor
         except:
             return None
@@ -28,8 +27,12 @@ class Client_modele():
             cursor=self.cnx.cursor()
             sql="DELETE FROM clients"
             sql+=" WHERE clients.PK_client_id="+id
-            cursor.execute(sql)
-            self.cnx.commit()         
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+            except:
+                self.cnx.rollback()
+                return False        
         except:
             return False
         finally:
@@ -41,10 +44,13 @@ class Client_modele():
             sql_update="UPDATE clients SET "    
             sql_update+="name='"+row[1]+"', first_name='"+row[2]+"', birth_date='"+row[3]+"', age='"+row[4]+"', rue='"+row[5]+"', house_number='"+row[6]+"', postcode='"+row[7]+"', email='"+row[8]+"', phone_number='"+row[9]+"'"
             sql_update+=" WHERE PK_client_id="+id
-            print(sql_update)
-            cursor.execute(sql_update)
-            self.cnx.commit()
-            return True
+            try:
+                cursor.execute(sql_update)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -55,9 +61,13 @@ class Client_modele():
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.clients (PK_client_id, name, first_name, birth_date, age, rue, house_number, postcode, email, phone_number) VALUES "
             sql+="("+row[0]+", '"+row[1]+"','"+row[2]+"','"+row[3]+"',"+row[4]+",'"+row[5]+"','"+row[6]+"','"+row[7]+"','"+row[8]+"','"+row[9]+"');"
-            cursor.execute(sql)
-            self.cnx.commit()
-            return True
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -72,7 +82,6 @@ class Client_modele():
             #On exécute la query
             cursor.execute(sql)               
             #On retourne le curseur pour le controller
-            print(cursor)
             return cursor
         except:
             return None

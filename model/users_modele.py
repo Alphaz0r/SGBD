@@ -29,8 +29,13 @@ class Users_modele():
             cursor=self.cnx.cursor()
             sql="DELETE FROM users"
             sql+=" WHERE users.PK_user_id="+id
-            cursor.execute(sql)
-            self.cnx.commit()         
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -42,9 +47,13 @@ class Users_modele():
             sql_update="UPDATE users SET "    
             sql_update+="name='"+row[1]+"', pseudonyme='"+row[2]+"', password='"+row[3]+"'"
             sql_update+=" WHERE PK_user_id="+id
-            cursor.execute(sql_update)
-            self.cnx.commit()
-            return True
+            try:    
+                cursor.execute(sql_update)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -55,9 +64,13 @@ class Users_modele():
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.users (PK_user_id, name, pseudonyme, password) VALUES "
             sql+="("+row[0]+", '"+row[1]+"','"+row[2]+"','"+row[3]+"')"
-            cursor.execute(sql)
-            self.cnx.commit()
-            return True
+            try:    
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:

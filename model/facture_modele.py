@@ -28,8 +28,13 @@ class Facture_modele():
             cursor=self.cnx.cursor()
             sql="DELETE FROM facture"
             sql+=" WHERE facture.PK_facture_id="+id
-            cursor.execute(sql)
-            self.cnx.commit()         
+            try:
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -41,9 +46,13 @@ class Facture_modele():
             sql_update="UPDATE facture SET "    
             sql_update+="date_creation='"+row[1]+"'"
             sql_update+=" WHERE PK_facture_id="+id
-            cursor.execute(sql_update)
-            self.cnx.commit()
-            return True
+            try:
+                cursor.execute(sql_update)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
@@ -54,9 +63,13 @@ class Facture_modele():
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.facture (PK_facture_id, total_price, FK_client_id, date_creation) VALUES "
             sql+="("+row[0]+", "+row[3]+",'"+row[1]+"','"+row[2]+"')"
-            cursor.execute(sql)
-            self.cnx.commit()
-            return True
+            try:    
+                cursor.execute(sql)
+                self.cnx.commit()
+                return True
+            except:
+                self.cnx.rollback()
+                return False
         except:
             return False
         finally:
