@@ -3,9 +3,10 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class Client_modele():
+class Client_DAO():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
+        
 
 
     def Select_Rows(self, condition=False):   
@@ -38,12 +39,12 @@ class Client_modele():
         finally:
             cursor.close()
 
-    def Update_Row(self, row, id):
+    def Update_Row(self, modele_client):
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE clients SET "    
-            sql_update+="name='"+row[1]+"', first_name='"+row[2]+"', birth_date='"+row[3]+"', age='"+row[4]+"', rue='"+row[5]+"', house_number='"+row[6]+"', postcode='"+row[7]+"', email='"+row[8]+"', phone_number='"+row[9]+"'"
-            sql_update+=" WHERE PK_client_id="+id
+            sql_update+="name='"+modele_client.name+"', first_name='"+modele_client.first_name+"', birth_date='"+modele_client.birth_date+"', age='"+modele_client.age+"', rue='"+modele_client.rue+"', house_number='"+modele_client.house_number+"', postcode='"+modele_client.postcode+"', email='"+modele_client.email+"', phone_number='"+modele_client.phone_number+"'"
+            sql_update+=" WHERE PK_client_id="+modele_client.PK_client_id
             try:
                 cursor.execute(sql_update)
                 self.cnx.commit()
@@ -56,11 +57,11 @@ class Client_modele():
         finally:
             cursor.close()
 
-    def Insert_Row(self, row):                           
+    def Insert_Row(self, modele_client):                           
         try:
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.clients (PK_client_id, name, first_name, birth_date, age, rue, house_number, postcode, email, phone_number) VALUES "
-            sql+="("+row[0]+", '"+row[1]+"','"+row[2]+"','"+row[3]+"',"+row[4]+",'"+row[5]+"','"+row[6]+"','"+row[7]+"','"+row[8]+"','"+row[9]+"');"
+            sql+="("+modele_client.PK_client_id+", '"+modele_client.name+"','"+modele_client.first_name+"','"+modele_client.birth_date+"','"+modele_client.age+"','"+modele_client.rue+"','"+modele_client.house_number+"','"+modele_client.postcode+"','"+modele_client.email+"','"+modele_client.phone_number+"');"
             try:
                 cursor.execute(sql)
                 self.cnx.commit()

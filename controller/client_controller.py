@@ -2,8 +2,10 @@ import mysql.connector
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
+sys.path.append("..\\DAO\\")
+from model.client_model import *
 from view.client_vue import *
-from model.client_modele import *
+from DAO.client_DAO import *
 from beautifultable import BeautifulTable
 from datetime import datetime
 from singleton import *
@@ -17,7 +19,7 @@ class Client_controller():
         self.cnx=cnx
         self.aff_col= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"] #Colonnes d'affichage pour BeautifulTables
         self.vue_client=Client_vue()                                                                                                                #Création de la vue
-        self.modele_client=Client_modele(self.cnx)                                                                                                  #Création du modèle
+        self.DAO_client=Client_DAO(self.cnx)                                                                                                        #Création du modèle
                                                                                                                                                     #J'ai choisi d'instancier ces classes directement dans le constructeur
                                                                                                                                                     #Comme ca je peux les réutiliser partout directement où je veux.
                                                                                                                                                     #Cependant j'ai remarqué que l'inconvénient majeur de cnx est qu'il n'est utilisable
@@ -52,26 +54,38 @@ class Client_controller():
             if confirmation==True:   
                 #On propose un formulaire au user     
                 row=self.vue_client.getRow(self.aff_col)
-                if row!=None:
-                    #Insertion dans la base de données
-                    creation_reussie=self.modele_client.Insert_Row(row)
-                    if creation_reussie==True:
-                        #Si tout a bien fonctionné on notifie le user de la réussite
-                        self.vue_client.Display_BackToMenu()
-                        return None
+
+                modele_client=Client_modele()
+                modele_client.PK_client_id="None"
+                modele_client.name=row[0]
+                modele_client.first_name=row[1]
+                modele_client.birth_date=row[2]
+                modele_client.age=row[3]
+                modele_client.rue=row[4]
+                modele_client.house_number=row[5]
+                modele_client.postcode=row[6]
+                modele_client.email=row[7]
+                modele_client.phone_number=row[8]
+
+                #Insertion dans la base de données
+                creation_reussie=self.DAO_client.Insert_Row(modele_client)
+                if creation_reussie==True:
+                    #Si tout a bien fonctionné on notifie le user de la réussite
+                    self.vue_client.Display_BackToMenu()
+                    return None
                 #Si il y a eu une erreur quelque part... Appeler le service informatique
                 self.vue_client.Display_Create_Error()
             else :
                 print("\n### Aucune action n'a été entreprise, retour au menu ###")
         except:
-            return None
+            self.vue_client.Display_Create_Error()
     """
     Affichage
     """
     def Display_Rows(self):   
         try:
             #Préparation du curseur + BeautifulTable
-            cursor=self.modele_client.Select_Rows()
+            cursor=self.DAO_client.Select_Rows()
             table=BeautifulTable(maxwidth=300) 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage (BeautifulTable)
             table.columns.header=self.aff_col  
@@ -95,7 +109,7 @@ class Client_controller():
             confirmation=self.vue_client.getConfirmation(id,1)
             if  confirmation == True and id!=False:
                 #Suppression dans la bdd
-                self.modele_client.Delete_Row(id)
+                self.DAO_client.Delete_Row(id)
                 #Information de la réussite
                 self.vue_client.Display_BackToMenu()
             else:
@@ -107,14 +121,15 @@ class Client_controller():
     """
     def Update_Row(self):
         try:
+            modele_client=Client_modele()
             #BeautifulTable
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
             #On demande l'id de la ligne à modifier
-            id=self.vue_client.Row_getId()
-            if id !=False:
+            modele_client.PK_client_id=self.vue_client.Row_getId()
+            if modele_client.PK_client_id !=False:
                 #On va chercher la ligne correspondant à ce qu'a choisi l'utilisateur
-                cursor=self.modele_client.Select_Rows(id)
+                cursor=self.DAO_client.Select_Rows(modele_client.PK_client_id)
                 #On stocke tout dans BeautifulTable
                 for row in cursor:
                     table_before.rows.append(row)  
@@ -125,20 +140,32 @@ class Client_controller():
                 if confirmation==True:  
                     #On propose un formulaire pour les nouvelles 
                     row=self.vue_client.getRow(self.aff_col)
+
+                    modele_client=Client_modele()
+                    modele_client.name=row[1]
+                    modele_client.first_name=row[2]
+                    modele_client.birth_date=row[3]
+                    modele_client.age=row[4]
+                    modele_client.rue=row[5]
+                    modele_client.house_number=row[6]
+                    modele_client.postcode=row[7]
+                    modele_client.email=row[8]
+                    modele_client.phone_number=row[9]
+
                     if row!=None:
-                        modification_reussie=self.modele_client.Update_Row(row, id)
+                        modification_reussie=self.DAO_client.Update_Row(modele_client)
                         if modification_reussie==True:
                             self.vue_client.Display_BackToMenu()
                             return None
                 self.vue_client.Display_Alter_Error()
 
         except:
-            return None
+            self.vue_client.Display_Alter_Error()
 
 
     def getClientId(self, id):
         try:
-            cursor=self.modele_client.Select_clientId(id)
+            cursor=self.DAO_client.Select_clientId(id)
             if cursor==None:
                 print("Erreur")
             else:

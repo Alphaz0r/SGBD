@@ -3,8 +3,10 @@ import interface_console
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
+sys.path.append("..\\DAO\\")
+from model.concentration_model import *
 from view.concentration_vue import *
-from model.concentration_modele import *
+from DAO.concentration_DAO import *
 from beautifultable import BeautifulTable
 from datetime import datetime
 
@@ -15,7 +17,7 @@ class Concentration_controller():
         self.cnx=cnx
         self.aff_col=["ID Concentration","Concentration en mg"] #TODO: MODIFIE CA
         self.vue_concentration=Concentration_vue() #TODO: MODIFIE CA
-        self.modele_concentration=Concentration_modele(self.cnx) #TODO: MODIFIE CA
+        self.DAO_concentration=Concentration_DAO(self.cnx) #TODO: MODIFIE CA
         
 
 
@@ -41,7 +43,7 @@ class Concentration_controller():
             if confirmation==True:        
                 row=self.vue_concentration.getRow(self.aff_col)
                 if row!=None:
-                    creation_reussie=self.modele_concentration.Insert_Row(row)
+                    creation_reussie=self.DAO_concentration.Insert_Row(row)
                     if insertion_reussie==True:
                         self.vue_concentration.Display_BackToMenu()
                         return None
@@ -52,7 +54,7 @@ class Concentration_controller():
 
     def Display_Rows(self):   
         try:
-            cursor=self.modele_concentration.Select_Rows()
+            cursor=self.DAO_concentration.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
@@ -73,7 +75,7 @@ class Concentration_controller():
             id=self.vue_concentration.Row_getId()
             confirmation=self.vue_concentration.getConfirmation(id,1)
             if  confirmation == True and id!=False:
-                delete_confirmation=self.modele_concentration.Delete_Row(id)
+                delete_confirmation=self.DAO_concentration.Delete_Row(id)
                 if delete_confirmation==True:
                     self.vue_concentration.Display_BackToMenu()
                     return None
@@ -90,7 +92,7 @@ class Concentration_controller():
 
             id=self.vue_concentration.Row_getId()
             if id !=False:
-                cursor=self.modele_concentration.Select_Rows(id)
+                cursor=self.DAO_concentration.Select_Rows(id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_concentration.Display_Rows(table_before)
@@ -99,7 +101,7 @@ class Concentration_controller():
                 if confirmation==True:  
                     row=self.vue_concentration.getRow(self.aff_col)
                     if row!=None:
-                        modification_reussie=self.modele_concentration.Update_Row(row, id)
+                        modification_reussie=self.DAO_concentration.Update_Row(row, id)
                         if modification_reussie==True:
                             self.vue_concentration.Display_BackToMenu()
                             return None

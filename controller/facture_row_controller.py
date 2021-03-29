@@ -2,9 +2,11 @@ import mysql.connector
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
+sys.path.append("..\\DAO\\")
+from model.facture_row_model import *
 from view.facture_row_vue import *
-from model.facture_row_modele import *
-from model.drugs_modele import *
+from DAO.facture_row_DAO import *
+from DAO.drugs_DAO import *
 from beautifultable import BeautifulTable
 from datetime import datetime
 
@@ -35,11 +37,11 @@ class FactureRow_controller():
 
     def Create_Row(self):
         try:
-            modele_factureRow=FactureRow_modele(self.cnx)
+            DAO_factureRow=FactureRow_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
         
-            cursor=modele_factureRow.Select_Rows(self.id_facture)
+            cursor=DAO_factureRow.Select_Rows(self.id_facture)
             for row in cursor:
                 table_before.rows.append(row)  
             self.vue_factureRow.Display_Rows(table_before)
@@ -48,7 +50,7 @@ class FactureRow_controller():
                 row=self.vue_factureRow.getRow(self.aff_col, self.table_drugs)
                 row.append(self.id_facture)
                 if row!=None:
-                    creation_reussie=modele_factureRow.Insert_Row(row)
+                    creation_reussie=DAO_factureRow.Insert_Row(row)
                     if creation_reussie==True:
                         self.vue_factureRow.Display_BackToMenu()
                         return None
@@ -60,8 +62,8 @@ class FactureRow_controller():
 
     def Display_Rows(self):   #OK
         try:
-            modele_factureRow=FactureRow_modele(self.cnx)
-            cursor=modele_factureRow.Select_Rows(self.id_facture)
+            DAO_factureRow=FactureRow_DAO(self.cnx)
+            cursor=DAO_factureRow.Select_Rows(self.id_facture)
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
@@ -80,11 +82,11 @@ class FactureRow_controller():
 
     def Delete_Row(self):
         try:
-            modele_factureRow=FactureRow_modele(self.cnx)
+            DAO_factureRow=FactureRow_DAO(self.cnx)
             id=self.vue_factureRow.Row_getId()
             confirmation=self.vue_factureRow.getConfirmation(id,1)
             if  confirmation == True and id!=False:
-                modele_factureRow.Delete_Row(id, self.id_facture)
+                DAO_factureRow.Delete_Row(id, self.id_facture)
                 self.vue_factureRow.Display_BackToMenu()
             else:
                 self.vue_factureRow.AucuneActionEntreprise()
@@ -93,12 +95,12 @@ class FactureRow_controller():
 
     def Update_Row(self):
         try:
-            modele_factureRow=FactureRow_modele(self.cnx)
+            DAO_factureRow=FactureRow_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
             id=self.vue_factureRow.Row_getId()
             if id !=False:
-                cursor=modele_factureRow.Select_Rows(self.id_facture,id)
+                cursor=DAO_factureRow.Select_Rows(self.id_facture,id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_factureRow.Display_Rows(table_before)
@@ -107,7 +109,7 @@ class FactureRow_controller():
                 if confirmation==True:  
                     row=self.vue_factureRow.getRow(self.aff_col, self.table_drugs)
                     if row!=None:
-                        modification_reussie=modele_factureRow.Update_Row(row,id, self.id_facture)
+                        modification_reussie=DAO_factureRow.Update_Row(row,id, self.id_facture)
                         if modification_reussie==True:
                             self.vue_factureRow.Display_BackToMenu()
                             return None
@@ -119,10 +121,10 @@ class FactureRow_controller():
 
     def Get_Row_Drugs(self):
         try:
-            modele_drugs=Drugs_modele(self.cnx)
+            DAO_drugs=Drugs_DAO(self.cnx)
             table_drugs=BeautifulTable(maxwidth=300)
             table_drugs.columns.header=self.aff_col_drugs
-            drugs_list=modele_drugs.Select_Rows_facture()
+            drugs_list=DAO_drugs.Select_Rows_facture()
             for row in drugs_list:
                 table_drugs.rows.append(row)
             return table_drugs
@@ -135,7 +137,7 @@ class FactureRow_controller():
 
     def getFactureRowId(self, id):
         try:
-            cursor=self.modele_factureRow.Select_factureRowId(id)
+            cursor=self.DAO_factureRow.Select_factureRowId(id)
             if cursor==None:
                 print("Erreur")
             else:

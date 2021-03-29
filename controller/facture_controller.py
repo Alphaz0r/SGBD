@@ -3,8 +3,10 @@ import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\controller\\")
 sys.path.append("..\\view\\")
+sys.path.append("..\\DAO\\")
+from model.facture_model import *
 from view.facture_vue import *
-from model.facture_modele import *
+from DAO.facture_DAO import *
 from controller.client_controller import *
 from controller.facture_row_controller import *
 from beautifultable import BeautifulTable
@@ -38,9 +40,9 @@ class Facture_controller():
 
     def Display_Rows(self):   
         try:
-            modele_facture=Facture_modele(self.cnx) #Création du modèle
+            DAOfacture_DAO_facture=Facture_DAOfacture_DAO(self.cnx) #Création du modèle
             vue_facture=Facture_vue()
-            cursor=modele_facture.Select_Rows()
+            cursor=DAOfacture_DAO_facture.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
@@ -58,12 +60,12 @@ class Facture_controller():
 
     def Delete_Row(self):
         try:
-            modele_facture=Facture_modele(self.cnx) #Création du modèle
+            DAOfacture_DAO_facture=Facture_DAOfacture_DAO(self.cnx) #Création du modèle
             vue_facture=Facture_vue()
             id=vue_facture.Row_getId()
             confirmation=vue_facture.getConfirmation(id, 1)
             if  confirmation == True and id!=False:
-                modele_facture.Delete_Row(id)
+                DAOfacture_DAO_facture.Delete_Row(id)
                 vue_facture.Display_BackToMenu()
             else:
                 vue_facture.Display_Delete_Error()
@@ -72,14 +74,14 @@ class Facture_controller():
 
     def Create_Row(self):
         try:
-            modele_facture=Facture_modele(self.cnx)
+            DAOfacture_DAO_facture=Facture_DAOfacture_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
             confirmation=self.vue_facture.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_facture.getRow(self.aff_col, self.table_client)
                 if row!=None:
-                    creation_reussie=modele_facture.Insert_Row(row)
+                    creation_reussie=DAOfacture_DAO_facture.Insert_Row(row)
                     if creation_reussie==True:
                         self.vue_facture.Display_BackToMenu()
                         return None
@@ -105,8 +107,8 @@ class Facture_controller():
 
     def Get_Row_Client(self):
         try:
-            modele_client=Client_modele(self.cnx)
-            client_list=modele_client.Select_Rows()
+            DAOfacture_DAO_client=Client_DAOfacture_DAO(self.cnx)
+            client_list=DAOfacture_DAO_client.Select_Rows()
             table_client=BeautifulTable(maxwidth=300)
             table_client.columns.header=self.aff_col_client
             for row in client_list:

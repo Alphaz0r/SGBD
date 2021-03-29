@@ -3,7 +3,7 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class FactureRow_modele():
+class FactureRow_DAO():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
 

@@ -3,9 +3,11 @@ import interface_console
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
+sys.path.append("..\\DAO\\")
+from model.drugs_model import *
 from view.drugs_vue import *
-from model.drugs_modele import *
-from model.concentration_modele import *
+from DAO.drugs_DAO import *
+from DAO.concentration_DAO import *
 from beautifultable import BeautifulTable
 from datetime import datetime
 
@@ -17,8 +19,8 @@ class Drugs_controller():
         self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "Concentration en mg", "Stock"]      #Pour affichage
         self.aff_col_concentration=["ID Concentration","Concentration en mg"]
         self.vue_drugs=Drugs_vue() #TODO: MODIFIE CA
-        self.modele_drugs=Drugs_modele(self.cnx) #TODO: MODIFIE CA
-        self.modele_concentration=Concentration_modele(self.cnx)
+        self.DAO_drugs=Drugs_DAO(self.cnx) #TODO: MODIFIE CA
+        self.DAO_concentration=Concentration_DAO(self.cnx)
         
     def Menu(self):
         while(True):
@@ -40,14 +42,14 @@ class Drugs_controller():
             table_before.columns.header=self.aff_col
             table_concentration=BeautifulTable(maxwidth=300)
             table_concentration.columns.header=self.aff_col_concentration
-            concentration_list=self.modele_concentration.Select_Rows()
+            concentration_list=self.DAO_concentration.Select_Rows()
             for row in concentration_list:
                 table_concentration.rows.append(row)
             confirmation=self.vue_drugs.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_drugs.getRow(self.aff_col, table_concentration)
                 if row!=None:
-                    creation_reussie=self.modele_drugs.Insert_Row(row)
+                    creation_reussie=self.DAO_drugs.Insert_Row(row)
                     if creation_reussie==True:
                         self.vue_drugs.Display_BackToMenu()
                         return None
@@ -58,7 +60,7 @@ class Drugs_controller():
 
     def Display_Rows(self):   
         try:
-            cursor=self.modele_drugs.Select_Rows()
+            cursor=self.DAO_drugs.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
@@ -79,7 +81,7 @@ class Drugs_controller():
             id=self.vue_drugs.Row_getId()
             confirmation=self.vue_drugs.getConfirmation(id,1)
             if  confirmation == True and id!=False:
-                delete_confirmation=self.modele_drugs.Delete_Row(id)
+                delete_confirmation=self.DAO_drugs.Delete_Row(id)
                 if delete_confirmation==True:
                     self.vue_drugs.Display_BackToMenu()
                     return None
@@ -93,12 +95,12 @@ class Drugs_controller():
             table_before.columns.header=self.aff_col   
             table_concentration=BeautifulTable(maxwidth=300)
             table_concentration.columns.header=self.aff_col_concentration
-            concentration_list=self.modele_concentration.Select_Rows()
+            concentration_list=self.DAO_concentration.Select_Rows()
             for row in concentration_list:
                 table_concentration.rows.append(row)
             id=self.vue_drugs.Row_getId()
             if id !=False:
-                cursor=self.modele_drugs.Select_Rows(id)
+                cursor=self.DAO_drugs.Select_Rows(id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_drugs.Display_Rows(table_before)
@@ -107,7 +109,7 @@ class Drugs_controller():
                 if confirmation==True:  
                     row=self.vue_drugs.getRow(self.aff_col, table_concentration)
                     if row!=None:
-                        modification_reussie=self.modele_drugs.Update_Row(row, id)
+                        modification_reussie=self.DAO_drugs.Update_Row(row, id)
                         if modification_reussie==True:
                             self.vue_drugs.Display_BackToMenu()
                             return None

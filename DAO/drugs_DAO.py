@@ -5,7 +5,7 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 
 
-class Drugs_modele():
+class Drugs_DAO():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
 

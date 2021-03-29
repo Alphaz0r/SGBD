@@ -2,8 +2,10 @@ import mysql.connector
 import sys
 sys.path.append("..\\model\\")
 sys.path.append("..\\view\\")
+sys.path.append("..\\DAO\\")
+from model.users_model import *
 from view.users_vue import *
-from model.users_modele import *
+from DAO.users_DAO import *
 from beautifultable import BeautifulTable
 from datetime import datetime
 import hashlib, binascii, os
@@ -14,7 +16,7 @@ class Users_controller():
         self.cnx=cnx
         self.aff_col= ["ID Utilisateur","Nom","Pseudonyme","Password"]
         self.vue_users=Users_vue() #Création de la vue
-        self.modele_users=Users_modele(self.cnx) #Création du modèle
+        self.DAO_users=Users_DAO(self.cnx) #Création du modèle
         
 
 
@@ -42,7 +44,7 @@ class Users_controller():
                 row[3]=self.hash_password(row[3])
                 print(row[3])
                 if row!=None:
-                    creation_reussie=self.modele_users.Insert_Row(row)
+                    creation_reussie=self.DAO_users.Insert_Row(row)
                     if creation_reussie==True:
                         self.vue_users.Display_BackToMenu()
                         return None
@@ -55,7 +57,7 @@ class Users_controller():
 
     def Display_Rows(self):   
         try:
-            cursor=self.modele_users.Select_Rows()
+            cursor=self.DAO_users.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
@@ -76,7 +78,7 @@ class Users_controller():
             id=self.vue_users.Row_getId()
             confirmation=self.vue_users.getConfirmation(id,1)
             if  confirmation == True and id!=False:
-                self.modele_users.Delete_Row(id)
+                self.DAO_users.Delete_Row(id)
                 self.vue_users.Display_BackToMenu()
             else:
                 self.vue_users.Display_Delete_Error()
@@ -90,7 +92,7 @@ class Users_controller():
 
             id=self.vue_users.Row_getId()
             if id !=False:
-                cursor=self.modele_users.Select_Rows(id)
+                cursor=self.DAO_users.Select_Rows(id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_users.Display_Rows(table_before)
@@ -101,7 +103,7 @@ class Users_controller():
                     row[3]=self.hash_password(row[3])           #hash du mdp
                     print(row[3])
                     if row!=None:
-                        modification_reussie=self.modele_users.Update_Row(row, id)
+                        modification_reussie=self.DAO_users.Update_Row(row, id)
                         if modification_reussie==True:
                             self.vue_users.Display_BackToMenu()
                             return None
@@ -137,7 +139,7 @@ class Users_controller():
             liste[3]=self.hash_password(liste[3])       #Hashage du mdp
             confirmation=self.vue_users.getConfirmation(id,2)  
             if confirmation==True:
-                creation_reussie=self.modele_users.Insert_Row(liste)
+                creation_reussie=self.DAO_users.Insert_Row(liste)
                 if creation_reussie==True:
                     self.vue_users.Display_BackToMenu()
                     return None
@@ -147,7 +149,7 @@ class Users_controller():
 
     def Check_User_Passw(self, user, passw):
         try:
-            cursor=self.modele_users.Select_Rows()
+            cursor=self.DAO_users.Select_Rows()
             liste=[]
             for row in cursor:
                 for element in row:

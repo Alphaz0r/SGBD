@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 class Singleton(object):
     _instance = None
     def __new__(class_, *args, **kwargs):
