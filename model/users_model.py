@@ -1,6 +1,13 @@
 class Users_modele():
     """
-    Created on 29-03-21 || Users model for table "users" in db
+    Users model for table ``users`` in db
+    
+    Attributes :
+        - PK_client_id 
+        - name 
+        - pseudonyme 
+        - password ( hash )
+
     """
     def __init__(self):
         self.PK_client_id="None"

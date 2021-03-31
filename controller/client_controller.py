@@ -10,11 +10,10 @@ from beautifultable import BeautifulTable
 from datetime import datetime
 from singleton import *
 
-"""
- CLASSE Client_controller
-          Nécessite la connexion à la base de données pour s'instancier
-"""
 class Client_controller():
+    """
+    Controler for "client" class
+    """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col= ["ID", "Nom", "Prénom", "Date de naissance", "Age", "Rue", "Numéro de maison", "Code postal", "Email", "Numéro de téléphone"] #Colonnes d'affichage pour BeautifulTables
@@ -25,10 +24,11 @@ class Client_controller():
                                                                                                                                                     #Cependant j'ai remarqué que l'inconvénient majeur de cnx est qu'il n'est utilisable
                                                                                                                                                     #qu'une seule fois pour plusieurs objets. Càd que si j'instancie un autre objet
                                                                                                                                                     #utilisant cnx, le programme retournera une erreur sql
-    """
-    Menu principal
-    """
+    
     def Menu(self):
+        """
+        Main menu
+        """
         while(True):
             choix_utilisateur=self.vue_client.Menu()
             if choix_utilisateur=="1":
@@ -41,10 +41,11 @@ class Client_controller():
                 self.Create_Row()
             elif choix_utilisateur=="5":
                 break
-    """
-    Création
-    """
+    
     def Create_Row(self):
+        """
+        Creating a row in client table
+        """
         try:
             #BeautifulTable
             table_before=BeautifulTable(maxwidth=300)                   
@@ -79,10 +80,11 @@ class Client_controller():
                 print("\n### Aucune action n'a été entreprise, retour au menu ###")
         except:
             self.vue_client.Display_Create_Error()
-    """
-    Affichage
-    """
+    
     def Display_Rows(self):   
+        """
+        Display every row for client table
+        """
         try:
             #Préparation du curseur + BeautifulTable
             cursor=self.DAO_client.Select_Rows()
@@ -99,10 +101,11 @@ class Client_controller():
         finally:
             if cursor!=None:
                 cursor.close()
-    """
-    Suppression
-    """
+    
     def Delete_Row(self):
+        """
+        Delete a row in the table after asking which one 
+        """
         try:
             #On va directement chercher l'id de la ligne à effacer + une confirmation pour informer l'utilisateur
             id=self.vue_client.Row_getId()
@@ -116,10 +119,11 @@ class Client_controller():
                 self.vue_client.AucuneActionEntreprise()
         except:
             self.vue_client.Display_Delete_Error()
-    """
-    Modification
-    """
+    
     def Update_Row(self):
+        """
+        Modify a row in the table after asking which one
+        """
         try:
             modele_client=Client_modele()
             #BeautifulTable
@@ -164,6 +168,9 @@ class Client_controller():
 
 
     def getClientId(self, id):
+        """
+        Simple select for client ID, used for facture table
+        """
         try:
             cursor=self.DAO_client.Select_clientId(id)
             if cursor==None:

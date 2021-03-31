@@ -1,6 +1,12 @@
 class Facture_modele():
     """
-    Created on 29-03-21 || Facture model for table "facture" in db
+    Facture model for table ``facture`` in db
+    
+    Attributes :
+        - PK_facture_id 
+        - total_price = count()
+        - FK_client_id 
+        - date_creation 
     """
     def __init__(self):
         self.PK_facture_id="None"

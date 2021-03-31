@@ -1,6 +1,18 @@
 class Client_modele():
     """
-    Created on 29-03-21 || Client model for table "client" in db
+    Client model for table ``client`` in db
+    
+    Attributes :
+        - PK_client_id 
+        - name
+        - first_name 
+        - birth_date
+        - age
+        - rue
+        - house_number
+        - postcode
+        - email
+        - phone_number 
     """
     def __init__(self):
         self.PK_client_id="None"

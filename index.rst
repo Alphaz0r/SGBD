@@ -3,30 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to SGBD Python's documentation!
+Welcome to SGBD Python Project IRAMPS !
 =======================================
+MODELS
+++++++
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: client_model 
-.. autoclass:: Client_modele
-.. automodule:: concentration_model
-.. autoclass:: Concentration_modele
-.. automodule:: drugs_model
-.. autoclass:: Drugs_modele
-.. automodule:: facture_model
-.. autoclass:: Facture_modele
-.. automodule:: facture_row_model
-.. autoclass:: Facture_row_modele
-.. automodule:: users_model
-.. autoclass:: Users_modele
+   doc/model/client_model
+   doc/model/concentration_model
+   doc/model/drugs_model
+   doc/model/facture_model
+   doc/model/facture_row_model
+   doc/model/users_model
 
-
-
-
-
-
+CONTROLLERS
++++++++++++
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
 
 
 

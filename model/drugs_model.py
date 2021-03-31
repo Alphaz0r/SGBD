@@ -1,6 +1,15 @@
 class Drugs_modele():
     """
-    Created on 29-03-21 || Drugs model for table "drugs" in db
+    Drugs model for table ``drugs`` in db
+    
+    Attributes :
+        - PK_drug_id 
+        - name
+        - description 
+        - peremption_date
+        - price
+        - FK_concentration_id
+        - stock 
     """
     def __init__(self):
         self.PK_drug_id="None"

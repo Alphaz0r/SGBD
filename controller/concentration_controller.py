@@ -13,15 +13,21 @@ from datetime import datetime
 
 
 class Concentration_controller():
+    """
+    Concentration class for table ``concentration`` in db
+    """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
-        self.aff_col=["ID Concentration","Concentration en mg"] #TODO: MODIFIE CA
-        self.vue_concentration=Concentration_vue() #TODO: MODIFIE CA
-        self.DAO_concentration=Concentration_DAO(self.cnx) #TODO: MODIFIE CA
+        self.aff_col=["ID Concentration","Concentration en mg"] 
+        self.vue_concentration=Concentration_vue() 
+        self.DAO_concentration=Concentration_DAO(self.cnx) 
         
 
 
     def Menu(self):
+        """
+        Main menu
+        """
         while(True):
             choix_utilisateur=self.vue_concentration.Menu()
             if choix_utilisateur=="1":
@@ -36,26 +42,37 @@ class Concentration_controller():
                 break
 
     def Create_Row(self):
+        """
+        Creating a row in ``concentration`` table
+        """
         try:
+            modele_concentration=Concentration_modele()
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
             confirmation=self.vue_concentration.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_concentration.getRow(self.aff_col)
-                if row!=None:
-                    creation_reussie=self.DAO_concentration.Insert_Row(row)
-                    if insertion_reussie==True:
+
+                
+                modele_concentration.concentration_mg=row[1]
+
+                if modele_concentration.concentration_mg!=None:
+                    creation_reussie=self.DAO_concentration.Insert_Row(modele_concentration)
+                    if creation_reussie==True:
                         self.vue_concentration.Display_BackToMenu()
                         return None
             self.vue_concentration.Display_Create_Error()
-
         except:
             return None
 
     def Display_Rows(self):   
+        """
+        Display every row for ``concentration`` table
+        """
         try:
+            #Préparation de l'affichage des lignes de façon organisée
             cursor=self.DAO_concentration.Select_Rows()
-            table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
+            table=BeautifulTable(maxwidth=300) 
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
             table.columns.header=self.aff_col
@@ -71,6 +88,9 @@ class Concentration_controller():
             cursor.close()
 
     def Delete_Row(self):
+        """
+        Delete a row in the ``concentration`` table after asking which one 
+        """
         try:
             id=self.vue_concentration.Row_getId()
             confirmation=self.vue_concentration.getConfirmation(id,1)
@@ -86,22 +106,29 @@ class Concentration_controller():
             self.vue_concentration.Display_Delete_Error()
 
     def Update_Row(self):
+        """
+        Modify a row in the table after asking which one
+        """
         try:
+            modele_concentration=Concentration_modele()
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
 
-            id=self.vue_concentration.Row_getId()
-            if id !=False:
-                cursor=self.DAO_concentration.Select_Rows(id)
+            modele_concentration.PK_concentration_id=self.vue_concentration.Row_getId()
+            if modele_concentration.PK_concentration_id !=False:
+                cursor=self.DAO_concentration.Select_Rows(modele_concentration.PK_concentration_id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_concentration.Display_Rows(table_before)
 
-                confirmation=self.vue_concentration.getConfirmation(id,0)  
+                confirmation=self.vue_concentration.getConfirmation(modele_concentration.PK_concentration_id,0)  
                 if confirmation==True:  
                     row=self.vue_concentration.getRow(self.aff_col)
-                    if row!=None:
-                        modification_reussie=self.DAO_concentration.Update_Row(row, id)
+
+                    modele_concentration.concentration_mg=row[1]
+
+                    if modele_concentration.concentration_mg!=None:
+                        modification_reussie=self.DAO_concentration.Update_Row(modele_concentration)
                         if modification_reussie==True:
                             self.vue_concentration.Display_BackToMenu()
                             return None
