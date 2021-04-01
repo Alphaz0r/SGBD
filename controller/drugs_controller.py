@@ -38,6 +38,7 @@ class Drugs_controller():
 
     def Create_Row(self):
         try:
+
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
             table_concentration=BeautifulTable(maxwidth=300)
@@ -48,8 +49,19 @@ class Drugs_controller():
             confirmation=self.vue_drugs.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_drugs.getRow(self.aff_col, table_concentration)
+
+                modele_drugs=Drugs_modele()
+                modele_drugs.PK_drug_id=row[0]
+                modele_drugs.name=row[1]
+                modele_drugs.description=row[2]
+                modele_drugs.peremption_date=row[3]
+                modele_drugs.price=row[4]
+                modele_drugs.FK_concentration_id=row[5]
+                modele_drugs.stock=row[6]
+
+
                 if row!=None:
-                    creation_reussie=self.DAO_drugs.Insert_Row(row)
+                    creation_reussie=self.DAO_drugs.Insert_Row(modele_drugs)
                     if creation_reussie==True:
                         self.vue_drugs.Display_BackToMenu()
                         return None
@@ -91,6 +103,7 @@ class Drugs_controller():
 
     def Update_Row(self):
         try:
+            modele_drugs=Drugs_modele()
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
             table_concentration=BeautifulTable(maxwidth=300)
@@ -98,7 +111,7 @@ class Drugs_controller():
             concentration_list=self.DAO_concentration.Select_Rows()
             for row in concentration_list:
                 table_concentration.rows.append(row)
-            id=self.vue_drugs.Row_getId()
+            modele_drugs.PK_drug_id=self.vue_drugs.Row_getId()
             if id !=False:
                 cursor=self.DAO_drugs.Select_Rows(id)
                 for row in cursor:
@@ -108,8 +121,16 @@ class Drugs_controller():
                 confirmation=self.vue_drugs.getConfirmation(id,0)  
                 if confirmation==True:  
                     row=self.vue_drugs.getRow(self.aff_col, table_concentration)
+                    
+                    modele_drugs.name=row[1]
+                    modele_drugs.description=row[2]
+                    modele_drugs.peremption_date=row[3]
+                    modele_drugs.price=row[4]
+                    modele_drugs.FK_concentration_id=row[5]
+                    modele_drugs.stock=row[6]
+
                     if row!=None:
-                        modification_reussie=self.DAO_drugs.Update_Row(row, id)
+                        modification_reussie=self.DAO_drugs.Update_Row(modele_drugs)
                         if modification_reussie==True:
                             self.vue_drugs.Display_BackToMenu()
                             return None

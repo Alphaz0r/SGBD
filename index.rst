@@ -23,6 +23,8 @@ CONTROLLERS
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   doc/controller/client_controller
 
 
 

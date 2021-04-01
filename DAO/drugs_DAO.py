@@ -41,11 +41,11 @@ class Drugs_DAO():
         finally:
             cursor.close()
 
-    def Update_Row(self, row, id):
+    def Update_Row(self, modele_drugs):
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE drugs SET "  #TODO: MODIFIE CA   
-            sql_update+="name='"+row[1]+"', description='"+row[2]+"', peremption_date='"+row[3]+"', price='"+row[4]+"', FK_concentration_id='"+row[5]+"', stock='"+row[6]+"'"
+            sql_update+="name='"+modele_drugs.name+"', description='"+modele_drugs.description+"', peremption_date='"+modele_drugs.peremption_date+"', price='"+modele_drugs.price+"', FK_concentration_id='"+modele_drugs.FK_concentration_id+"', stock='"+modele_drugs.stock+"'"
             sql_update+=" WHERE PK_drug_id="+id #TODO: MODIFIE CA
             try:
                 cursor.execute(sql_update)
@@ -59,11 +59,11 @@ class Drugs_DAO():
         finally:
             cursor.close()
 
-    def Insert_Row(self, row):                           
+    def Insert_Row(self, modele_drugs):                           
         try:
             cursor=self.cnx.cursor()   
             sql="INSERT INTO pharmacie.drugs (PK_drug_id, name, description, peremption_date, price, FK_concentration_id, stock) VALUES " #TODO: MODIFIE CA
-            sql+="("+row[0]+", '"+row[1]+"', '"+row[2]+"', '"+row[3]+"', '"+row[4]+"', '"+row[5]+"', '"+row[6]+"');" #TODO: MODIFIE CA
+            sql+="("+modele_drugs.PK_drug_id+", '"+modele_drugs.name+"', '"+modele_drugs.description+"', '"+modele_drugs.peremption_date+"', '"+modele_drugs.price+"', '"+modele_drugs.FK_concentration_id+"', '"+modele_drugs.stock+"');" #TODO: MODIFIE CA
             print(sql)
             cursor.execute(sql)
             self.cnx.commit()

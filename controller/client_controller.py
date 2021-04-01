@@ -12,7 +12,9 @@ from singleton import *
 
 class Client_controller():
     """
-    Controler for "client" class
+    Controller for ``client`` class
+    
+    ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
     """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
@@ -44,7 +46,7 @@ class Client_controller():
     
     def Create_Row(self):
         """
-        Creating a row in client table
+        Launch sequence to add a row in the table
         """
         try:
             #BeautifulTable
@@ -83,7 +85,7 @@ class Client_controller():
     
     def Display_Rows(self):   
         """
-        Display every row for client table
+        Launch sequence to display all table rows
         """
         try:
             #Préparation du curseur + BeautifulTable
@@ -104,7 +106,7 @@ class Client_controller():
     
     def Delete_Row(self):
         """
-        Delete a row in the table after asking which one 
+        Launch sequence to delete the row chosen by the user 
         """
         try:
             #On va directement chercher l'id de la ligne à effacer + une confirmation pour informer l'utilisateur
@@ -122,7 +124,7 @@ class Client_controller():
     
     def Update_Row(self):
         """
-        Modify a row in the table after asking which one
+        Launch sequence to modify a row chosen by the user
         """
         try:
             modele_client=Client_modele()
@@ -169,7 +171,7 @@ class Client_controller():
 
     def getClientId(self, id):
         """
-        Simple select for client ID, used for facture table
+        Simple select for client ID, used for ``facture`` table
         """
         try:
             cursor=self.DAO_client.Select_clientId(id)
