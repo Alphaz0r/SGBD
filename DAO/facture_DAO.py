@@ -13,7 +13,7 @@ class Facture_DAO():
     def Select_Rows(self, condition=False):   
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
-            sql="SELECT facture.PK_facture_id, facture.FK_client_id, clients.name, clients.first_name, clients.email, clients.rue, clients.house_number, clients.postcode, facture.total_price, CAST(facture.date_creation AS CHAR) FROM facture JOIN clients ON facture.FK_client_id=clients.PK_client_id"
+            sql="SELECT facture.PK_facture_id, facture.FK_client_id, clients.name, clients.first_name, clients.email, clients.rue, clients.house_number, clients.postcode, (SELECT SUM(drugs.price*facture_row.item_count) FROM drugs, facture_row WHERE facture_row.FK_drug_id=drugs.PK_drug_id) as prix_facture, CAST(facture.date_creation AS CHAR) FROM facture JOIN clients ON facture.FK_client_id=clients.PK_client_id"
             if condition!=False:
                 sql+=" WHERE PK_facture_id in("+condition+")"
             #On exécute la query
@@ -40,12 +40,12 @@ class Facture_DAO():
         finally:
             cursor.close()
 
-    def Update_Row(self, row, id):
+    def Update_Row(self, modele_facture):
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE facture SET "    
-            sql_update+="date_creation='"+row[1]+"'"
-            sql_update+=" WHERE PK_facture_id="+id
+            sql_update+="date_creation='"+modele_facture.date_creation+"'"
+            sql_update+=" WHERE PK_facture_id="+modele_facture.PK_facture_id
             try:
                 cursor.execute(sql_update)
                 self.cnx.commit()
@@ -58,11 +58,11 @@ class Facture_DAO():
         finally:
             cursor.close()
 
-    def Insert_Row(self, row):                           
+    def Insert_Row(self, modele_facture):                           
         try:
             cursor=self.cnx.cursor()    
-            sql="INSERT INTO pharmacie.facture (PK_facture_id, total_price, FK_client_id, date_creation) VALUES "
-            sql+="("+row[0]+", "+row[3]+",'"+row[1]+"','"+row[2]+"')"
+            sql="INSERT INTO pharmacie.facture (FK_client_id, date_creation) VALUES "
+            sql+="("+modele_facture.FK_client_id+", \""+modele_facture.date_creation+"\")"
             try:    
                 cursor.execute(sql)
                 self.cnx.commit()

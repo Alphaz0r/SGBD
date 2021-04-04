@@ -48,9 +48,15 @@ class FactureRow_controller():
             confirmation=self.vue_factureRow.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_factureRow.getRow(self.aff_col, self.table_drugs)
-                row.append(self.id_facture)
+                
+                modele_facture_row.PK_fd_id=self.id_facture
+                modele_facture_row=Facture_row_modele()
+                modele_facture_row.item_count=row[0]
+                modele_facture_row.FK_drug_id=row[1]
+                modele_facture_row.FK_drug_id=[2]
+
                 if row!=None:
-                    creation_reussie=DAO_factureRow.Insert_Row(row)
+                    creation_reussie=DAO_factureRow.Insert_Row()
                     if creation_reussie==True:
                         self.vue_factureRow.Display_BackToMenu()
                         return None
@@ -58,7 +64,7 @@ class FactureRow_controller():
             else:
                 self.vue_factureRow.AucuneActionEntreprise()
         except:
-            return None
+            self.vue_factureRow.Display_Create_Error()
 
     def Display_Rows(self):   #OK
         try:
@@ -95,21 +101,22 @@ class FactureRow_controller():
 
     def Update_Row(self):
         try:
+            modele_facture_row=Facture_row_modele()
             DAO_factureRow=FactureRow_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
-            id=self.vue_factureRow.Row_getId()
+            modele_facture_row.PK_fd_id=self.vue_factureRow.Row_getId()
             if id !=False:
                 cursor=DAO_factureRow.Select_Rows(self.id_facture,id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_factureRow.Display_Rows(table_before)
 
-                confirmation=self.vue_factureRow.getConfirmation(id,0)  
+                confirmation=self.vue_factureRow.getConfirmation(modele_facture_row.PK_fd_id,0)  
                 if confirmation==True:  
                     row=self.vue_factureRow.getRow(self.aff_col, self.table_drugs)
                     if row!=None:
-                        modification_reussie=DAO_factureRow.Update_Row(row,id, self.id_facture)
+                        modification_reussie=DAO_factureRow.Update_Row(modele_facture_row, self.id_facture)
                         if modification_reussie==True:
                             self.vue_factureRow.Display_BackToMenu()
                             return None

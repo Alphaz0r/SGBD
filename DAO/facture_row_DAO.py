@@ -48,12 +48,12 @@ class FactureRow_DAO():
         finally:
             cursor.close()
 
-    def Update_Row(self, row, id_row, id_facture):
+    def Update_Row(self, modele_facture_row, id_facture):
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE facture_row SET "    
-            sql_update+="item_count='"+row[2]+"', FK_drug_id='"+row[1]+"'"
-            sql_update+=" WHERE facture_row.PK_fd_id=("+id_row+") and FK_facture_id in ("+id_facture+")"
+            sql_update+="item_count='"+modele_facture_row.item_count+"', FK_drug_id='"+modele_facture_row.FK_drug_id+"'"
+            sql_update+=" WHERE facture_row.PK_fd_id=("+modele_facture_row.PK_fd_id+") and FK_facture_id in ("+id_facture+")"
             try:
                 cursor.execute(sql_update)
                 self.cnx.commit()
@@ -66,11 +66,11 @@ class FactureRow_DAO():
         finally:
             cursor.close()
 
-    def Insert_Row(self, row):                           
+    def Insert_Row(self, modele_facture_row):                           
         try:
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.facture_row (PK_fd_id, item_count, FK_drug_id,  FK_facture_id) VALUES "
-            sql+="("+row[0]+", "+row[1]+",'"+row[2]+"','"+row[3]+"')"
+            sql+="("+modele_facture_row.PK_fd_id+", "+modele_facture_row.item_count+",'"+modele_facture_row.FK_drug_id+"','"+modele_facture_row.FK_facture_id+"')"
             try:
                 cursor.execute(sql)
                 self.cnx.commit()

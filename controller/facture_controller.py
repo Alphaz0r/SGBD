@@ -40,9 +40,9 @@ class Facture_controller():
 
     def Display_Rows(self):   
         try:
-            DAOfacture_DAO_facture=Facture_DAOfacture_DAO(self.cnx) #Création du modèle
+            DAO_facture=Facture_DAO(self.cnx) #Création du modèle
             vue_facture=Facture_vue()
-            cursor=DAOfacture_DAO_facture.Select_Rows()
+            cursor=DAO_facture.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
 
             #On exécute la query et on y place tous ses éléments dans un module qui va gérer l'affichage
@@ -60,12 +60,12 @@ class Facture_controller():
 
     def Delete_Row(self):
         try:
-            DAOfacture_DAO_facture=Facture_DAOfacture_DAO(self.cnx) #Création du modèle
+            DAO_facture=Facture_DAO(self.cnx) #Création du modèle
             vue_facture=Facture_vue()
             id=vue_facture.Row_getId()
             confirmation=vue_facture.getConfirmation(id, 1)
             if  confirmation == True and id!=False:
-                DAOfacture_DAO_facture.Delete_Row(id)
+                DAO_facture.Delete_Row(id)
                 vue_facture.Display_BackToMenu()
             else:
                 vue_facture.Display_Delete_Error()
@@ -74,14 +74,20 @@ class Facture_controller():
 
     def Create_Row(self):
         try:
-            DAOfacture_DAO_facture=Facture_DAOfacture_DAO(self.cnx)
+            DAO_facture=Facture_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
             confirmation=self.vue_facture.getConfirmation(id,2)  
             if confirmation==True:        
                 row=self.vue_facture.getRow(self.aff_col, self.table_client)
+
+                modele_facture=Facture_modele()
+                modele_facture.PK_facture_id=row[0]
+                modele_facture.FK_client_id=row[1]
+                modele_facture.date_creation=row[2]
+                
                 if row!=None:
-                    creation_reussie=DAOfacture_DAO_facture.Insert_Row(row)
+                    creation_reussie=DAO_facture.Insert_Row(modele_facture)
                     if creation_reussie==True:
                         self.vue_facture.Display_BackToMenu()
                         return None
@@ -92,8 +98,30 @@ class Facture_controller():
             return None
 
 
-    def Update_Row(self):   #TODO: Ne pas oublier de pouvoir modifier la date de la facture
-        pass
+    def Update_Row(self):   
+        try:
+            DAO_facture=Facture_DAO(self.cnx)
+            table_before=BeautifulTable(maxwidth=300)                   
+            table_before.columns.header=self.aff_col
+            confirmation=self.vue_facture.getConfirmation(id,2)  
+            if confirmation==True:        
+                row=self.vue_facture.getRow(self.aff_col, self.table_client)
+
+                modele_facture=Facture_modele()
+                modele_facture.PK_facture_id=row[0]
+                modele_facture.FK_client_id=row[1]
+                modele_facture.date_creation=row[2]
+                
+                if row!=None:
+                    creation_reussie=DAO_facture.Insert_Row(modele_facture)
+                    if creation_reussie==True:
+                        self.vue_facture.Display_BackToMenu()
+                        return None
+                self.vue_facture.Display_Create_Error()
+            else :
+                self.vue_facture.AucuneActionEntreprise()
+        except:
+            return None
 
     def Display_FactureRow(self):
         try:    
@@ -107,8 +135,8 @@ class Facture_controller():
 
     def Get_Row_Client(self):
         try:
-            DAOfacture_DAO_client=Client_DAOfacture_DAO(self.cnx)
-            client_list=DAOfacture_DAO_client.Select_Rows()
+            DAO_client=Client_DAO(self.cnx)
+            client_list=DAO_client.Select_Rows()
             table_client=BeautifulTable(maxwidth=300)
             table_client.columns.header=self.aff_col_client
             for row in client_list:
