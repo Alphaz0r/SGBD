@@ -26,7 +26,7 @@ class Client_controller():
                                                                                                                                                     #Cependant j'ai remarqué que l'inconvénient majeur de cnx est qu'il n'est utilisable
                                                                                                                                                     #qu'une seule fois pour plusieurs objets. Càd que si j'instancie un autre objet
                                                                                                                                                     #utilisant cnx, le programme retournera une erreur sql
-    
+
     def Menu(self):
         """
         Main menu

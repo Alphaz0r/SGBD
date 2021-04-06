@@ -42,9 +42,15 @@ class Users_controller():
             if confirmation==True:        
                 row=self.vue_users.getRow(self.aff_col)
                 row[3]=self.hash_password(row[3])
-                print(row[3])
+
+                modele_user=Users_modele()
+                modele_user.PK_user_id=row[0]
+                modele_user.name=row[1]
+                modele_user.pseudonyme=row[2]
+                modele_user.password=row[3]
+
                 if row!=None:
-                    creation_reussie=self.DAO_users.Insert_Row(row)
+                    creation_reussie=self.DAO_users.Insert_Row(modele_user)
                     if creation_reussie==True:
                         self.vue_users.Display_BackToMenu()
                         return None
@@ -75,10 +81,11 @@ class Users_controller():
 
     def Delete_Row(self):
         try:
-            id=self.vue_users.Row_getId()
-            confirmation=self.vue_users.getConfirmation(id,1)
-            if  confirmation == True and id!=False:
-                self.DAO_users.Delete_Row(id)
+            modele_user=Users_modele()
+            modele_user.PK_user_id=self.vue_users.Row_getId()
+            confirmation=self.vue_users.getConfirmation(modele_user.PK_user_id,1)
+            if  confirmation == True and modele_user.PK_user_id!=False:
+                self.DAO_users.Delete_Row(modele_user.PK_user_id)
                 self.vue_users.Display_BackToMenu()
             else:
                 self.vue_users.Display_Delete_Error()
@@ -87,23 +94,29 @@ class Users_controller():
 
     def Update_Row(self):
         try:
+            modele_user=Users_modele()
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
 
-            id=self.vue_users.Row_getId()
-            if id !=False:
-                cursor=self.DAO_users.Select_Rows(id)
+            modele_user.PK_user_id=self.vue_users.Row_getId()
+            if modele_user.PK_user_id !=False:
+                cursor=self.DAO_users.Select_Rows(modele_user.PK_user_id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_users.Display_Rows(table_before)
 
-                confirmation=self.vue_users.getConfirmation(id,0)  
+                confirmation=self.vue_users.getConfirmation(modele_user.PK_user_id,0)  
                 if confirmation==True:  
                     row=self.vue_users.getRow(self.aff_col)
                     row[3]=self.hash_password(row[3])           #hash du mdp
-                    print(row[3])
+                    
+                    modele_user=Users_modele()
+                    modele_user.name=row[1]
+                    modele_user.pseudonyme=row[2]
+                    modele_user.password=row[3]
+
                     if row!=None:
-                        modification_reussie=self.DAO_users.Update_Row(row, id)
+                        modification_reussie=self.DAO_users.Update_Row(modele_user)
                         if modification_reussie==True:
                             self.vue_users.Display_BackToMenu()
                             return None

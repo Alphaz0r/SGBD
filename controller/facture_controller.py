@@ -14,6 +14,9 @@ from datetime import datetime
 
 
 class Facture_controller():
+    """
+    Facture class for table ``facture`` in db
+    """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col=["ID Facture","ID Client", "Nom","Prénom","email","Rue","Numéro de maison","Code postal","Prix Total Facture €€€","Date de facturation"]
@@ -23,6 +26,9 @@ class Facture_controller():
         
 
     def WhereWeGoing(self):
+        """
+        Main menu
+        """
         while(True):
             choix_utilisateur=self.vue_facture.Menu()
             if choix_utilisateur=="1":
@@ -38,7 +44,10 @@ class Facture_controller():
             elif choix_utilisateur=="6":break
                 
 
-    def Display_Rows(self):   
+    def Display_Rows(self):  
+        """
+        launch display row sequence
+        """ 
         try:
             DAO_facture=Facture_DAO(self.cnx) #Création du modèle
             vue_facture=Facture_vue()
@@ -59,6 +68,9 @@ class Facture_controller():
             cursor.close()
 
     def Delete_Row(self):
+        """
+        launch delete row sequence 
+        """
         try:
             DAO_facture=Facture_DAO(self.cnx) #Création du modèle
             vue_facture=Facture_vue()
@@ -73,6 +85,9 @@ class Facture_controller():
             vue_facture.Display_Delete_Error()
 
     def Create_Row(self):
+        """
+        Launch create row sequence
+        """
         try:
             DAO_facture=Facture_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
@@ -98,7 +113,10 @@ class Facture_controller():
             return None
 
 
-    def Update_Row(self):   
+    def Update_Row(self):  
+        """
+        launch update row sequence
+        """ 
         try:
             DAO_facture=Facture_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
@@ -124,6 +142,9 @@ class Facture_controller():
             return None
 
     def Display_FactureRow(self):
+        """
+        launch sequence to display only the details of the selected facture
+        """ 
         try:    
             vue_facture=Facture_vue()
             id_facture=vue_facture.Row_getId()
@@ -134,6 +155,9 @@ class Facture_controller():
             self.vue_facture.Display_Select_Error()
 
     def Get_Row_Client(self):
+        """
+        launch sequence to select only the client ID
+        """ 
         try:
             DAO_client=Client_DAO(self.cnx)
             client_list=DAO_client.Select_Rows()

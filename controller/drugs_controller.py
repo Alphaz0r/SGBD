@@ -14,7 +14,10 @@ from datetime import datetime
 
 
 class Drugs_controller():
-    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
+    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
+        """
+        Drugs class for table ``drugs`` in db
+        """ 
         self.cnx=cnx
         self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "Concentration en mg", "Stock"]      #Pour affichage
         self.aff_col_concentration=["ID Concentration","Concentration en mg"]
@@ -23,6 +26,9 @@ class Drugs_controller():
         self.DAO_concentration=Concentration_DAO(self.cnx)
         
     def Menu(self):
+        """
+        Main menu
+        """
         while(True):
             choix_utilisateur=self.vue_drugs.Menu()
             if choix_utilisateur=="1":
@@ -37,6 +43,9 @@ class Drugs_controller():
                 break
 
     def Create_Row(self):
+        """
+        Launch create row sequence
+        """
         try:
 
             table_before=BeautifulTable(maxwidth=300)                   
@@ -71,6 +80,9 @@ class Drugs_controller():
             return None
 
     def Display_Rows(self):   
+        """
+        launch display row sequence
+        """
         try:
             cursor=self.DAO_drugs.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
@@ -89,6 +101,9 @@ class Drugs_controller():
             cursor.close()
 
     def Delete_Row(self):
+        """
+        launch delete row sequence 
+        """
         try:
             id=self.vue_drugs.Row_getId()
             confirmation=self.vue_drugs.getConfirmation(id,1)
@@ -102,6 +117,9 @@ class Drugs_controller():
             self.vue_drugs.Display_Delete_Error()
 
     def Update_Row(self):
+        """
+        launch update row sequence
+        """
         try:
             modele_drugs=Drugs_modele()
             table_before=BeautifulTable(maxwidth=300)                   

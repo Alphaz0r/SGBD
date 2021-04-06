@@ -41,12 +41,12 @@ class Users_DAO():
         finally:
             cursor.close()
 
-    def Update_Row(self, modele_users):
+    def Update_Row(self, modele_user):
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE users SET "    
-            sql_update+="name='"+modele_users.name+"', pseudonyme='"+modele_users.pseudonyme+"', password='"+modele_users.password+"'"
-            sql_update+=" WHERE PK_user_id="+modele_users.PK_user_id
+            sql_update+="name='"+modele_user.name+"', pseudonyme='"+modele_user.pseudonyme+"', password='"+modele_user.password+"'"
+            sql_update+=" WHERE PK_user_id="+modele_user.PK_user_id
             try:    
                 cursor.execute(sql_update)
                 self.cnx.commit()
@@ -59,11 +59,11 @@ class Users_DAO():
         finally:
             cursor.close()
 
-    def Insert_Row(self, modele_users):                           
+    def Insert_Row(self, modele_user):                           
         try:
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.users (PK_user_id, name, pseudonyme, password) VALUES "
-            sql+="("+modele_users.PK_user_id+", '"+modele_users.name+"','"+modele_users.pseudonyme+"','"+modele_users.password+"')"
+            sql+="("+modele_user.PK_user_id+", '"+modele_user.name+"','"+modele_user.pseudonyme+"','"+modele_user.password+"')"
             try:    
                 cursor.execute(sql)
                 self.cnx.commit()

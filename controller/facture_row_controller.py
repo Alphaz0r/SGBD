@@ -12,6 +12,9 @@ from datetime import datetime
 
 
 class FactureRow_controller():
+    """
+    FactureRow class for table ``facture_row`` in db
+    """
     def __init__(self, cnx, id_facture): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.id_facture=id_facture
@@ -22,6 +25,9 @@ class FactureRow_controller():
 
         
     def Menu(self):
+        """
+        Main menu
+        """
         while(True):
             choix_utilisateur=self.vue_factureRow.Menu()
             if choix_utilisateur=="1":
@@ -36,6 +42,9 @@ class FactureRow_controller():
                 break
 
     def Create_Row(self):
+        """
+        Launch create row sequence
+        """
         try:
             DAO_factureRow=FactureRow_DAO(self.cnx)
             table_before=BeautifulTable(maxwidth=300)                   
@@ -67,6 +76,9 @@ class FactureRow_controller():
             self.vue_factureRow.Display_Create_Error()
 
     def Display_Rows(self):   #OK
+        """
+        launch display row sequence
+        """
         try:
             DAO_factureRow=FactureRow_DAO(self.cnx)
             cursor=DAO_factureRow.Select_Rows(self.id_facture)
@@ -87,6 +99,9 @@ class FactureRow_controller():
             cursor.close()
 
     def Delete_Row(self):
+        """
+        launch delete row sequence 
+        """
         try:
             DAO_factureRow=FactureRow_DAO(self.cnx)
             id=self.vue_factureRow.Row_getId()
@@ -100,6 +115,9 @@ class FactureRow_controller():
             self.vue_factureRow.Display_Delete_Error()
 
     def Update_Row(self):
+        """
+        launch update row sequence
+        """ 
         try:
             modele_facture_row=Facture_row_modele()
             DAO_factureRow=FactureRow_DAO(self.cnx)
@@ -127,6 +145,9 @@ class FactureRow_controller():
             self.vue_factureRow.Display_Alter_Error()
 
     def Get_Row_Drugs(self):
+        """
+        launch sequence to display the ``drugs`` table
+        """ 
         try:
             DAO_drugs=Drugs_DAO(self.cnx)
             table_drugs=BeautifulTable(maxwidth=300)
@@ -143,6 +164,9 @@ class FactureRow_controller():
 
 
     def getFactureRowId(self, id):
+        """
+        launch sequence to get the facture row id
+        """ 
         try:
             cursor=self.DAO_factureRow.Select_factureRowId(id)
             if cursor==None:

@@ -10,7 +10,7 @@ class Users_modele():
 
     """
     def __init__(self):
-        self.PK_client_id="None"
+        self.PK_user_id="None"
         self.name="None"
         self.pseudonyme="None"
         self.password="None"

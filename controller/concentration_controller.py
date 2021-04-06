@@ -43,7 +43,7 @@ class Concentration_controller():
 
     def Create_Row(self):
         """
-        Creating a row in ``concentration`` table
+        Launch create row sequence
         """
         try:
             modele_concentration=Concentration_modele()
@@ -67,7 +67,7 @@ class Concentration_controller():
 
     def Display_Rows(self):   
         """
-        Display every row for ``concentration`` table
+        launch display row sequence
         """
         try:
             #Préparation de l'affichage des lignes de façon organisée
@@ -89,7 +89,7 @@ class Concentration_controller():
 
     def Delete_Row(self):
         """
-        Delete a row in the ``concentration`` table after asking which one 
+        launch delete row sequence 
         """
         try:
             id=self.vue_concentration.Row_getId()
@@ -107,7 +107,7 @@ class Concentration_controller():
 
     def Update_Row(self):
         """
-        Modify a row in the table after asking which one
+        launch update row sequence
         """
         try:
             modele_concentration=Concentration_modele()
