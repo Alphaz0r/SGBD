@@ -16,7 +16,9 @@ from datetime import datetime
 class Drugs_controller():
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
         """
-        Drugs class for table ``drugs`` in db
+        Drugs controller class for table ``drugs`` in db
+
+        ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
         """ 
         self.cnx=cnx
         self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "Concentration en mg", "Stock"]      #Pour affichage

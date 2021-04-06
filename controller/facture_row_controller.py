@@ -13,7 +13,9 @@ from datetime import datetime
 
 class FactureRow_controller():
     """
-    FactureRow class for table ``facture_row`` in db
+    FactureRow controller class for table ``facture_row`` in db
+
+    ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
     """
     def __init__(self, cnx, id_facture): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx

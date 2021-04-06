@@ -15,6 +15,8 @@ from datetime import datetime
 class Concentration_controller():
     """
     Concentration class for table ``concentration`` in db
+
+    ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
     """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx

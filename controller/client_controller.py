@@ -12,7 +12,7 @@ from singleton import *
 
 class Client_controller():
     """
-    Controller for ``client`` class
+    Client controller class for ``client`` table
     
     ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
     """

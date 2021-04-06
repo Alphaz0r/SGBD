@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
 
-    <title>client_controller &#8212; Documentation SGBD Python ASAP</title>
+    <title>drugs_controller &#8212; Documentation SGBD Python ASAP</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script src="../../_static/translations.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Recherche" href="../../search.html" />
-    <link rel="next" title="concentration_controller" href="concentration_controller.html" />
-    <link rel="prev" title="users_model" href="../model/users_model.html" />
+    <link rel="next" title="facture_controller" href="facture_controller.html" />
+    <link rel="prev" title="concentration_controller" href="concentration_controller.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -34,41 +34,39 @@
 
           <div class="body" role="main">
             
-  <section id="module-client_controller">
-<span id="client-controller"></span><h1>client_controller<a class="headerlink" href="#module-client_controller" title="Lien permanent vers ce titre">¶</a></h1>
+  <section id="module-drugs_controller">
+<span id="drugs-controller"></span><h1>drugs_controller<a class="headerlink" href="#module-drugs_controller" title="Lien permanent vers ce titre">¶</a></h1>
 <dl class="py class">
-<dt id="client_controller.Client_controller">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">client_controller.</span></code><code class="sig-name descname"><span class="pre">Client_controller</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#client_controller.Client_controller" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Controller for <code class="docutils literal notranslate"><span class="pre">client</span></code> class</p>
-<p><code class="docutils literal notranslate"><span class="pre">cnx</span></code> is the connection object from <code class="docutils literal notranslate"><span class="pre">mysql-connector</span></code> needed to send sql commands to the database</p>
-<dl class="py method">
-<dt id="client_controller.Client_controller.Create_Row">
-<code class="sig-name descname"><span class="pre">Create_Row</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#client_controller.Client_controller.Create_Row" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Launch sequence to add a row in the table</p>
+<dt id="drugs_controller.Drugs_controller">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">drugs_controller.</span></code><code class="sig-name descname"><span class="pre">Drugs_controller</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drugs_controller.Drugs_controller" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="drugs_controller.Drugs_controller.Create_Row">
+<code class="sig-name descname"><span class="pre">Create_Row</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drugs_controller.Drugs_controller.Create_Row" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Launch create row sequence</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="client_controller.Client_controller.Delete_Row">
-<code class="sig-name descname"><span class="pre">Delete_Row</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#client_controller.Client_controller.Delete_Row" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Launch sequence to delete the row chosen by the user</p>
+<dt id="drugs_controller.Drugs_controller.Delete_Row">
+<code class="sig-name descname"><span class="pre">Delete_Row</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drugs_controller.Drugs_controller.Delete_Row" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>launch delete row sequence</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="client_controller.Client_controller.Display_Rows">
-<code class="sig-name descname"><span class="pre">Display_Rows</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#client_controller.Client_controller.Display_Rows" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Launch sequence to display all table rows</p>
+<dt id="drugs_controller.Drugs_controller.Display_Rows">
+<code class="sig-name descname"><span class="pre">Display_Rows</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drugs_controller.Drugs_controller.Display_Rows" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>launch display row sequence</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="client_controller.Client_controller.Menu">
-<code class="sig-name descname"><span class="pre">Menu</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#client_controller.Client_controller.Menu" title="Lien permanent vers cette définition">¶</a></dt>
+<dt id="drugs_controller.Drugs_controller.Menu">
+<code class="sig-name descname"><span class="pre">Menu</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drugs_controller.Drugs_controller.Menu" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Main menu</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="client_controller.Client_controller.Update_Row">
-<code class="sig-name descname"><span class="pre">Update_Row</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#client_controller.Client_controller.Update_Row" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Launch sequence to modify a row chosen by the user</p>
+<dt id="drugs_controller.Drugs_controller.Update_Row">
+<code class="sig-name descname"><span class="pre">Update_Row</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drugs_controller.Drugs_controller.Update_Row" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>launch update row sequence</p>
 </dd></dl>
 
 </dd></dl>
@@ -101,9 +99,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../model/users_model.html">users_model</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">client_controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client_controller.html">client_controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concentration_controller.html">concentration_controller</a></li>
-<li class="toctree-l1"><a class="reference internal" href="drugs_controller.html">drugs_controller</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">drugs_controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="facture_controller.html">facture_controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="facture_row_controller.html">facture_row_controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="users_controller.html">users_controller</a></li>
@@ -113,8 +111,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../model/users_model.html" title="Chapitre précédent">users_model</a></li>
-      <li>Next: <a href="concentration_controller.html" title="Chapitre suivant">concentration_controller</a></li>
+      <li>Previous: <a href="concentration_controller.html" title="Chapitre précédent">concentration_controller</a></li>
+      <li>Next: <a href="facture_controller.html" title="Chapitre suivant">facture_controller</a></li>
   </ul></li>
 </ul>
 </div>
@@ -148,7 +146,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../../_sources/doc/controller/client_controller.rst.txt"
+      <a href="../../_sources/doc/controller/drugs_controller.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

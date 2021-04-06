@@ -12,6 +12,11 @@ import hashlib, binascii, os
 
 
 class Users_controller():
+    """
+    Users controller class for table ``users`` in db
+
+    ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
+    """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
         self.aff_col= ["ID Utilisateur","Nom","Pseudonyme","Password"]

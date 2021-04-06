@@ -8,9 +8,6 @@ Welcome to SGBD Python Project IRAMPS !
 MODELS
 ++++++
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
    doc/model/client_model
    doc/model/concentration_model
    doc/model/drugs_model
@@ -21,10 +18,13 @@ MODELS
 CONTROLLERS
 +++++++++++
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-   
    doc/controller/client_controller
+   doc/controller/concentration_controller
+   doc/controller/drugs_controller
+   doc/controller/facture_controller
+   doc/controller/facture_row_controller
+   doc/controller/users_controller
+
 
 
 
