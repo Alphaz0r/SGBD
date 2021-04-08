@@ -18,6 +18,11 @@ class Drugs_vue(Vue_mere):
         self.nomTable="drugs"
 
     def Menu(self):
+        """Main menu
+
+        Returns:
+            choix [String]: User option choice when navigating to the menu
+        """
         try:    
             while(True):
                 interface_console.aff_menu_drugs()  # Affichage menu table
@@ -28,6 +33,16 @@ class Drugs_vue(Vue_mere):
             print("+++ Erreur dans le menu "+self.nomTable+" +++")
 
     def getRow(self, header, table_concentration):
+        """Ask the user to fill a row and check if every user input is correct. Then ask the user is everything is okay or if he wants to modify something
+           Note : - The checks are made after every input but not when asking to modify something >> critical
+                  - There could be more checks 
+
+        Args:
+            header ([list]): header list of String for "header" row for BeautifulTables
+
+        Returns:
+            [list]: Returns a list with every user input in it
+        """
         #Initialisation de la liste qui va récupérer les variables pour la query
         query_list=["NULL"]
         #Préparation de la table magique

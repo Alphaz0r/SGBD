@@ -27,8 +27,7 @@ class FactureRow_controller():
 
         
     def Menu(self):
-        """
-        Main menu
+        """Call client_vue to display menu then use its return to launch a chosen by user sequence
         """
         while(True):
             choix_utilisateur=self.vue_factureRow.Menu()
@@ -44,8 +43,10 @@ class FactureRow_controller():
                 break
 
     def Create_Row(self):
-        """
-        Launch create row sequence
+        """Launch a sequence to create a row in the table
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             DAO_factureRow=FactureRow_DAO(self.cnx)
@@ -78,8 +79,7 @@ class FactureRow_controller():
             self.vue_factureRow.Display_Create_Error()
 
     def Display_Rows(self):   #OK
-        """
-        launch display row sequence
+        """Launch a sequence to display the table to the user
         """
         try:
             DAO_factureRow=FactureRow_DAO(self.cnx)
@@ -101,8 +101,7 @@ class FactureRow_controller():
             cursor.close()
 
     def Delete_Row(self):
-        """
-        launch delete row sequence 
+        """Launch a sequence to delete a row chosen by the user
         """
         try:
             DAO_factureRow=FactureRow_DAO(self.cnx)
@@ -117,9 +116,11 @@ class FactureRow_controller():
             self.vue_factureRow.Display_Delete_Error()
 
     def Update_Row(self):
+        """Launch a sequence to update a row chosen by the user
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
-        launch update row sequence
-        """ 
         try:
             modele_facture_row=Facture_row_modele()
             DAO_factureRow=FactureRow_DAO(self.cnx)

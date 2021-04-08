@@ -14,12 +14,13 @@ from datetime import datetime
 
 
 class Drugs_controller():
-    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
-        """
+    """
         Drugs controller class for table ``drugs`` in db
 
         ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
-        """ 
+    """ 
+    def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
+        
         self.cnx=cnx
         self.aff_col=["ID Médicament", "Nom", "Description", "Date de péremption", "Prix en €€€", "Concentration en mg", "Stock"]      #Pour affichage
         self.aff_col_concentration=["ID Concentration","Concentration en mg"]
@@ -28,8 +29,7 @@ class Drugs_controller():
         self.DAO_concentration=Concentration_DAO(self.cnx)
         
     def Menu(self):
-        """
-        Main menu
+        """Call client_vue to display menu then use its return to launch a chosen by user sequence
         """
         while(True):
             choix_utilisateur=self.vue_drugs.Menu()
@@ -45,8 +45,10 @@ class Drugs_controller():
                 break
 
     def Create_Row(self):
-        """
-        Launch create row sequence
+        """Launch a sequence to create a row in the table
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
 
@@ -82,8 +84,7 @@ class Drugs_controller():
             return None
 
     def Display_Rows(self):   
-        """
-        launch display row sequence
+        """Launch a sequence to display the table to the user
         """
         try:
             cursor=self.DAO_drugs.Select_Rows()
@@ -103,8 +104,7 @@ class Drugs_controller():
             cursor.close()
 
     def Delete_Row(self):
-        """
-        launch delete row sequence 
+        """Launch a sequence to delete a row chosen by the user
         """
         try:
             id=self.vue_drugs.Row_getId()
@@ -119,8 +119,10 @@ class Drugs_controller():
             self.vue_drugs.Display_Delete_Error()
 
     def Update_Row(self):
-        """
-        launch update row sequence
+        """Launch a sequence to update a row chosen by the user
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             modele_drugs=Drugs_modele()

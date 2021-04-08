@@ -28,8 +28,7 @@ class Client_controller():
                                                                                                                                                     #utilisant cnx, le programme retournera une erreur sql
 
     def Menu(self):
-        """
-        Main menu
+        """Call client_vue to display menu then use its return to launch a chosen by user sequence
         """
         while(True):
             choix_utilisateur=self.vue_client.Menu()
@@ -45,8 +44,10 @@ class Client_controller():
                 break
     
     def Create_Row(self):
-        """
-        Launch sequence to add a row in the table
+        """Launch a sequence to create a row in the table
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             #BeautifulTable
@@ -84,8 +85,7 @@ class Client_controller():
             self.vue_client.Display_Create_Error()
     
     def Display_Rows(self):   
-        """
-        Launch sequence to display all table rows
+        """Launch a sequence to display the table to the user
         """
         try:
             #Préparation du curseur + BeautifulTable
@@ -105,8 +105,7 @@ class Client_controller():
                 cursor.close()
     
     def Delete_Row(self):
-        """
-        Launch sequence to delete the row chosen by the user 
+        """Launch a sequence to delete a row chosen by the user
         """
         try:
             #On va directement chercher l'id de la ligne à effacer + une confirmation pour informer l'utilisateur
@@ -123,8 +122,7 @@ class Client_controller():
             self.vue_client.Display_Delete_Error()
     
     def Update_Row(self):
-        """
-        Launch sequence to modify a row chosen by the user
+        """Launch a sequence to update a row chosen by the user
         """
         try:
             modele_client=Client_modele()
@@ -170,8 +168,13 @@ class Client_controller():
 
 
     def getClientId(self, id):
-        """
-        Simple select for client ID, used for ``facture`` table
+        """Call the DAO to get a client filtered by its id
+
+        Args:
+            id ([String]): client's id
+
+        Returns:
+            MySQLCursor: MySQLCursor with client id inside of it
         """
         try:
             cursor=self.DAO_client.Select_clientId(id)

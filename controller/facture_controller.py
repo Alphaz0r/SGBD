@@ -28,8 +28,7 @@ class Facture_controller():
         
 
     def WhereWeGoing(self):
-        """
-        Main menu
+        """Call client_vue to display menu then use its return to launch a chosen by user sequence
         """
         while(True):
             choix_utilisateur=self.vue_facture.Menu()
@@ -70,8 +69,7 @@ class Facture_controller():
             cursor.close()
 
     def Delete_Row(self):
-        """
-        launch delete row sequence 
+        """Launch a sequence to delete a row chosen by the user
         """
         try:
             DAO_facture=Facture_DAO(self.cnx) #Création du modèle
@@ -87,8 +85,10 @@ class Facture_controller():
             vue_facture.Display_Delete_Error()
 
     def Create_Row(self):
-        """
-        Launch create row sequence
+        """Launch a sequence to create a row in the table
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             DAO_facture=Facture_DAO(self.cnx)
@@ -116,8 +116,10 @@ class Facture_controller():
 
 
     def Update_Row(self):  
-        """
-        launch update row sequence
+        """Launch a sequence to update a row chosen by the user
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """ 
         try:
             DAO_facture=Facture_DAO(self.cnx)
@@ -144,8 +146,7 @@ class Facture_controller():
             return None
 
     def Display_FactureRow(self):
-        """
-        launch sequence to display only the details of the selected facture
+        """Launch a sequence to display the table to the user
         """ 
         try:    
             vue_facture=Facture_vue()

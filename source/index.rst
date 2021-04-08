@@ -34,7 +34,16 @@ DAO
    doc/DAO/facture_DAO
    doc/DAO/facture_row_DAO
    doc/DAO/users_DAO
-   
+
+VUE
+++++
+.. toctree::
+   doc/view/client_vue
+   doc/view/concentration_vue
+   doc/view/drugs_vue
+   doc/view/facture_vue
+   doc/view/facture_row_vue
+   doc/view/users_vue
    
    
    

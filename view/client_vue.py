@@ -32,7 +32,7 @@ class Client_vue(Vue_mere):
 
     def getRow(self, header):
         """Ask the user to fill a row and check if every user input is correct. Then ask the user is everything is okay or if he wants to modify something
-           Note : - The checks are made after every input but not when asking to modify something >> critical
+           Note : - The checks are made after every input but not when asking to modify something >> critical issue
                   - There could be more checks 
 
         Args:

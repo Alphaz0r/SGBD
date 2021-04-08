@@ -27,8 +27,7 @@ class Concentration_controller():
 
 
     def Menu(self):
-        """
-        Main menu
+        """Call client_vue to display menu then use its return to launch a chosen by user sequence
         """
         while(True):
             choix_utilisateur=self.vue_concentration.Menu()
@@ -44,8 +43,10 @@ class Concentration_controller():
                 break
 
     def Create_Row(self):
-        """
-        Launch create row sequence
+        """Launch a sequence to create a row in the table
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             modele_concentration=Concentration_modele()
@@ -68,8 +69,7 @@ class Concentration_controller():
             return None
 
     def Display_Rows(self):   
-        """
-        launch display row sequence
+        """Launch a sequence to display the table to the user
         """
         try:
             #Préparation de l'affichage des lignes de façon organisée
@@ -90,8 +90,7 @@ class Concentration_controller():
             cursor.close()
 
     def Delete_Row(self):
-        """
-        launch delete row sequence 
+        """Launch a sequence to delete a row chosen by the user
         """
         try:
             id=self.vue_concentration.Row_getId()
@@ -108,8 +107,10 @@ class Concentration_controller():
             self.vue_concentration.Display_Delete_Error()
 
     def Update_Row(self):
-        """
-        launch update row sequence
+        """Launch a sequence to update a row chosen by the user
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             modele_concentration=Concentration_modele()

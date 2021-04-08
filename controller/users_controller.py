@@ -26,8 +26,7 @@ class Users_controller():
 
 
     def Menu(self):
-        """
-        Main menu
+        """Call client_vue to display menu then use its return to launch a chosen by user sequence
         """
         while(True):
             choix_utilisateur=self.vue_users.Menu()
@@ -43,8 +42,10 @@ class Users_controller():
                 break
 
     def Create_Row(self):
-        """
-        Launch create row sequence
+        """Launch a sequence to create a row in the table
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             table_before=BeautifulTable(maxwidth=300)                   
@@ -73,9 +74,8 @@ class Users_controller():
             self.vue_users.Display_Create_Error()
 
     def Display_Rows(self):  
+        """Launch a sequence to display the table to the user
         """
-        launch display row sequence
-        """ 
         try:
             cursor=self.DAO_users.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
@@ -94,8 +94,7 @@ class Users_controller():
             cursor.close()
 
     def Delete_Row(self):
-        """
-        launch delete row sequence 
+        """Launch a sequence to delete a row chosen by the user
         """
         try:
             modele_user=Users_modele()
@@ -110,8 +109,10 @@ class Users_controller():
             self.vue_users.Display_Delete_Error()
 
     def Update_Row(self):
-        """
-        launch update row sequence
+        """Launch a sequence to update a row chosen by the user
+
+        Returns:
+            [None]: If all went well it will return None, however it will display an error
         """
         try:
             modele_user=Users_modele()
