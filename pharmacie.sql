@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : Dim 21 mars 2021 à 22:54
+-- Généré le : jeu. 08 avr. 2021 à 21:54
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.2
 
@@ -63,9 +63,12 @@ CREATE TABLE `concentration` (
 --
 
 INSERT INTO `concentration` (`PK_concentration_id`, `concentration_mg`) VALUES
-(1, 300),
+(1, 250),
+(14, 366),
 (2, 500),
+(15, 588),
 (3, 750),
+(13, 963),
 (4, 1000),
 (5, 1250),
 (10, 2000);
@@ -108,22 +111,17 @@ INSERT INTO `drugs` (`PK_drug_id`, `name`, `description`, `peremption_date`, `pr
 
 CREATE TABLE `facture` (
   `PK_facture_id` bigint(20) UNSIGNED NOT NULL,
-  `total_price` double DEFAULT NULL,
   `FK_client_id` bigint(20) UNSIGNED DEFAULT NULL,
   `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Déclencheurs `facture`
+-- Déchargement des données de la table `facture`
 --
-DELIMITER $$
-CREATE TRIGGER `Facture_Total_Price` AFTER INSERT ON `facture` FOR EACH ROW BEGIN
-    UPDATE facture
-    SET facture.total_price = SUM(drugs.price*new.facture_row.item_count)
-    WHERE drugs.PK_drug_id = new.facture_row.FK_drug_id and facture.PK_facture_id = facture_row.FK_facture_id;
-END
-$$
-DELIMITER ;
+
+INSERT INTO `facture` (`PK_facture_id`, `FK_client_id`, `date_creation`) VALUES
+(9, 15, '2021-04-01 19:31:48'),
+(10, 15, '2021-04-04 21:06:45');
 
 -- --------------------------------------------------------
 
@@ -139,16 +137,12 @@ CREATE TABLE `facture_row` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Déclencheurs `facture_row`
+-- Déchargement des données de la table `facture_row`
 --
-DELIMITER $$
-CREATE TRIGGER `Stock_Drugs_After_Insert_Facture` AFTER INSERT ON `facture_row` FOR EACH ROW BEGIN
-    UPDATE drugs
-    SET drugs.stock = drugs.stock - new.facture_row.item_count 
-    WHERE drugs.PK_drug_id = new.facture_row.FK_drug_id;
-END
-$$
-DELIMITER ;
+
+INSERT INTO `facture_row` (`PK_fd_id`, `item_count`, `FK_drug_id`, `FK_facture_id`) VALUES
+(9, 5, 2, 9),
+(10, 10, 5, 9);
 
 -- --------------------------------------------------------
 
@@ -232,7 +226,7 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT pour la table `concentration`
 --
 ALTER TABLE `concentration`
-  MODIFY `PK_concentration_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `PK_concentration_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `drugs`
@@ -244,13 +238,13 @@ ALTER TABLE `drugs`
 -- AUTO_INCREMENT pour la table `facture`
 --
 ALTER TABLE `facture`
-  MODIFY `PK_facture_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `PK_facture_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `facture_row`
 --
 ALTER TABLE `facture_row`
-  MODIFY `PK_fd_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `PK_fd_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `users`
