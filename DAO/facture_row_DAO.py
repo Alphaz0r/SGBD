@@ -4,11 +4,24 @@ from datetime import datetime
 
 
 class FactureRow_DAO():
+    """
+    Facture Row DAO class for table ``facture_row`` in db
+
+    ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
+    """
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
 
 
     def Select_Rows(self, id_facture="0", condition=False):   #OK
+        """Execute a simple SELECT query
+
+        Args:
+            condition ([bool/str]): If condition is false, there's no WHERE statement. If condition is true, add a WHERE statement at the end of the query
+
+        Returns:
+            [MySQLCursor]: MySQLCursor object with the SELECT content inside of it
+        """
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
             sql="SELECT facture.PK_facture_id, facture_row.PK_fd_id, facture_row.FK_drug_id, drugs.name, facture_row.item_count, concentration.concentration_mg, clients.name, clients.first_name, clients.PK_client_id "
@@ -32,6 +45,14 @@ class FactureRow_DAO():
             return None
 
     def Delete_Row(self, id_row, id_facture):
+        """Execute a simple DELETE statement
+
+        Args:
+            id ([String]): We need an id given by the user to delete the desired query.
+
+        Returns:
+            [Bool]: If the delete query didn't work, it returns a boolean (False)
+        """
         try:    
             cursor=self.cnx.cursor()
             sql="DELETE FROM facture_row"
@@ -49,6 +70,14 @@ class FactureRow_DAO():
             cursor.close()
 
     def Update_Row(self, modele_facture_row, id_facture):
+        """Execute a simple UPDATE statement
+
+        Args:
+            modele_facture_row ([modele_facture_row obj]): We need an modele_facture_row object to update a row in the table
+
+        Returns:
+            [Bool]: If the update query didn't work, it returns a boolean (False)
+        """
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE facture_row SET "    
@@ -66,7 +95,15 @@ class FactureRow_DAO():
         finally:
             cursor.close()
 
-    def Insert_Row(self, modele_facture_row):                           
+    def Insert_Row(self, modele_facture_row): 
+        """Execute a simple INSERT statement
+
+        Args:
+            modele_facture_row ([modele_facture_row obj]): We need an modele_facture_row object to insert a new row in the table
+
+        Returns:
+            [Bool]: If the update query didn't work, it returns a boolean (False)
+        """                         
         try:
             cursor=self.cnx.cursor()    
             sql="INSERT INTO pharmacie.facture_row (PK_fd_id, item_count, FK_drug_id,  FK_facture_id) VALUES "

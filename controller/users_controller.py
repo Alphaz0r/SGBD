@@ -26,6 +26,9 @@ class Users_controller():
 
 
     def Menu(self):
+        """
+        Main menu
+        """
         while(True):
             choix_utilisateur=self.vue_users.Menu()
             if choix_utilisateur=="1":
@@ -40,6 +43,9 @@ class Users_controller():
                 break
 
     def Create_Row(self):
+        """
+        Launch create row sequence
+        """
         try:
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col
@@ -66,7 +72,10 @@ class Users_controller():
         except:
             self.vue_users.Display_Create_Error()
 
-    def Display_Rows(self):   
+    def Display_Rows(self):  
+        """
+        launch display row sequence
+        """ 
         try:
             cursor=self.DAO_users.Select_Rows()
             table=BeautifulTable(maxwidth=300) #Préparation de l'affichage des lignes de façon organisée
@@ -85,6 +94,9 @@ class Users_controller():
             cursor.close()
 
     def Delete_Row(self):
+        """
+        launch delete row sequence 
+        """
         try:
             modele_user=Users_modele()
             modele_user.PK_user_id=self.vue_users.Row_getId()
@@ -98,6 +110,9 @@ class Users_controller():
             self.vue_users.Display_Delete_Error()
 
     def Update_Row(self):
+        """
+        launch update row sequence
+        """
         try:
             modele_user=Users_modele()
             table_before=BeautifulTable(maxwidth=300)                   
@@ -152,6 +167,9 @@ class Users_controller():
 
 
     def Get_and_Check_Creds(self):
+        """
+        Launch sequence to get password and hash it
+        """
         try:
             liste=self.vue_users.getUser_Pass()
             liste[3]=self.hash_password(liste[3])       #Hashage du mdp
@@ -166,6 +184,9 @@ class Users_controller():
             self.vue_users.Display_Create_Error()
 
     def Check_User_Passw(self, user, passw):
+        """
+        Check password given by user on login form
+        """
         try:
             cursor=self.DAO_users.Select_Rows()
             liste=[]

@@ -6,11 +6,24 @@ from datetime import datetime
 
 
 class Concentration_DAO():
+    """
+    Concentration DAO class for table ``concentration`` in db
+
+    ``cnx`` is the connection object from ``mysql-connector`` needed to send sql commands to the database
+    """ 
     def __init__(self, cnx): #Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor() 
         self.cnx=cnx
 
 
     def Select_Rows(self, condition=False):   
+        """Execute a simple SELECT query
+
+        Args:
+            condition ([bool/str]): If condition is false, there's no WHERE statement. If condition is true, add a WHERE statement at the end of the query
+
+        Returns:
+            [MySQLCursor]: MySQLCursor object with the SELECT content inside of it
+        """
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
             sql="SELECT * FROM concentration" 
@@ -24,6 +37,14 @@ class Concentration_DAO():
             return None
 
     def Delete_Row(self, id):
+        """Execute a simple DELETE statement
+
+        Args:
+            id ([String]): We need an id given by the user to delete the desired query.
+
+        Returns:
+            [Bool]: If the delete query didn't work, it returns a boolean (False)
+        """
         try:    
             cursor=self.cnx.cursor()
             sql="DELETE FROM concentration" 
@@ -40,12 +61,20 @@ class Concentration_DAO():
         finally:
             cursor.close()
 
-    def Update_Row(self, concentration_DAO):
+    def Update_Row(self, concentration_modele):
+        """Execute a simple UPDATE statement
+
+        Args:
+            concentration_modele ([concentration_modele obj]): We need an concentration_modele object to update a row in the table
+
+        Returns:
+            [Bool]: If the update query didn't work, it returns a boolean (False)
+        """
         try:
             cursor=self.cnx.cursor()
             sql_update="UPDATE concentration SET "     
-            sql_update+="concentration_mg='"+concentration_DAO.concentration_mg+"'" 
-            sql_update+=" WHERE PK_concentration_id="+concentration_DAO.PK_concentration_id 
+            sql_update+="concentration_mg='"+concentration_modele.concentration_mg+"'" 
+            sql_update+=" WHERE PK_concentration_id="+concentration_modele.PK_concentration_id 
             try:
                 cursor.execute(sql_update)
                 self.cnx.commit()
@@ -58,11 +87,19 @@ class Concentration_DAO():
         finally:
             cursor.close()
 
-    def Insert_Row(self, concentration_DAO):                           
+    def Insert_Row(self, concentration_modele):  
+        """Execute a simple INSERT statement
+
+        Args:
+            concentration_modele ([concentration_modele obj]): We need an concentration_modele object to insert a new row in the table
+
+        Returns:
+            [Bool]: If the update query didn't work, it returns a boolean (False)
+        """                              
         try:
             cursor=self.cnx.cursor()   
             sql="INSERT INTO pharmacie.concentration (PK_concentration_id, concentration_mg) VALUES " 
-            sql+="('"+concentration_DAO.PK_concentration_id+"', '"+concentration_DAO.concentration_mg+"');" 
+            sql+="('"+concentration_modele.PK_concentration_id+"', '"+concentration_modele.concentration_mg+"');" 
             try:
                 cursor.execute(sql)
                 self.cnx.commit()

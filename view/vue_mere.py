@@ -9,6 +9,9 @@ from datetime import datetime
 
 
 class Vue_mere():
+    """
+    Vue_mere class, superclass of others vue
+    """
     def __init__(self):
         pass
 

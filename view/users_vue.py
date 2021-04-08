@@ -10,6 +10,9 @@ from view.vue_mere import *
 from getpass import getpass
 
 class Users_vue(Vue_mere):
+    """
+    Users_vue class for table ``users`` in db
+    """
     def __init__(self):  # Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
         self.nomTable="users"
 

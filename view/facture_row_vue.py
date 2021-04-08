@@ -9,6 +9,9 @@ from datetime import datetime
 from view.vue_mere import *
 
 class FactureRow_vue(Vue_mere):
+    """
+    FactureRow_vue class for table ``facture_row`` in db
+    """
     def __init__(self, id_facture):  # Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
         self.nomTable="facture"
         self.id_facture=id_facture

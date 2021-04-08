@@ -11,6 +11,9 @@ from view.vue_mere import *
 
 
 class Drugs_vue(Vue_mere):
+    """
+    Drugs_vue class for table ``drugs`` in db
+    """
     def __init__(self):  # Il faut récupérer la connexion "cnx" à la base de données pour l'utiliser avec les pointeurs cursor()
         self.nomTable="drugs"
 
