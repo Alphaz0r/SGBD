@@ -21,7 +21,7 @@ class Client_DAO():
             condition ([bool/str]): If condition is false, there's no WHERE statement. If condition is true, add a WHERE statement at the end of the query
 
         Returns:
-            [MySQLCursor]: MySQLCursor object with the SELECT content inside of it
+            [MySQLCursor]: MySQLCursor object with the query content inside of it
         """
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
@@ -97,8 +97,8 @@ class Client_DAO():
         """                    
         try:
             cursor=self.cnx.cursor()    
-            sql="INSERT INTO pharmacie.clients (PK_client_id, name, first_name, birth_date, age, rue, house_number, postcode, email, phone_number) VALUES "
-            sql+="("+modele_client.PK_client_id+", '"+modele_client.name+"','"+modele_client.first_name+"','"+modele_client.birth_date+"','"+modele_client.age+"','"+modele_client.rue+"','"+modele_client.house_number+"','"+modele_client.postcode+"','"+modele_client.email+"','"+modele_client.phone_number+"');"
+            sql="INSERT INTO pharmacie.clients (name, first_name, birth_date, age, rue, house_number, postcode, email, phone_number) VALUES "
+            sql+="('"+modele_client.name+"','"+modele_client.first_name+"','"+modele_client.birth_date+"','"+modele_client.age+"','"+modele_client.rue+"','"+modele_client.house_number+"','"+modele_client.postcode+"','"+modele_client.email+"','"+modele_client.phone_number+"');"
             try:
                 cursor.execute(sql)
                 self.cnx.commit()

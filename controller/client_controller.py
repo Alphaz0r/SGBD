@@ -60,16 +60,16 @@ class Client_controller():
                 row=self.vue_client.getRow(self.aff_col)
 
                 modele_client=Client_modele()
-                modele_client.PK_client_id="None"
-                modele_client.name=row[0]
-                modele_client.first_name=row[1]
-                modele_client.birth_date=row[2]
-                modele_client.age=row[3]
-                modele_client.rue=row[4]
-                modele_client.house_number=row[5]
-                modele_client.postcode=row[6]
-                modele_client.email=row[7]
-                modele_client.phone_number=row[8]
+                modele_client.PK_client_id=row[0]
+                modele_client.name=row[1]
+                modele_client.first_name=row[2]
+                modele_client.birth_date=row[3]
+                modele_client.age=row[4]
+                modele_client.rue=row[5]
+                modele_client.house_number=row[6]
+                modele_client.postcode=row[7]
+                modele_client.email=row[8]
+                modele_client.phone_number=row[9]
 
                 #Insertion dans la base de données
                 creation_reussie=self.DAO_client.Insert_Row(modele_client)
@@ -140,12 +140,11 @@ class Client_controller():
                 #Affichage au client + confirmation
                 self.vue_client.Display_Rows(table_before)
 
-                confirmation=self.vue_client.getConfirmation(id,0)  
+                confirmation=self.vue_client.getConfirmation(modele_client.PK_client_id,0)  
                 if confirmation==True:  
                     #On propose un formulaire pour les nouvelles 
                     row=self.vue_client.getRow(self.aff_col)
 
-                    modele_client=Client_modele()
                     modele_client.name=row[1]
                     modele_client.first_name=row[2]
                     modele_client.birth_date=row[3]

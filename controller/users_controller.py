@@ -131,7 +131,6 @@ class Users_controller():
                     row=self.vue_users.getRow(self.aff_col)
                     row[3]=self.hash_password(row[3])           #hash du mdp
                     
-                    modele_user=Users_modele()
                     modele_user.name=row[1]
                     modele_user.pseudonyme=row[2]
                     modele_user.password=row[3]

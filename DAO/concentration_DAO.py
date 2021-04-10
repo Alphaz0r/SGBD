@@ -22,7 +22,7 @@ class Concentration_DAO():
             condition ([bool/str]): If condition is false, there's no WHERE statement. If condition is true, add a WHERE statement at the end of the query
 
         Returns:
-            [MySQLCursor]: MySQLCursor object with the SELECT content inside of it
+            [MySQLCursor]: MySQLCursor object with the query content inside of it
         """
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL

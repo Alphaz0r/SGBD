@@ -134,13 +134,13 @@ class Drugs_controller():
             for row in concentration_list:
                 table_concentration.rows.append(row)
             modele_drugs.PK_drug_id=self.vue_drugs.Row_getId()
-            if id !=False:
-                cursor=self.DAO_drugs.Select_Rows(id)
+            if modele_drugs.PK_drug_id !=False:
+                cursor=self.DAO_drugs.Select_Rows(modele_drugs.PK_drug_id)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_drugs.Display_Rows(table_before)
 
-                confirmation=self.vue_drugs.getConfirmation(id,0)  
+                confirmation=self.vue_drugs.getConfirmation(modele_drugs.PK_drug_id,0)  
                 if confirmation==True:  
                     row=self.vue_drugs.getRow(self.aff_col, table_concentration)
                     

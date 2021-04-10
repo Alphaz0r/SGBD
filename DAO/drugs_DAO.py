@@ -21,7 +21,7 @@ class Drugs_DAO():
             condition ([bool/str]): If condition is false, there's no WHERE statement. If condition is true, add a WHERE statement at the end of the query
 
         Returns:
-            [MySQLCursor]: MySQLCursor object with the SELECT content inside of it
+            [MySQLCursor]: MySQLCursor object with the query content inside of it
         """
         try:
             cursor=self.cnx.cursor()    #Initialisation du curseur qui va exécuter la requête SQL
@@ -73,9 +73,9 @@ class Drugs_DAO():
         """
         try:
             cursor=self.cnx.cursor()
-            sql_update="UPDATE drugs SET "  #TODO: MODIFIE CA   
+            sql_update="UPDATE drugs SET "     
             sql_update+="name='"+modele_drugs.name+"', description='"+modele_drugs.description+"', peremption_date='"+modele_drugs.peremption_date+"', price='"+modele_drugs.price+"', FK_concentration_id='"+modele_drugs.FK_concentration_id+"', stock='"+modele_drugs.stock+"'"
-            sql_update+=" WHERE PK_drug_id="+id #TODO: MODIFIE CA
+            sql_update+=" WHERE PK_drug_id="+modele_drugs.PK_drug_id
             try:
                 cursor.execute(sql_update)
                 self.cnx.commit()
