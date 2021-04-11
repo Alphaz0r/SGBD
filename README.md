@@ -13,5 +13,7 @@ This github project is a school project, I'm currently studying IT Data manageme
 - [mysql-connector-python](https://dev.mysql.com/doc/connector-python/en/)
 
 If you want to install these packages please use one of these commands :
+
 `pip install *packageName*`
+
 `python3 -m pip install *packageName*`
