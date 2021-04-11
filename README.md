@@ -1,7 +1,7 @@
 # SGBD Project
 
 Welcome !
-This github project is a school project, I'm currently studying and learning git. 
+This github project is a school project, I'm currently studying IT Data management and learning git. 
 
 ## Requirements
 
