@@ -1,4 +1,4 @@
-# SGBD Projet
+# SGBD Project
 
 Welcome !
 This github project is a school project, I'm currently studying and learning git. 
