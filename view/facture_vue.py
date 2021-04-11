@@ -81,7 +81,7 @@ class Facture_vue(Vue_mere):
             [list]: Returns a list with every user input in it
         """
         #Initialisation de la liste qui va récupérer les variables pour la query
-        query_list=["NULL"]
+        query_list=["/////"]
         #Préparation de la table magique
         table_vide=BeautifulTable(maxwidth=300)
         result_table=BeautifulTable(maxwidth=300)

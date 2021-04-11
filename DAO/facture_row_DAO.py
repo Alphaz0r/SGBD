@@ -106,8 +106,8 @@ class FactureRow_DAO():
         """                         
         try:
             cursor=self.cnx.cursor()    
-            sql="INSERT INTO pharmacie.facture_row (PK_fd_id, item_count, FK_drug_id,  FK_facture_id) VALUES "
-            sql+="("+modele_facture_row.PK_fd_id+", "+modele_facture_row.item_count+",'"+modele_facture_row.FK_drug_id+"','"+modele_facture_row.FK_facture_id+"')"
+            sql="INSERT INTO pharmacie.facture_row (item_count, FK_drug_id,  FK_facture_id) VALUES "
+            sql+="("+modele_facture_row.item_count+",'"+modele_facture_row.FK_drug_id+"','"+modele_facture_row.FK_facture_id+"')"
             try:
                 cursor.execute(sql)
                 self.cnx.commit()

@@ -37,13 +37,12 @@ class Facture_controller():
             if choix_utilisateur=="2":
                 self.Display_FactureRow()
             elif choix_utilisateur=="3":
-                self.Update_FactureRow()
-            elif choix_utilisateur=="4":
                 self.Delete_Row()
-            elif choix_utilisateur=="5":
+            elif choix_utilisateur=="4":
                 self.Create_Row()
-            elif choix_utilisateur=="6":break
+            elif choix_utilisateur=="5":break
                 
+
 
     def Display_Rows(self):  
         """
@@ -158,8 +157,7 @@ class Facture_controller():
             self.vue_facture.Display_Select_Error()
 
     def Get_Row_Client(self):
-        """
-        launch sequence to select only the client ID
+        """launch sequence to select only the client ID
         """ 
         try:
             DAO_client=Client_DAO(self.cnx)

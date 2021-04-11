@@ -57,18 +57,17 @@ class FactureRow_controller():
             for row in cursor:
                 table_before.rows.append(row)  
             self.vue_factureRow.Display_Rows(table_before)
-            confirmation=self.vue_factureRow.getConfirmation(id,2)  
+            confirmation=self.vue_factureRow.getConfirmation(self.id_facture,2)  
             if confirmation==True:        
                 row=self.vue_factureRow.getRow(self.aff_col, self.table_drugs)
                 
-                modele_facture_row.PK_fd_id=self.id_facture
                 modele_facture_row=Facture_row_modele()
-                modele_facture_row.item_count=row[0]
+                modele_facture_row.FK_facture_id=self.id_facture
+                modele_facture_row.item_count=row[2]
                 modele_facture_row.FK_drug_id=row[1]
-                modele_facture_row.FK_drug_id=[2]
 
                 if row!=None:
-                    creation_reussie=DAO_factureRow.Insert_Row()
+                    creation_reussie=DAO_factureRow.Insert_Row(modele_facture_row)
                     if creation_reussie==True:
                         self.vue_factureRow.Display_BackToMenu()
                         return None
@@ -127,8 +126,8 @@ class FactureRow_controller():
             table_before=BeautifulTable(maxwidth=300)                   
             table_before.columns.header=self.aff_col   
             modele_facture_row.PK_fd_id=self.vue_factureRow.Row_getId()
-            if id !=False:
-                cursor=DAO_factureRow.Select_Rows(self.id_facture,id)
+            if modele_facture_row.PK_fd_id !=False:
+                cursor=DAO_factureRow.Select_Rows(self.id_facture)
                 for row in cursor:
                     table_before.rows.append(row)  
                 self.vue_factureRow.Display_Rows(table_before)

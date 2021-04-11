@@ -51,7 +51,7 @@ class FactureRow_vue(Vue_mere):
         except:
             return False
 
-    def getClient(self): #TODO: A FAIRE
+    def getClient(self): 
         try:    
             reponse = input("Indiquez l'id du client à qui la facture sera adressée : ")
             return reponse
@@ -63,7 +63,7 @@ class FactureRow_vue(Vue_mere):
             chiffre=False
             while(chiffre == False):
                 # TODO: Vérifier que l'id se trouve dans la bdd pour notifier l'utilisateur
-                id = input("Veuillez choisir la LIGNE FACTURE \nVotre choix : ")
+                id = input("Veuillez choisir la LIGNE FACTURE (et pas ID FACTURE SVP) \nVotre choix : ")
                 chiffre = self.Intable(id)
             return id
         except:
@@ -81,7 +81,7 @@ class FactureRow_vue(Vue_mere):
             [list]: Returns a list with every user input in it
         """
         #Initialisation de la liste qui va récupérer les variables pour la query
-        query_list=["NULL"]
+        query_list=["/////"]
         #Préparation de la table magique
         table_vide=BeautifulTable(maxwidth=300)
         result_table=BeautifulTable(maxwidth=300)
@@ -125,8 +125,8 @@ class FactureRow_vue(Vue_mere):
                                 print(result_table)         #TODO:5découper ce bloc en plusieurs fonctions
                             elif reponse in header:
                                 new_value=input("Entrez la valeur pour "+reponse+": ")
-                                header[header.index(reponse)]=new_value     #TODO:Vérification ???? ATTENTION ATTENTION
-                                result_table.rows.append(query_list)        #Régler cette ligne, affichage double ATTENTION ATTENTION
+                                header[header.index(reponse)]=new_value     #TODO:Vérification ???? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                result_table.rows.append(query_list)        #Régler cette ligne, affichage double !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  
                     elif reponse=="Q":
                         print("### Retour au menu... ###")

@@ -73,10 +73,9 @@ def aff_menu_facture():
     print("##############################################################################################################")
     print("# Choix 1 : Afficher les factures et leurs clients associés                                                  #")
     print("# Choix 2 : Afficher les détails d'une facture et interagir avec                                             #")
-    print("# Choix 3 : Modifier les informations d'une facture                                                          #")
-    print("# Choix 4 : Supprimer une ou plusieurs factures ainsi que ses informations /!\ action irréversible /!\       #")
-    print("# Choix 5 : Insérer une nouvelle facture                                                                     #")
-    print("# Choix 6 : Sortir de la gestion des factures                                                                #")
+    print("# Choix 3 : Supprimer une ou plusieurs factures ainsi que ses informations /!\ action irréversible /!\       #")
+    print("# Choix 4 : Insérer une nouvelle facture                                                                     #")
+    print("# Choix 5 : Sortir de la gestion des factures                                                                #")
     print("##############################################################################################################")
 
 
