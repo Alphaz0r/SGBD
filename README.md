@@ -11,3 +11,5 @@ This github project is a school project, I'm currently studying IT Data manageme
 
 - BeautifulTables
 - mysql-connector-python
+
+If you want to install these packages please use the command `pip install *packageName*`
