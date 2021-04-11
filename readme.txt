@@ -1,13 +1,13 @@
-SGBD Projet
-===========
+# SGBD Projet
+
 Welcome !
 This github project is a school project, I'm currently studying and learning git. 
 
-## Requirements ##
+## Requirements
 
 - Python 3.9 
 
-### Modules ###
+### Modules
 
 - BeautifulTables
 - mysql-connector-python
